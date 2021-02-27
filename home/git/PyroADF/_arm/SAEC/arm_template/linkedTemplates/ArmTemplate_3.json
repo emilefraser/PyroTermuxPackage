@@ -1,0 +1,1254 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "factoryName": {
+            "type": "string",
+            "metadata": "Data Factory name",
+            "defaultValue": "saecpowerbidev"
+        }
+    },
+    "variables": {
+        "factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+    },
+    "resources": [
+        {
+            "name": "[concat(parameters('factoryName'), '/ErrorLog')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "description": "Writes the error details of a pipeline which failed to the MetaData DBs Error log",
+                "activities": [
+                    {
+                        "name": "WritePipelineErrorToMetaDataDB",
+                        "description": "Stored Procedure that writes the errors of a pipeline  to the metadata database",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "0.00:03:00",
+                            "retry": 1,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[adf].[SetPipelineError]",
+                            "storedProcedureParameters": {
+                                "DataFactoryName": {
+                                    "value": {
+                                        "value": "@pipeline().parameters.DataFactoryName",
+                                        "type": "Expression"
+                                    },
+                                    "type": "String"
+                                },
+                                "OutputJSON": {
+                                    "value": {
+                                        "value": "@pipeline().parameters.OutputJSON",
+                                        "type": "Expression"
+                                    },
+                                    "type": "String"
+                                },
+                                "PipelineName": {
+                                    "value": {
+                                        "value": "@pipeline().parameters.PipelineName",
+                                        "type": "Expression"
+                                    },
+                                    "type": "String"
+                                },
+                                "PipelineRunID": {
+                                    "value": {
+                                        "value": "@pipeline().parameters.PipelineRunID",
+                                        "type": "Expression"
+                                    },
+                                    "type": "Guid"
+                                },
+                                "PipelineTriggerID": {
+                                    "value": {
+                                        "value": "@pipeline().parameters.PipelineTriggerID",
+                                        "type": "Expression"
+                                    },
+                                    "type": "Guid"
+                                },
+                                "PipelineTriggerName": {
+                                    "value": {
+                                        "value": "@pipeline().TriggerName",
+                                        "type": "Expression"
+                                    },
+                                    "type": "String"
+                                },
+                                "PipelineTriggerTime": {
+                                    "value": {
+                                        "value": "@pipeline().TriggerTime",
+                                        "type": "Expression"
+                                    },
+                                    "type": "DateTime"
+                                },
+                                "PipelineTriggerType": {
+                                    "value": {
+                                        "value": "@pipeline().TriggerType",
+                                        "type": "Expression"
+                                    },
+                                    "type": "String"
+                                }
+                            }
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    }
+                ],
+                "parameters": {
+                    "PipelineRunID": {
+                        "type": "string"
+                    },
+                    "DataFactoryName": {
+                        "type": "string"
+                    },
+                    "PipelineName": {
+                        "type": "string"
+                    },
+                    "PipelineTriggerID": {
+                        "type": "string"
+                    },
+                    "PipelineTriggerName": {
+                        "type": "string"
+                    },
+                    "PipelineTriggerTime": {
+                        "type": "string"
+                    },
+                    "PipelineTriggerType": {
+                        "type": "string"
+                    },
+                    "OutputJSON": {
+                        "type": "string"
+                    }
+                },
+                "folder": {
+                    "name": "Purchasing/Utility"
+                },
+                "annotations": [
+                    "Utility"
+                ],
+                "lastPublishTime": "2020-10-04T22:31:05Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Materialize')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "description": "Writes the error details of a pipeline which failed to the MetaData DBs Error log",
+                "activities": [
+                    {
+                        "name": "WritePipelineErrorToMetaDataDB",
+                        "description": "Stored Procedure that writes the errors of a pipeline  to the metadata database",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "0.00:03:00",
+                            "retry": 1,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[adf].[SetPipelineError]",
+                            "storedProcedureParameters": {
+                                "DataFactoryName": {
+                                    "value": {
+                                        "value": "@pipeline().parameters.DataFactoryName",
+                                        "type": "Expression"
+                                    },
+                                    "type": "String"
+                                },
+                                "OutputJSON": {
+                                    "value": {
+                                        "value": "@pipeline().parameters.OutputJSON",
+                                        "type": "Expression"
+                                    },
+                                    "type": "String"
+                                },
+                                "PipelineName": {
+                                    "value": {
+                                        "value": "@pipeline().parameters.PipelineName",
+                                        "type": "Expression"
+                                    },
+                                    "type": "String"
+                                },
+                                "PipelineRunID": {
+                                    "value": {
+                                        "value": "@pipeline().parameters.PipelineRunID",
+                                        "type": "Expression"
+                                    },
+                                    "type": "Guid"
+                                },
+                                "PipelineTriggerID": {
+                                    "value": {
+                                        "value": "@pipeline().parameters.PipelineTriggerID",
+                                        "type": "Expression"
+                                    },
+                                    "type": "Guid"
+                                },
+                                "PipelineTriggerName": {
+                                    "value": {
+                                        "value": "@pipeline().TriggerName",
+                                        "type": "Expression"
+                                    },
+                                    "type": "String"
+                                },
+                                "PipelineTriggerTime": {
+                                    "value": {
+                                        "value": "@pipeline().TriggerTime",
+                                        "type": "Expression"
+                                    },
+                                    "type": "DateTime"
+                                },
+                                "PipelineTriggerType": {
+                                    "value": {
+                                        "value": "@pipeline().TriggerType",
+                                        "type": "Expression"
+                                    },
+                                    "type": "String"
+                                }
+                            }
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    }
+                ],
+                "parameters": {
+                    "PipelineRunID": {
+                        "type": "string"
+                    },
+                    "DataFactoryName": {
+                        "type": "string"
+                    },
+                    "PipelineName": {
+                        "type": "string"
+                    },
+                    "PipelineTriggerID": {
+                        "type": "string"
+                    },
+                    "PipelineTriggerName": {
+                        "type": "string"
+                    },
+                    "PipelineTriggerTime": {
+                        "type": "string"
+                    },
+                    "PipelineTriggerType": {
+                        "type": "string"
+                    },
+                    "OutputJSON": {
+                        "type": "string"
+                    }
+                },
+                "folder": {
+                    "name": "Purchasing/Utility"
+                },
+                "annotations": [
+                    "Utility"
+                ],
+                "lastPublishTime": "2020-10-13T21:25:34Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Purchasing_RawVault_IndexRefresh')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "05_IDX_050_Index_FL_HUB_NCIX",
+                        "description": "dm.05_IDX_050_Index_FL_HUB_NCIX",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dm].[05_IDX_050_Index_FL_HUB_NCIX]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "05_IDX_051_Index_FL_LINK_UNCIX",
+                        "description": "dm.05_IDX_051_Index_FL_LINK_UNCIX",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dm].[05_IDX_051_Index_FL_LINK_UNCIX]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "05_IDX_052_Index_FL_SAT_UFNCIX",
+                        "description": "dm.05_IDX_052_Index_FL_SAT_UFNCIX",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [
+                            {
+                                "activity": "05_IDX_053_Index_FL_SAT_PK",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dm].[05_IDX_052_Index_FL_SAT_UFNCIX]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "05_IDX_053_Index_FL_SAT_PK",
+                        "description": "dm.05_IDX_053_Index_FL_SAT_PK",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dm].[05_IDX_053_Index_FL_SAT_PK]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "05_IDX_058_Index_FL_LINKSAT_PK",
+                        "description": "dm.05_IDX_058_Index_FL_LINKSAT_PK",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dm].[05_IDX_058_Index_FL_LINKSAT_PK]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "05_IDX_059_Index_FL_LINKSAT_NCIX",
+                        "description": "dm.05_IDX_059_Index_FL_LINKSAT_NCIX",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [
+                            {
+                                "activity": "05_IDX_058_Index_FL_LINKSAT_PK",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dm].[05_IDX_059_Index_FL_LINKSAT_NCIX]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "Defrag indexes",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [
+                            {
+                                "activity": "05_IDX_052_Index_FL_SAT_UFNCIX",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            },
+                            {
+                                "activity": "05_IDX_059_Index_FL_LINKSAT_NCIX",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            },
+                            {
+                                "activity": "05_IDX_050_Index_FL_HUB_NCIX",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            },
+                            {
+                                "activity": "05_IDX_051_Index_FL_LINK_UNCIX",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dm].[09_MAIN_01_DEFRAG_FL_IDX]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    }
+                ],
+                "folder": {
+                    "name": "Purchasing/6_Indexing"
+                },
+                "annotations": [],
+                "lastPublishTime": "2020-11-17T14:36:32Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Purchasing_BusinessVaultRefresh')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "BRIDGE_PurchaseDocumentItem_INIT",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[biz].[BRIDGE_PurchaseDocumentItem_INIT]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "ChangeDocument",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[biz].[CreateChangeDocument]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    }
+                ],
+                "folder": {
+                    "name": "Purchasing/7_BusinessVaultLoads"
+                },
+                "annotations": [],
+                "lastPublishTime": "2020-12-01T22:40:25Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Purchasing_InfoMart_Materialisation')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "infomart_Create_mat_LatestPurchaseRequisitionApproval",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[infomart].[Create_mat_LatestPurchaseRequisitionApproval]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "infomart_Create_mat_LatestPurchaseOrderApproval",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[infomart].[Create_mat_LatestPurchaseOrderApproval]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "infomart_Create_mat_EarliestPurchaseOrderApproval",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[infomart].[Create_mat_EarliestPurchaseOrderApproval]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    }
+                ],
+                "folder": {
+                    "name": "Purchasing/98_InfoMart_Materialisation"
+                },
+                "annotations": [],
+                "lastPublishTime": "2020-12-01T21:54:29Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Friday_1h00_AM')]",
+            "type": "Microsoft.DataFactory/factories/triggers",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "annotations": [],
+                "runtimeState": "Started",
+                "pipelines": [
+                    {
+                        "pipelineReference": {
+                            "referenceName": "1 Schedule Loading",
+                            "type": "PipelineReference"
+                        },
+                        "parameters": {}
+                    }
+                ],
+                "type": "ScheduleTrigger",
+                "typeProperties": {
+                    "recurrence": {
+                        "frequency": "Week",
+                        "interval": 1,
+                        "startTime": "2020-05-29T01:00:00Z",
+                        "timeZone": "UTC",
+                        "schedule": {
+                            "minutes": [
+                                0
+                            ],
+                            "hours": [
+                                1
+                            ],
+                            "weekDays": [
+                                "Friday"
+                            ]
+                        }
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Tuesday_3h30_AM')]",
+            "type": "Microsoft.DataFactory/factories/triggers",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "annotations": [],
+                "runtimeState": "Started",
+                "pipelines": [
+                    {
+                        "pipelineReference": {
+                            "referenceName": "4 Strategies",
+                            "type": "PipelineReference"
+                        },
+                        "parameters": {}
+                    }
+                ],
+                "type": "ScheduleTrigger",
+                "typeProperties": {
+                    "recurrence": {
+                        "frequency": "Week",
+                        "interval": 1,
+                        "startTime": "2020-06-02T03:30:00Z",
+                        "timeZone": "UTC",
+                        "schedule": {
+                            "minutes": [
+                                30
+                            ],
+                            "hours": [
+                                4
+                            ],
+                            "weekDays": [
+                                "Tuesday"
+                            ]
+                        }
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Tuesday_12h05_AM')]",
+            "type": "Microsoft.DataFactory/factories/triggers",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "annotations": [],
+                "runtimeState": "Started",
+                "pipelines": [
+                    {
+                        "pipelineReference": {
+                            "referenceName": "2 WM Source Tables",
+                            "type": "PipelineReference"
+                        },
+                        "parameters": {}
+                    }
+                ],
+                "type": "ScheduleTrigger",
+                "typeProperties": {
+                    "recurrence": {
+                        "frequency": "Week",
+                        "interval": 1,
+                        "startTime": "2020-06-02T00:05:00Z",
+                        "timeZone": "UTC",
+                        "schedule": {
+                            "minutes": [
+                                5
+                            ],
+                            "hours": [
+                                22
+                            ],
+                            "weekDays": [
+                                "Monday"
+                            ]
+                        }
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Tuesday_Friday_3h40_AM')]",
+            "type": "Microsoft.DataFactory/factories/triggers",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "annotations": [],
+                "runtimeState": "Started",
+                "pipelines": [
+                    {
+                        "pipelineReference": {
+                            "referenceName": "3 Process Cube",
+                            "type": "PipelineReference"
+                        },
+                        "parameters": {}
+                    }
+                ],
+                "type": "ScheduleTrigger",
+                "typeProperties": {
+                    "recurrence": {
+                        "frequency": "Week",
+                        "interval": 1,
+                        "startTime": "2020-06-02T03:40:00Z",
+                        "timeZone": "UTC",
+                        "schedule": {
+                            "minutes": [
+                                40
+                            ],
+                            "hours": [
+                                3,
+                                4
+                            ],
+                            "weekDays": [
+                                "Tuesday",
+                                "Friday"
+                            ]
+                        }
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Tuesday_12H05_AM PHASE 2')]",
+            "type": "Microsoft.DataFactory/factories/triggers",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "annotations": [],
+                "runtimeState": "Started",
+                "pipelines": [
+                    {
+                        "pipelineReference": {
+                            "referenceName": "5 WM Phase 2",
+                            "type": "PipelineReference"
+                        },
+                        "parameters": {}
+                    }
+                ],
+                "type": "ScheduleTrigger",
+                "typeProperties": {
+                    "recurrence": {
+                        "frequency": "Week",
+                        "interval": 1,
+                        "startTime": "2020-06-02T01:00:00Z",
+                        "timeZone": "UTC",
+                        "schedule": {
+                            "minutes": [
+                                55
+                            ],
+                            "hours": [
+                                1
+                            ],
+                            "weekDays": [
+                                "Tuesday"
+                            ]
+                        }
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Supply_Daily_00h05')]",
+            "type": "Microsoft.DataFactory/factories/triggers",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "annotations": [],
+                "runtimeState": "Stopped",
+                "pipelines": [
+                    {
+                        "pipelineReference": {
+                            "referenceName": "Supply KPI",
+                            "type": "PipelineReference"
+                        },
+                        "parameters": {}
+                    }
+                ],
+                "type": "ScheduleTrigger",
+                "typeProperties": {
+                    "recurrence": {
+                        "frequency": "Week",
+                        "interval": 1,
+                        "startTime": "2020-06-09T14:21:00Z",
+                        "timeZone": "UTC",
+                        "schedule": {
+                            "minutes": [
+                                5
+                            ],
+                            "hours": [
+                                0
+                            ],
+                            "weekDays": [
+                                "Monday",
+                                "Tuesday",
+                                "Wednesday",
+                                "Thursday",
+                                "Friday"
+                            ]
+                        }
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/dataflow1')]",
+            "type": "Microsoft.DataFactory/factories/dataflows",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "type": "MappingDataFlow",
+                "typeProperties": {
+                    "sources": [
+                        {
+                            "dataset": {
+                                "referenceName": "DSR_S4H_CFIGLACCBYFMA",
+                                "type": "DatasetReference"
+                            },
+                            "name": "source1"
+                        }
+                    ],
+                    "sinks": [
+                        {
+                            "dataset": {
+                                "referenceName": "AzureSqlTable1",
+                                "type": "DatasetReference"
+                            },
+                            "name": "sink1"
+                        }
+                    ],
+                    "transformations": [],
+                    "script": "source(output(\n\t\tMANDT as string,\n\t\tGLACCOUNT as string,\n\t\tCOMPANYCODE as string,\n\t\tCOMPANYCODENAME as string,\n\t\tCOMPANYCODEEXTENDEDNAME as string,\n\t\tFINANCIALMANAGEMENTAREA as string,\n\t\tGLACCOUNTNAME as string,\n\t\tGLACCOUNTEXTENDEDNAME as string,\n\t\tGLACCOUNTLONGNAME as string,\n\t\tAUTHORIZATIONGROUP as string,\n\t\tACCOUNTINGCLERK as string,\n\t\tCREATIONDATE as date,\n\t\tCREATEDBYUSER as string,\n\t\tCOMMITMENTITEMINTERNALNAME as string,\n\t\tFIELDSTATUSVARIANT as string,\n\t\tFIELDSTATUSGROUP as string,\n\t\tFIELDSTATUSGROUPNAME as string,\n\t\tGLACCOUNTTYPE as string,\n\t\tGLACCOUNTTYPENAME as string,\n\t\tCHARTOFACCOUNTS as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> source1\nsource1 sink(input(\n\t\tMANDT as string,\n\t\tEBELN as string,\n\t\tBUKRS as string,\n\t\tBSTYP as string,\n\t\tBSART as string,\n\t\tBSAKZ as string,\n\t\tLOEKZ as string,\n\t\tSTATU as string,\n\t\tAEDAT as string,\n\t\tERNAM as string,\n\t\tLASTCHANGEDATETIME as decimal(27,7),\n\t\tPINCR as string,\n\t\tLPONR as string,\n\t\tLIFNR as string,\n\t\tSPRAS as string,\n\t\tZTERM as string,\n\t\tZBD1T as decimal(3,0),\n\t\tZBD2T as decimal(3,0),\n\t\tZBD3T as decimal(3,0),\n\t\tZBD1P as decimal(6,3),\n\t\tZBD2P as decimal(6,3),\n\t\tEKORG as string,\n\t\tEKGRP as string,\n\t\tWAERS as string,\n\t\tWKURS as decimal(12,5),\n\t\tKUFIX as string,\n\t\tBEDAT as string,\n\t\tKDATB as string,\n\t\tKDATE as string,\n\t\tBWBDT as string,\n\t\tANGDT as string,\n\t\tBNDDT as string,\n\t\tGWLDT as string,\n\t\tAUSNR as string,\n\t\tANGNR as string,\n\t\tIHRAN as string,\n\t\tIHREZ as string,\n\t\tVERKF as string,\n\t\tTELF1 as string,\n\t\tLLIEF as string,\n\t\tKUNNR as string,\n\t\tKONNR as string,\n\t\tABGRU as string,\n\t\tAUTLF as string,\n\t\tWEAKT as string,\n\t\tRESWK as string,\n\t\tLBLIF as string,\n\t\tINCO1 as string,\n\t\tINCO2 as string,\n\t\tKTWRT as decimal(20,2),\n\t\tSUBMI as string,\n\t\tKNUMV as string,\n\t\tKALSM as string,\n\t\tSTAFO as string,\n\t\tLIFRE as string,\n\t\tEXNUM as string,\n\t\tUNSEZ as string,\n\t\tLOGSY as string,\n\t\tUPINC as string,\n\t\tSTAKO as string,\n\t\tFRGGR as string,\n\t\tFRGSX as string,\n\t\tFRGKE as string,\n\t\tFRGZU as string,\n\t\tFRGRL as string,\n\t\tLANDS as string,\n\t\tLPHIS as string,\n\t\tADRNR as string,\n\t\tSTCEG_L as string,\n\t\tSTCEG as string,\n\t\tABSGR as string,\n\t\tADDNR as string,\n\t\tKORNR as string,\n\t\tMEMORY as string,\n\t\tPROCSTAT as string,\n\t\tRLWRT as decimal(20,2),\n\t\tREVNO as string,\n\t\tSCMPROC as string,\n\t\tREASON_CODE as string,\n\t\tMEMORYTYPE as string,\n\t\tRETTP as string,\n\t\tRETPC as decimal(6,2),\n\t\tDPTYP as string,\n\t\tDPPCT as decimal(6,2),\n\t\tDPAMT as decimal(14,2),\n\t\tDPDAT as string,\n\t\tMSR_ID as string,\n\t\tHIERARCHY_EXISTS as string,\n\t\tTHRESHOLD_EXISTS as string,\n\t\tLEGAL_CONTRACT as string,\n\t\tDESCRIPTION as string,\n\t\tRELEASE_DATE as string,\n\t\tVSART as string,\n\t\tHANDOVERLOC as string,\n\t\tSHIPCOND as string,\n\t\tINCOV as string,\n\t\tINCO2_L as string,\n\t\tINCO3_L as string,\n\t\tGRWCU as string,\n\t\tINTRA_REL as string,\n\t\tINTRA_EXCL as string,\n\t\tQTN_ERLST_SUBMSN_DATE as string,\n\t\tFOLLOWON_DOC_CAT as string,\n\t\tFOLLOWON_DOC_TYPE as string,\n\t\tDUMMY_EKKO_INCL_EEW_PS as string,\n\t\tEXTERNALSYSTEM as string,\n\t\tEXTERNALREFERENCEID as string,\n\t\tEXT_REV_TMSTMP as decimal(27,7),\n\t\tISEOPBLOCKED as string,\n\t\tISAGED as string,\n\t\tFORCE_ID as string,\n\t\tFORCE_CNT as string,\n\t\tRELOC_ID as string,\n\t\tRELOC_SEQ_ID as string,\n\t\tSOURCE_LOGSYS as string,\n\t\tFSH_TRANSACTION as string,\n\t\tFSH_ITEM_GROUP as string,\n\t\tFSH_VAS_LAST_ITEM as string,\n\t\tFSH_OS_STG_CHANGE as string,\n\t\tOIEXGNUM as string,\n\t\tOIEXGTYP as string,\n\t\tOIAEVGTYPE as string,\n\t\tOIPIPEVAL as string,\n\t\tOIC_LIFNR as string,\n\t\tOIC_DCITYC as string,\n\t\tOIC_DCOUNC as string,\n\t\tOIC_DREGIO as string,\n\t\tOIC_DLAND1 as string,\n\t\tOIC_OCITYC as string,\n\t\tOIC_OCOUNC as string,\n\t\tOIC_OREGIO as string,\n\t\tOIC_OLAND1 as string,\n\t\tOIC_PORGIN as string,\n\t\tOIC_PDESTN as string,\n\t\tOIC_PTRIP as string,\n\t\tOIC_PBATCH as string,\n\t\tOIC_MOT as string,\n\t\tOIC_AORGIN as string,\n\t\tOIC_ADESTN as string,\n\t\tOIC_TRUCKN as string,\n\t\tOIA_BASELO as string,\n\t\tOID_EXTBOL as string,\n\t\tOID_MISCDL as string,\n\t\tTMS_REF_UUID as string,\n\t\tZZDUMMY as string,\n\t\tZZDATA1 as string,\n\t\tZZDATA2 as string,\n\t\tZZDATA3 as string,\n\t\tZZDATA4 as string,\n\t\tZAPCGK as string,\n\t\tAPCGK_EXTEND as string,\n\t\tZBAS_DATE as string,\n\t\tZADATTYP as string,\n\t\tZSTART_DAT as string,\n\t\tZ_DEV as decimal(7,3),\n\t\tZINDANX as string,\n\t\tZLIMIT_DAT as string,\n\t\tNUMERATOR as string,\n\t\tHASHCAL_BDAT as string,\n\t\tHASHCAL as string,\n\t\tNEGATIVE as string,\n\t\tHASHCAL_EXISTS as string,\n\t\tKNOWN_INDEX as string,\n\t\tPOSTAT as string,\n\t\tVZSKZ as string,\n\t\tFSH_SNST_STATUS as string,\n\t\tPROCE as string,\n\t\tCONC as string,\n\t\tCONT as string,\n\t\tCOMP as string,\n\t\tOUTR as string,\n\t\tDESP as string,\n\t\tDESP_DAT as string,\n\t\tDESP_CARGO as string,\n\t\tPARE as string,\n\t\tPARE_DAT as string,\n\t\tPARE_CARGO as string,\n\t\tPFM_CONTRACT as string,\n\t\tPOHF_TYPE as string,\n\t\tEQ_EINDT as string,\n\t\tEQ_WERKS as string,\n\t\tFIXPO as string,\n\t\tEKGRP_ALLOW as string,\n\t\tWERKS_ALLOW as string,\n\t\tCONTRACT_ALLOW as string,\n\t\tPSTYP_ALLOW as string,\n\t\tFIXPO_ALLOW as string,\n\t\tKEY_ID_ALLOW as string,\n\t\tAUREL_ALLOW as string,\n\t\tDELPER_ALLOW as string,\n\t\tEINDT_ALLOW as string,\n\t\tLTSNR_ALLOW as string,\n\t\tOTB_LEVEL as string,\n\t\tOTB_COND_TYPE as string,\n\t\tKEY_ID as string,\n\t\tOTB_VALUE as decimal(23,2),\n\t\tOTB_CURR as string,\n\t\tOTB_RES_VALUE as decimal(22,2),\n\t\tOTB_SPEC_VALUE as decimal(22,2),\n\t\tSPR_RSN_PROFILE as string,\n\t\tBUDG_TYPE as string,\n\t\tOTB_STATUS as string,\n\t\tOTB_REASON as string,\n\t\tCHECK_TYPE as string,\n\t\tCON_OTB_REQ as string,\n\t\tCON_PREBOOK_LEV as string,\n\t\tCON_DISTR_LEV as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/SapHanaTable1')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "SAAZS_V_SAP13",
+                    "type": "LinkedServiceReference"
+                },
+                "folder": {
+                    "name": "Purchasing/_Archive_"
+                },
+                "annotations": [],
+                "type": "SapHanaTable",
+                "schema": [],
+                "typeProperties": {
+                    "schema": "SAPHANADB",
+                    "table": "T000"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/dataset_SAP_HANA_SAAZS_V_SAP13')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "description": "Generic Dataset to the SAP HANA database that will be used to populate the landing zone through configuration",
+                "linkedServiceName": {
+                    "referenceName": "SAAZS_V_SAP13",
+                    "type": "LinkedServiceReference"
+                },
+                "parameters": {
+                    "DatabaseName": {
+                        "type": "string",
+                        "defaultValue": "SAPHANADB"
+                    },
+                    "TableNameTechnical": {
+                        "type": "string",
+                        "defaultValue": "ABCD"
+                    }
+                },
+                "folder": {
+                    "name": "Purchasing/1_Extract"
+                },
+                "annotations": [],
+                "type": "SapHanaTable",
+                "schema": [],
+                "typeProperties": {
+                    "schema": {
+                        "value": "@dataset().DatabaseName",
+                        "type": "Expression"
+                    },
+                    "table": {
+                        "value": "@dataset().TableNameTechnical",
+                        "type": "Expression"
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/dataset_SAP_HANA_SAAZS_V_SAP13_INCREMENTAL')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "description": "Generic Dataset to the SAP HANA database that will be used to populate the landing zone through configuration",
+                "linkedServiceName": {
+                    "referenceName": "SAAZS_V_SAP13",
+                    "type": "LinkedServiceReference"
+                },
+                "folder": {
+                    "name": "Purchasing/1_Extract"
+                },
+                "annotations": [],
+                "type": "SapHanaTable",
+                "schema": [],
+                "typeProperties": {}
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/dataset_SAP_HANA_SAAZS_V_SAP13_INCREMENTAL_QA')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "description": "Generic Dataset to the SAP HANA QA environment database that will be used to populate the landing zone through configuration",
+                "linkedServiceName": {
+                    "referenceName": "SAAS_V_SAP13_QA",
+                    "type": "LinkedServiceReference"
+                },
+                "folder": {
+                    "name": "Purchasing/1_Extract"
+                },
+                "annotations": [],
+                "type": "SapHanaTable",
+                "schema": [],
+                "typeProperties": {}
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/dataset_SAP_HANA_SAAZS_V_SAP33_PROD')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "description": "Generic Dataset to the SAP HANA PROD environment database that will be used to populate the landing zone through configuration",
+                "linkedServiceName": {
+                    "referenceName": "SAAZS_V_SAP33_PROD",
+                    "type": "LinkedServiceReference"
+                },
+                "folder": {
+                    "name": "Purchasing/1_Extract"
+                },
+                "annotations": [
+                    "PRODUCTION",
+                    "SAP S4 HANA"
+                ],
+                "type": "SapHanaTable",
+                "schema": [],
+                "typeProperties": {}
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Finance_Pipelyne_MAINLOAD')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Financial_Dimension_Part1",
+                        "type": "ExecutePipeline",
+                        "dependsOn": [],
+                        "userProperties": [],
+                        "typeProperties": {
+                            "pipeline": {
+                                "referenceName": "Finance_Pipelyne_Dimensions_Part1",
+                                "type": "PipelineReference"
+                            },
+                            "waitOnCompletion": true,
+                            "parameters": {}
+                        }
+                    },
+                    {
+                        "name": "Financial_Facts_Part2",
+                        "type": "ExecutePipeline",
+                        "dependsOn": [
+                            {
+                                "activity": "Financial_Dimension_Part2",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "userProperties": [],
+                        "typeProperties": {
+                            "pipeline": {
+                                "referenceName": "Finance_Pipelyne_Facts",
+                                "type": "PipelineReference"
+                            },
+                            "waitOnCompletion": true,
+                            "parameters": {}
+                        }
+                    },
+                    {
+                        "name": "Last_Run_Time",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [
+                            {
+                                "activity": "Financial_Facts_Part2",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_packageRunTime]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "Financial_Dimension_Part2",
+                        "type": "ExecutePipeline",
+                        "dependsOn": [
+                            {
+                                "activity": "Financial_Dimension_Part1",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "userProperties": [],
+                        "typeProperties": {
+                            "pipeline": {
+                                "referenceName": "Finance_Pipelyne_Dimensions_Part2",
+                                "type": "PipelineReference"
+                            },
+                            "waitOnCompletion": true,
+                            "parameters": {}
+                        }
+                    }
+                ],
+                "folder": {
+                    "name": "Data warehouse"
+                },
+                "annotations": [],
+                "lastPublishTime": "2019-10-02T21:56:43Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/SoapApiLoad_copy1')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "CopySoapData",
+                        "type": "Copy",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "source": {
+                                "type": "BinarySource",
+                                "storeSettings": {
+                                    "type": "HttpReadSettings",
+                                    "requestMethod": "GET"
+                                },
+                                "formatSettings": {
+                                    "type": "BinaryReadSettings"
+                                }
+                            },
+                            "sink": {
+                                "type": "BinarySink",
+                                "storeSettings": {
+                                    "type": "AzureBlobStorageWriteSettings"
+                                }
+                            },
+                            "enableStaging": false
+                        },
+                        "inputs": [
+                            {
+                                "referenceName": "SoapBinaryReturn",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ],
+                        "outputs": [
+                            {
+                                "referenceName": "Binary1",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ]
+                    }
+                ],
+                "folder": {
+                    "name": "Purchasing/2_Extract"
+                },
+                "annotations": [],
+                "lastPublishTime": "2020-10-07T12:13:22Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/SoapCall_copy1')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Web1",
+                        "type": "WebActivity",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "url": "https://s1-eu.ariba.com/Sourcing/soap/saec-T/ContractHeaderExport",
+                            "method": "POST",
+                            "headers": {},
+                            "body": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:urn=\"urn:Ariba:Sourcing:vrealm_51073\">\n   <soapenv:Header>\n      <urn:Headers>\n      </urn:Headers>\n   </soapenv:Header>\n   <soapenv:Body>\n      <urn:ContractHeaderExportRequest>\n         <urn:WSContractHeaderExportInputBean_Item>\n            <urn:item>\n               <urn:ClassName>ariba.collaborate.contracts.ContractWorkspace</urn:ClassName>              \n            </urn:item>\n         </urn:WSContractHeaderExportInputBean_Item>\n      </urn:ContractHeaderExportRequest>\n   </soapenv:Body>\n</soapenv:Envelope>",
+                            "authentication": {
+                                "type": "Basic",
+                                "username": "BIUSER",
+                                "password": {
+                                    "type": "SecureString",
+                                    "value": "**********"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "name": "Copy data1",
+                        "type": "Copy",
+                        "dependsOn": [
+                            {
+                                "activity": "Web1",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "source": {
+                                "type": "DelimitedTextSource",
+                                "storeSettings": {
+                                    "type": "AzureBlobStorageReadSettings",
+                                    "recursive": false
+                                },
+                                "formatSettings": {
+                                    "type": "DelimitedTextReadSettings"
+                                }
+                            },
+                            "sink": {
+                                "type": "AzureSqlSink"
+                            },
+                            "enableStaging": false,
+                            "translator": {
+                                "type": "TabularTranslator",
+                                "typeConversion": true,
+                                "typeConversionSettings": {
+                                    "allowDataTruncation": true,
+                                    "treatBooleanAsNumber": false
+                                }
+                            }
+                        },
+                        "inputs": [
+                            {
+                                "referenceName": "SoapDelimetedReturn",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ],
+                        "outputs": [
+                            {
+                                "referenceName": "dataset_saec_powerbi_dev",
+                                "type": "DatasetReference",
+                                "parameters": {
+                                    "EntityName": "SoapTest",
+                                    "SchemaName": "lnd"
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "variables": {
+                    "test": {
+                        "type": "String"
+                    }
+                },
+                "folder": {
+                    "name": "Purchasing/2_Extract"
+                },
+                "annotations": [],
+                "lastPublishTime": "2020-10-08T00:30:47Z"
+            },
+            "dependsOn": []
+        }
+    ]
+}

@@ -1,0 +1,100 @@
+{
+	"name": "Ingress_Get_All_Customers_and_Configs",
+	"properties": {
+		"activities": [
+			{
+				"name": "Get_DynamicConnections_FromStaticConnection",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "Get_DynamicConfigsFromStaticConfig",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "ForEach_DynamicConnection",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Get_DynamicConnections_FromStaticConnection",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Get_DynamicConnections_FromStaticConnection').output.value\n\n",
+						"type": "Expression"
+					},
+					"isSequential": false,
+					"activities": [
+						{
+							"name": "Execute_Statement_On_MulipleLinkedServices",
+							"type": "Lookup",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "AzureSqlSource",
+									"partitionOption": "None"
+								},
+								"dataset": {
+									"referenceName": "Execute_StatementOverAllDynamicConnections",
+									"type": "DatasetReference",
+									"parameters": {
+										"ServerName": {
+											"value": "item().ServerName",
+											"type": "Expression"
+										},
+										"AuthPassword": {
+											"value": "@{activity('Get_DynamicConnections_FromStaticConnection').output.value[0].AuthPassword}",
+											"type": "Expression"
+										},
+										"DatabaseName": {
+											"value": "item().DatabaseName",
+											"type": "Expression"
+										},
+										"AuthUserName": {
+											"value": "@{activity('Get_DynamicConnections_FromStaticConnection').output.value[0].AuthUserName}",
+											"type": "Expression"
+										}
+									}
+								},
+								"firstRowOnly": false
+							}
+						}
+					]
+				}
+			}
+		],
+		"folder": {
+			"name": "Resurse"
+		},
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

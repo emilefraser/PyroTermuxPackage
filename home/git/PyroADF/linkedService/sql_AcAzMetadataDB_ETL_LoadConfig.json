@@ -1,0 +1,13 @@
+{
+	"name": "sql_AcAzMetadataDB_ETL_LoadConfig",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"description": "Linked service to my metadata database",
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"connectionString": "integrated security=False;encrypt=True;connection timeout=30;data source=acazmssql01.database.windows.net;initial catalog=AcAzMetadataDB;user id=emilefraser",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkFDQVpBREZfY2YyZmJjMjctOWFmYy00MzNlLTllNDYtODJhZDUxZTg5MjIxIg0KfQ=="
+		}
+	}
+}

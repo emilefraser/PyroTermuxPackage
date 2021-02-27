@@ -1,0 +1,17 @@
+{
+	"name": "PostgreSql",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"type": "PostgreSql",
+		"typeProperties": {
+			"server": "dctest",
+			"database": "dc",
+			"username": "dc",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiIzN2U2ZGNjZi0xMDQ2LTRiZGYtOTI2OS0xNTU5YjE0ZjMyZGYiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "dctest-win",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

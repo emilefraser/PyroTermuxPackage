@@ -1,0 +1,33 @@
+
+create git repo
+git clone git@github.com:emilefraser/PyroTermux.git
+
+au
+
+ls $HOME/storage/shared/tdebs
+
+INPUT_FOLDER=$HOME/storage/shared/tdebs
+OUTPUT_FOLDER=$HOME/storage/shared/repos/PyroTermux
+
+termux-apt-repo $INPUT_FOLDER $OUTPUT_FOLDER
+
+
+#commit to repo
+git add *
+git commit -m "message"
+git push
+
+echo 'deb [trusted=yes] https://raw.githubusercontent.com/emilefraser/PyroTermux/ master termux extras' > $PREFIX/etc/apt/sources.list.d/pyrotermux.list
+
+grep ^ $PREFIX/etc/apt/sources.list $PREFIX//etc/apt/sources.list.d/*
+
+
+ls /var/lib/apt/lists/*_Packages
+
+cp $PREFIX/etc/apt/sources.list $HOME/.repo
+cp $PREFIX/etc/apt/sources.list.d $HOME/.repo
+
+
+
+
+cat /data/data/com.termux/files/usr/var/lib/apt/lists/raw.githubusercontent.com_emilefraser_PyroTermux_master_dists_termux_extras_binary-aarch64_Packages

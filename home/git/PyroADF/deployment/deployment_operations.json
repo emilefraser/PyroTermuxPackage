@@ -1,0 +1,32 @@
+[
+  {
+    "id": "/subscriptions/65b6d768-d2b9-42be-b034-e8bd2a5d3ff7/resourceGroups/DMGR/providers/Microsoft.Resources/deployments/Microsoft.DataFactory-AcAzAdf/operations/2CCFB3CD8B0B3BDF",
+    "operationId": "2CCFB3CD8B0B3BDF",
+    "properties": {
+      "provisioningOperation": "Create",
+      "provisioningState": "Succeeded",
+      "timestamp": "2019-11-02T19:23:00.6448881Z",
+      "duration": "PT19.8342644S",
+      "trackingId": "718c303c-d392-4685-983a-3e2153e6acbd",
+      "statusCode": "OK",
+      "targetResource": {
+        "id": "/subscriptions/65b6d768-d2b9-42be-b034-e8bd2a5d3ff7/resourceGroups/DMGR/providers/Microsoft.DataFactory/factories/AcAzAdf",
+        "resourceType": "Microsoft.DataFactory/factories",
+        "resourceName": "AcAzAdf"
+      }
+    }
+  },
+  {
+    "id": "/subscriptions/65b6d768-d2b9-42be-b034-e8bd2a5d3ff7/resourceGroups/DMGR/providers/Microsoft.Resources/deployments/Microsoft.DataFactory-AcAzAdf/operations/08586288843295866558",
+    "operationId": "08586288843295866558",
+    "properties": {
+      "provisioningOperation": "EvaluateDeploymentOutput",
+      "provisioningState": "Succeeded",
+      "timestamp": "2019-11-02T19:23:00.7072751Z",
+      "duration": "PT0.0412359S",
+      "trackingId": "3224412d-cd84-4033-987e-1307b8cb62e7",
+      "statusCode": "OK",
+      "statusMessage": null
+    }
+  }
+]

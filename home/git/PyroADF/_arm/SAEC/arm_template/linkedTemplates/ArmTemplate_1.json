@@ -1,0 +1,4797 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "factoryName": {
+            "type": "string",
+            "metadata": "Data Factory name",
+            "defaultValue": "saecpowerbidev"
+        }
+    },
+    "variables": {
+        "factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+    },
+    "resources": [
+        {
+            "name": "[concat(parameters('factoryName'), '/DSR_S4H_CFIGLACCBYFMA')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "saec_powerbi_dev",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "AzureSqlTable",
+                "schema": [
+                    {
+                        "name": "MANDT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "GLACCOUNT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "COMPANYCODE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "COMPANYCODENAME",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "COMPANYCODEEXTENDEDNAME",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FINANCIALMANAGEMENTAREA",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "GLACCOUNTNAME",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "GLACCOUNTEXTENDEDNAME",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "GLACCOUNTLONGNAME",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "AUTHORIZATIONGROUP",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ACCOUNTINGCLERK",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CREATIONDATE",
+                        "type": "date"
+                    },
+                    {
+                        "name": "CREATEDBYUSER",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "COMMITMENTITEMINTERNALNAME",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FIELDSTATUSVARIANT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FIELDSTATUSGROUP",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FIELDSTATUSGROUPNAME",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "GLACCOUNTTYPE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "GLACCOUNTTYPENAME",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CHARTOFACCOUNTS",
+                        "type": "nvarchar"
+                    }
+                ],
+                "typeProperties": {
+                    "tableName": "[[Sap4Hanna].[CFIGLACCBYFMA]"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/DSR_S4H_CFASSETHISTSHEET')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "saec_powerbi_dev",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "AzureSqlTable",
+                "schema": [
+                    {
+                        "name": "MANDT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ASSETACCOUNTDETERMINATION",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ASSETACCOUNTDETERMINATIONDESC",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ASSETCLASS",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ASSETCLASSNAME",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CHARTOFACCOUNTS",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CHARTOFACCOUNTSNAME",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ACQNPRODNCOSTGLACCOUNT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ACQNPRODNCOSTGLACCOUNTNAME",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ASSETACCOUNTINGKEYFIGURE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "DISPLAYCURRENCY",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "AMOUNTINDISPLAYCURRENCY",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "COMPANYCODE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "COMPANYCODENAME",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "LEDGERGROUP",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "LEDGERGROUPNAME",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "LEDGER",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "LEDGERNAME",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ASSETDEPRECIATIONAREA",
+                        "type": "char"
+                    },
+                    {
+                        "name": "ASSETDEPRECIATIONAREANAME",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CHARTOFDEPRECIATION",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FISCALYEAR",
+                        "type": "char"
+                    },
+                    {
+                        "name": "FISCALPERIOD",
+                        "type": "char"
+                    },
+                    {
+                        "name": "FINANCIALSTATEMENTVARIANT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FINANCIALSTATEMENTVARIANTNAME",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CONTROLLINGAREA",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CONTROLLINGAREANAME",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "COSTCENTER",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "COSTCENTERNAME",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PROFITCENTER",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PROFITCENTERNAME",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "SEGMENT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "SEGMENTNAME",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FUNCTIONALAREA",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FUNCTIONALAREANAME",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FUNDSCENTER",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "BUSINESSAREA",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "BUSINESSAREANAME",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "MASTERFIXEDASSET",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "MASTERFIXEDASSETDESCRIPTION",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FIXEDASSET",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FIXEDASSETDESCRIPTION",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "GROUPMASTERFIXEDASSET",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "GROUPFIXEDASSET",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PERSONNELNUMBER",
+                        "type": "char"
+                    },
+                    {
+                        "name": "FUND",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "SUBLEDGERACCTLINEITEMTYPE",
+                        "type": "char"
+                    },
+                    {
+                        "name": "SUBLEDGERACCTLINEITEMTYPENAME",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ASSETTRANSACTIONTYPE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ASSETTRANSACTIONTYPENAME",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ASSETACCTTRANSCLASSFCTN",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ASSETACCTTRANSCLASSFCTNNAME",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FINANCIALACCOUNTTYPE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FINANCIALACCOUNTTYPENAME",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ACCOUNTINGDOCUMENTCREATIONDATE",
+                        "type": "date"
+                    },
+                    {
+                        "name": "CREATIONTIME",
+                        "type": "char"
+                    },
+                    {
+                        "name": "JOINTVENTURECOSTRECOVERYCODE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ACCOUNTINGPRINCIPLE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ACCOUNTINGPRINCIPLENAME",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FISCALYEARVARIANT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "COUNTRYCHARTOFACCOUNTS",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "COUNTRYCHARTOFACCOUNTSNAME",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FINANCIALMANAGEMENTAREA",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "GLACCOUNT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "GLACCOUNTNAME",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ALTERNATIVEGLACCOUNT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ALTERNATIVEGLACCOUNTNAME",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ASSETBUSINESSAREA",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ASSETBUSINESSAREANAME",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ASSETCOSTCENTER",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ASSETCOSTCENTERNAME",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ASSETPROFITCENTER",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ASSETPROFITCENTERNAME",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ASSETSEGMENT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ASSETSEGMENTNAME",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ASSETBUDGETPERIOD",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ASSETGRANT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ASSETFUND",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ASSETLOCATION",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "REALESTATEOBJECT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ASSETFUNDSCENTER",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ASSETCOSTCTRACTIVITYTYPE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FIRSTACQUISITIONFISCALYEAR",
+                        "type": "char"
+                    },
+                    {
+                        "name": "FIRSTACQUISITIONFISCALPERIOD",
+                        "type": "char"
+                    },
+                    {
+                        "name": "ASSETCAPITALIZATIONDATE",
+                        "type": "date"
+                    },
+                    {
+                        "name": "ASSETDEACTIVATIONDATE",
+                        "type": "date"
+                    },
+                    {
+                        "name": "FIXEDASSETGROUP",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ASSETSUPPLIERNAME",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "INVESTMENTORDER",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "BASEUNIT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "INVENTORYISCOUNTED",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "LASTINVENTORYDATE",
+                        "type": "date"
+                    },
+                    {
+                        "name": "INVENTORY",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "GROUP1ASSETEVALUATIONKEY",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "GROUP2ASSETEVALUATIONKEY",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "GROUP3ASSETEVALUATIONKEY",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "GROUP4ASSETEVALUATIONKEY",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "GROUP5ASSETEVALUATIONKEY",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ASSETSERIALNUMBER",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "INVESTMENTSUPPORTMEASURE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "INVESTMENTSUPPORTMEASURENAME",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "DEPRECIATIONSTARTDATE",
+                        "type": "date"
+                    },
+                    {
+                        "name": "SPECIALDEPRSTARTDATE",
+                        "type": "date"
+                    },
+                    {
+                        "name": "DEPRECIATIONKEY",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "DEPRECIATIONKEYNAME",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PLANNEDUSEFULLIFEINYEARS",
+                        "type": "char"
+                    },
+                    {
+                        "name": "PLANNEDUSEFULLIFEINPERIODS",
+                        "type": "char"
+                    }
+                ],
+                "typeProperties": {
+                    "tableName": "[[Sap4Hanna].[CFASSETHISTSHEET]"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/DSR_SPS_CPP')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "saec_powerbi_dev",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "AzureSqlTable",
+                "schema": [
+                    {
+                        "name": "RCOSTCTR",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RPLANYEAR",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RVERSION",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RCOMPCODE",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RCOSTELMT",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RACTTYPE",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RDBCR_IND",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RDOC_CAT",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RMATLGRUP",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RPIOVALUE",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RPIOBJTYP",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RPCOMPCOD",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RWBS_ELMT",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RVNDRCAT",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "0FISCPER",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RAMOUNT",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RCURRENCY",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RCURTYPE",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RQUANTITY",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RUNIT",
+                        "type": "varchar"
+                    }
+                ],
+                "typeProperties": {
+                    "tableName": "[[SPSData].[SPS_CCP_OUTPUT_ALL_F09_RCOMPCODE_ALL_Booyj9]"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/DSR_S4H_ZFIARCACCRECEIV')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "saec_powerbi_dev",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "AzureSqlTable",
+                "schema": [
+                    {
+                        "name": "MANDT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "COMPANYCODE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CUSTOMER",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "SPECIALGLCODE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "GLACCOUNT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CREDITSEGMENT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "BUSINESSPARTNER",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "NETDUEINTERVALTEXT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "RECONCILIATIONACCOUNT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CHARTOFACCOUNTS",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "EXCHANGERATETYPE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CUSTOMERCOUNTRY",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CUSTOMERREGION",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ACCOUNTINGCLERK",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CUSTOMERACCOUNTGROUP",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CUSTOMERCLASSIFICATION",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CREDITRISKCLASS",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CUSTOMERBASICAUTHORIZATIONGRP",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CUSTOMERFINSAUTHORIZATIONGRP",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "DISPLAYCURRENCY",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "NUMBEROFOPENITEMS",
+                        "type": "int",
+                        "precision": 10
+                    },
+                    {
+                        "name": "CUSTOMERCREDITLIMITAMOUNT",
+                        "type": "decimal",
+                        "precision": 15,
+                        "scale": 2
+                    },
+                    {
+                        "name": "AMOUNTINDISPLAYCURRENCY",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "TOTALOVERDUEAMTINDSPCRCY",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "TOTALNOTOVRDAMTINDSPCRCY",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "NETDUEINTVL1AMTINDSPCRCY",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "NETDUEINTVL2AMTINDSPCRCY",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "NETDUEINTVL3AMTINDSPCRCY",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "NETDUELASTINTVLAMTINDSPCRCY",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    }
+                ],
+                "typeProperties": {
+                    "tableName": "[[Sap4Hanna].[ZFIARCACCRECEIV]"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/DSR_SPS_PCP')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "saec_powerbi_dev",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "AzureSqlTable",
+                "schema": [
+                    {
+                        "name": "RPRFT_CTR",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RPLANYEAR",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RVERSION",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RCOMPCODE",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RACCOUNT",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RPCATTYP",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RDOC_CAT",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RMATLGRUP",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RPCOMPANY",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "FISCPER",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RAMOUNT",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RCURRENCY",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RCURTYPE",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RQUANTITY",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RUNIT",
+                        "type": "varchar"
+                    }
+                ],
+                "typeProperties": {
+                    "tableName": "[[SPSData].[SPS_PCP_ADJ_OUTPUT_F09_RCOMPCODE_ALL_Booyj9]"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/DSR_S4H_CFIPROJECTQ2201')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "saec_powerbi_dev",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "AzureSqlTable",
+                "schema": [
+                    {
+                        "name": "MANDT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "WBSISSTATISTICALWBSELEMENT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PROJECT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PROJECTDESCRIPTION",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "WBSELEMENT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "WBSDESCRIPTION",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "GLACCOUNT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "BILLABLECONTROL",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "BUSINESSTRANSACTIONTYPE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CALENDARMONTH",
+                        "type": "char"
+                    },
+                    {
+                        "name": "CALENDARQUARTER",
+                        "type": "char"
+                    },
+                    {
+                        "name": "CALENDARWEEK",
+                        "type": "char"
+                    },
+                    {
+                        "name": "CALENDARYEAR",
+                        "type": "char"
+                    },
+                    {
+                        "name": "CHARTOFACCOUNTS",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CONTROLLINGOBJECTCURRENCY",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "COMPANYCODE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "COMPANYCODECURRENCY",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "COSTSOURCEUNIT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CUSTOMER",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CONTROLLINGDEBITCREDITCODE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FISCALPERIOD",
+                        "type": "char"
+                    },
+                    {
+                        "name": "FISCALQUARTER",
+                        "type": "char"
+                    },
+                    {
+                        "name": "FISCALWEEK",
+                        "type": "char"
+                    },
+                    {
+                        "name": "FISCALYEARPERIOD",
+                        "type": "char"
+                    },
+                    {
+                        "name": "FISCALYEARQUARTER",
+                        "type": "char"
+                    },
+                    {
+                        "name": "FISCALYEARWEEK",
+                        "type": "char"
+                    },
+                    {
+                        "name": "FISCALYEARVARIANT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FUNCTIONALAREA",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "GLOBALCURRENCY",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ACCOUNTINGDOCUMENT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "LEDGERGLLINEITEM",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "LEDGERFISCALYEAR",
+                        "type": "char"
+                    },
+                    {
+                        "name": "MATERIAL",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ORIGINPROFITCENTER",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PARTNERCOSTCTRACTIVITYTYPE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PARTNERCOSTCENTER",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PARTNERFUNCTIONALAREA",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PARTNERORDER",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PARTNERPROFITCENTER",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PARTNERPROJECT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PARTNERWBSELEMENT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PERSONNELNUMBER",
+                        "type": "char"
+                    },
+                    {
+                        "name": "EMPLOYEEFULLNAME",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "POSTINGDATE",
+                        "type": "date"
+                    },
+                    {
+                        "name": "PRODUCT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "SOLDMATERIAL",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "SOLDPRODUCT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PROFITCENTER",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "COSTANALYSISRESOURCE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "SEGMENT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "SERVICESRENDEREDDATE",
+                        "type": "date"
+                    },
+                    {
+                        "name": "PARTNERCOMPANY",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "TRANSACTIONCURRENCY",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "WORKITEM",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CALENDARYEARMONTH",
+                        "type": "char"
+                    },
+                    {
+                        "name": "CALENDARYEARQUARTER",
+                        "type": "char"
+                    },
+                    {
+                        "name": "CALENDARYEARWEEK",
+                        "type": "char"
+                    },
+                    {
+                        "name": "AMOUNTINTRANSACTIONCURRENCY",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "AMOUNTINCOMPANYCODECURRENCY",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "AMOUNTINGLOBALCURRENCY",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "AMOUNTINOBJECTCURRENCY",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "VALUATIONQUANTITY",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 3
+                    }
+                ],
+                "typeProperties": {
+                    "tableName": "[[Sap4Hanna].[CFIPROJECTQ2201]"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/DSR_S4H_ZMMMLCMLEDGER')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "saec_powerbi_dev",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "AzureSqlTable",
+                "schema": [
+                    {
+                        "name": "MANDT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "COMPANYCODE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "LEDGER",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "GLACCOUNT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "MATERIALGROUP",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PROFITCENTER",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "SEGMENT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CHARTOFACCOUNTS",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "MATERIAL",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "INVENTORYVALUATIONTYPE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "VALUATIONAREA",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "MATERIALVALUATIONCLASS",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "INVENTORYVALUATIONCATEGORY",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PLANT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "INVENTORYQTY",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 3
+                    },
+                    {
+                        "name": "AMOUNTINCOMPANYCODECURRENCY",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "SLSPRICEAMOUNTINCOCODECRCY",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "AMOUNTINGROUPCURRENCY",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "AMOUNTINFREEDEFINEDCURRENCY1",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "AMOUNTINFREEDEFINEDCURRENCY2",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "AMOUNTINFREEDEFINEDCURRENCY3",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "AMOUNTINFREEDEFINEDCURRENCY4",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "AMOUNTINFREEDEFINEDCURRENCY5",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "AMOUNTINFREEDEFINEDCURRENCY6",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "AMOUNTINFREEDEFINEDCURRENCY7",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "AMOUNTINFREEDEFINEDCURRENCY8",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    }
+                ],
+                "typeProperties": {
+                    "tableName": "[[Sap4Hanna].[ZMMMLCMLEDGER]"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/DSR_S4H_ZFIAUCAGINGANAL')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "saec_powerbi_dev",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "AzureSqlTable",
+                "schema": [
+                    {
+                        "name": "MANDT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "SOURCELEDGER",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "COMPANY_CODE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FISCALYEAR",
+                        "type": "char"
+                    },
+                    {
+                        "name": "ACCOUNTINGDOCUMENT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "LEDGERGLLINEITEM",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "LEDGER",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "LEDGERFISCALYEAR",
+                        "type": "char"
+                    },
+                    {
+                        "name": "COSTCENTER",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PROFITCENTER",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "BALANCETRANSACTIONCURRENCY",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "AMOUNTINBALANCETRANSACCRCY",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "TRANSACTIONCURRENCY",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "AMOUNTINTRANSACTIONCURRENCY",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "COMPANYCODECURRENCY",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "AMOUNTINCOMPANYCODECURRENCY",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "GLOBALCURRENCY",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "AMOUNTINGLOBALCURRENCY",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "FREEDEFINEDCURRENCY1",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "AMOUNTINFREEDEFINEDCURRENCY1",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "FREEDEFINEDCURRENCY2",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "AMOUNTINFREEDEFINEDCURRENCY2",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "FREEDEFINEDCURRENCY3",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "AMOUNTINFREEDEFINEDCURRENCY3",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "FREEDEFINEDCURRENCY4",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "AMOUNTINFREEDEFINEDCURRENCY4",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "FREEDEFINEDCURRENCY5",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "AMOUNTINFREEDEFINEDCURRENCY5",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "FREEDEFINEDCURRENCY6",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "AMOUNTINFREEDEFINEDCURRENCY6",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "FREEDEFINEDCURRENCY7",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "AMOUNTINFREEDEFINEDCURRENCY7",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "FREEDEFINEDCURRENCY8",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "AMOUNTINFREEDEFINEDCURRENCY8",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "FIXEDAMOUNTINGLOBALCRCY",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "GRPVALNFIXEDAMTINGLOBCRCY",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "PRFTCTRVALNFXDAMTINGLOBCRCY",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "TOTALPRICEVARCINGLOBALCRCY",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "GRPVALNTOTPRCVARCINGLOBCRCY",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "PRFTCTRVALNTOTPRCVARCINGLBCRCY",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "FIXEDPRICEVARCINGLOBALCRCY",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "GRPVALNFIXEDPRCVARCINGLOBCRCY",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "PRFTCTRVALNFXDPRCVARCINGLBCRCY",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "CONTROLLINGOBJECTCURRENCY",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "AMOUNTINOBJECTCURRENCY",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "POSTINGDATE",
+                        "type": "date"
+                    },
+                    {
+                        "name": "DOCUMENTDATE",
+                        "type": "date"
+                    },
+                    {
+                        "name": "ACCOUNTINGDOCUMENTTYPE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ACCOUNTINGDOCUMENTITEM",
+                        "type": "char"
+                    },
+                    {
+                        "name": "ASSIGNMENTREFERENCE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ACCOUNTINGDOCUMENTCATEGORY",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "POSTINGKEY",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "TRANSACTIONTYPEDETERMINATION",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "SUBLEDGERACCTLINEITEMTYPE",
+                        "type": "char"
+                    },
+                    {
+                        "name": "ACCOUNTINGDOCCREATEDBYUSER",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "LASTCHANGEDATETIME",
+                        "type": "decimal",
+                        "precision": 15,
+                        "scale": 0
+                    },
+                    {
+                        "name": "CREATIONDATETIME",
+                        "type": "decimal",
+                        "precision": 15,
+                        "scale": 0
+                    },
+                    {
+                        "name": "CREATIONDATE",
+                        "type": "date"
+                    },
+                    {
+                        "name": "ELIMINATIONPROFITCENTER",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ORIGINOBJECTTYPE",
+                        "type": "char"
+                    },
+                    {
+                        "name": "GLACCOUNTTYPE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ALTERNATIVEGLACCOUNT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "COUNTRYCHARTOFACCOUNTS",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "INVOICEREFERENCE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "INVOICEREFERENCEFISCALYEAR",
+                        "type": "char"
+                    },
+                    {
+                        "name": "FOLLOWONDOCUMENTTYPE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "INVOICEITEMREFERENCE",
+                        "type": "char"
+                    },
+                    {
+                        "name": "REFERENCEPURCHASEORDERCATEGORY",
+                        "type": "char"
+                    },
+                    {
+                        "name": "PURCHASINGDOCUMENT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PURCHASINGDOCUMENTITEM",
+                        "type": "char"
+                    },
+                    {
+                        "name": "ACCOUNTASSIGNMENTNUMBER",
+                        "type": "char"
+                    },
+                    {
+                        "name": "DOCUMENTITEMTEXT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "SALESORDER",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "SALESORDERITEM",
+                        "type": "char"
+                    },
+                    {
+                        "name": "SALESDOCUMENT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "SALESDOCUMENTITEM",
+                        "type": "char"
+                    },
+                    {
+                        "name": "MATERIAL",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PRODUCT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PLANT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "SUPPLIER",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CUSTOMER",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "SERVICESRENDEREDDATE",
+                        "type": "date"
+                    },
+                    {
+                        "name": "CONDITIONCONTRACT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FINANCIALACCOUNTTYPE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "SPECIALGLCODE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "TAXCODE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "HOUSEBANK",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "HOUSEBANKACCOUNT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ISOPENITEMMANAGED",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CLEARINGDATE",
+                        "type": "date"
+                    },
+                    {
+                        "name": "CLEARINGACCOUNTINGDOCUMENT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CLEARINGDOCFISCALYEAR",
+                        "type": "char"
+                    },
+                    {
+                        "name": "ASSETDEPRECIATIONAREA",
+                        "type": "char"
+                    },
+                    {
+                        "name": "MAIN_ASSET_NUMBER",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FIXEDASSET",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ASSETVALUEDATE",
+                        "type": "date"
+                    },
+                    {
+                        "name": "ASSETTRANSACTIONTYPE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ASSETACCTTRANSCLASSFCTN",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "DEPRECIATIONFISCALPERIOD",
+                        "type": "char"
+                    },
+                    {
+                        "name": "GROUPMASTERFIXEDASSET",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "GROUPFIXEDASSET",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "COSTESTIMATE",
+                        "type": "char"
+                    },
+                    {
+                        "name": "INVENTORYSPECIALSTOCKVALNTYPE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "INVENTORYSPECIALSTOCKTYPE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "INVENTORYSPCLSTKSALESDOCUMENT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "INVENTORYSPCLSTKSALESDOCITM",
+                        "type": "char"
+                    },
+                    {
+                        "name": "INVTRYSPCLSTOCKWBSELMNTINTID",
+                        "type": "char"
+                    },
+                    {
+                        "name": "INVENTORYSPCLSTOCKWBSELEMENT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "INVENTORYSPECIALSTOCKSUPPLIER",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "INVENTORYVALUATIONTYPE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "VALUATIONAREA",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "SENDERGLACCOUNT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "SENDERACCOUNTASSIGNMENT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "SENDERACCOUNTASSIGNMENTTYPE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CONTROLLINGOBJECT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "COSTORIGINGROUP",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ORIGINSENDEROBJECT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CONTROLLINGDEBITCREDITCODE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CONTROLLINGOBJECTDEBITTYPE",
+                        "type": "char"
+                    },
+                    {
+                        "name": "QUANTITYISINCOMPLETE",
+                        "type": "char"
+                    },
+                    {
+                        "name": "OFFSETTINGACCOUNT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OFFSETTINGACCOUNTTYPE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OFFSETTINGCHARTOFACCOUNTS",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "LINEITEMISCOMPLETED",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PERSONNELNUMBER",
+                        "type": "char"
+                    },
+                    {
+                        "name": "BILLABLECONTROL",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CONTROLLINGOBJECTCLASS",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PARTNERCOMPANYCODE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PARTNERCONTROLLINGOBJECTCLASS",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ORIGINCOSTCENTER",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ORIGINPROFITCENTER",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ORIGINCOSTCTRACTIVITYTYPE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ACCOUNTASSIGNMENT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ACCOUNTASSIGNMENTTYPE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "COSTCTRACTIVITYTYPE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ORDERID",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ORDERCATEGORY",
+                        "type": "char"
+                    },
+                    {
+                        "name": "WBSELEMENTINTERNALID",
+                        "type": "char"
+                    },
+                    {
+                        "name": "WBSELEMENT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PROJECTINTERNALID",
+                        "type": "char"
+                    },
+                    {
+                        "name": "WORKPACKAGE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PROJECT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OPERATINGCONCERN",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PROJECTNETWORK",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "RELATEDNETWORKACTIVITY",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "BUSINESSPROCESS",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "COSTOBJECT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "COSTANALYSISRESOURCE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CUSTOMERSERVICENOTIFICATION",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PARTNERACCOUNTASSIGNMENT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PARTNERACCOUNTASSIGNMENTTYPE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PARTNERCOSTCTRACTIVITYTYPE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PARTNERORDER",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PARTNERORDERCATEGORY",
+                        "type": "char"
+                    },
+                    {
+                        "name": "PARTNERWBSELEMENT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PARTNERPROJECT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PARTNERSALESDOCUMENT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PARTNERSALESDOCUMENTITEM",
+                        "type": "char"
+                    },
+                    {
+                        "name": "PARTNERPROJECTNETWORK",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PARTNERPROJECTNETWORKACTIVITY",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PARTNERBUSINESSPROCESS",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PARTNERCOSTOBJECT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "WORKITEM",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "BILLINGDOCUMENTTYPE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "SALESORGANIZATION",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "DISTRIBUTIONCHANNEL",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ORGANIZATIONDIVISION",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "SOLDMATERIAL",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "SOLDPRODUCT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "MATERIALGROUP",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "SOLDPRODUCTGROUP",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CUSTOMERGROUP",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CUSTOMERSUPPLIERCOUNTRY",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CUSTOMERSUPPLIERINDUSTRY",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "SALESDISTRICT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "BILLTOPARTY",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "SHIPTOPARTY",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CUSTOMERSUPPLIERCORPORATEGROUP",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FINANCIALMANAGEMENTAREA",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FUND",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "GRANTID",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "BUDGETPERIOD",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PARTNERFUND",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PARTNERGRANT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PARTNERBUDGETPERIOD",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FUNDSCENTER",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FUNDEDPROGRAM",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "JOINTVENTURE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "VALUE_DATE",
+                        "type": "date"
+                    },
+                    {
+                        "name": "JOINTVENTUREEQUITYGROUP",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "JOINTVENTURECOSTRECOVERYCODE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "JOINTVENTUREEQUITYTYPE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "SETTLEMENTREFERENCEDATE",
+                        "type": "date"
+                    },
+                    {
+                        "name": "WORKCENTERINTERNALID",
+                        "type": "char"
+                    },
+                    {
+                        "name": "ORDEROPERATION",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ORDERITEM",
+                        "type": "char"
+                    },
+                    {
+                        "name": "ORDERSUBOPERATION",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "EQUIPMENT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FUNCTIONALLOCATION",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ASSEMBLY",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "MAINTENANCEACTIVITYTYPE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "MAINTENANCEORDERPLANNINGCODE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "MAINTPRIORITYTYPE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "MAINTPRIORITY",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "SUPERIORORDER",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PRODUCTGROUP",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "MAINTENANCEORDERISPLANNED",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "DEBITAMOUNTINCOCODECRCY",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "CREDITAMOUNTINCOCODECRCY",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "DEBITAMOUNTINTRANSCRCY",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "CREDITAMOUNTINTRANSCRCY",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "DEBITAMOUNTINBALANCETRANSCRCY",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "CREDITAMOUNTINBALANCETRANSCRCY",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "DEBITAMOUNTINGLOBALCRCY",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "CREDITAMOUNTINGLOBALCRCY",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "DEBITAMOUNTINFREEDEFINEDCRCY1",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "CREDITAMOUNTINFREEDEFINEDCRCY1",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "DEBITAMOUNTINFREEDEFINEDCRCY2",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "CREDITAMOUNTINFREEDEFINEDCRCY2",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "DEBITAMOUNTINFREEDEFINEDCRCY3",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "CREDITAMOUNTINFREEDEFINEDCRCY3",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "DEBITAMOUNTINFREEDEFINEDCRCY4",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "CREDITAMOUNTINFREEDEFINEDCRCY4",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "DEBITAMOUNTINFREEDEFINEDCRCY5",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "CREDITAMOUNTINFREEDEFINEDCRCY5",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "DEBITAMOUNTINFREEDEFINEDCRCY6",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "CREDITAMOUNTINFREEDEFINEDCRCY6",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "DEBITAMOUNTINFREEDEFINEDCRCY7",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "CREDITAMOUNTINFREEDEFINEDCRCY7",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "DEBITAMOUNTINFREEDEFINEDCRCY8",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "CREDITAMOUNTINFREEDEFINEDCRCY8",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "WBSISSTATISTICALWBSELEMENT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "NUMBEROFITEMS",
+                        "type": "decimal",
+                        "precision": 13,
+                        "scale": 0
+                    },
+                    {
+                        "name": "ASSETCLASS",
+                        "type": "nvarchar"
+                    }
+                ],
+                "typeProperties": {
+                    "tableName": "[[Sap4Hanna].[ZFIAUCAGINGANAL]"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/DSR_S4H_ZCOPCACPROFCENT')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "saec_powerbi_dev",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "AzureSqlTable",
+                "schema": [
+                    {
+                        "name": "MANDT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ACCOUNTASSIGNMENTNUMBER",
+                        "type": "char"
+                    },
+                    {
+                        "name": "GLACCOUNT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ASSETTRANSACTIONTYPE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "COMPANYCODE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CUSTOMER",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "TRANSACTIONCURRENCY",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PARTNERCOMPANYNAME",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "BUSINESSTRANSACTIONTYPE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ORDERCATEGORY",
+                        "type": "char"
+                    },
+                    {
+                        "name": "ORDERTYPE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PARTNERCOMPANYCODE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CONTROLLINGAREA",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CHARTOFACCOUNTS",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "COSTCENTER",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "COSTOBJECT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "COMPANYCODECURRENCY",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ASSETVALUEDATE",
+                        "type": "date"
+                    },
+                    {
+                        "name": "CONTROLLINGOBJECTCURRENCY",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "BPCUSTOMER",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CREATIONDATE",
+                        "type": "date"
+                    },
+                    {
+                        "name": "ACCOUNTINGDOCUMENTCATEGORY",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ACCOUNTINGDOCCREATEDBYUSER",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "DOCUMENTDATE",
+                        "type": "date"
+                    },
+                    {
+                        "name": "ACCOUNTINGDOCUMENT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ACCOUNTINGDOCUMENTTYPE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FISCALPERIOD",
+                        "type": "char"
+                    },
+                    {
+                        "name": "FISCALYEARVARIANT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FISCALYEARPERIOD",
+                        "type": "char"
+                    },
+                    {
+                        "name": "HOUSEBANKACCOUNT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ACCTGDOCTYPEAUTHORIZATIONGROUP",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ISSTATISTICALCOSTCENTER",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "DOCUMENTITEMTEXT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "MASTERFIXEDASSET",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "MATERIALGROUP",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OPERATINGCONCERN",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "INTERNALORDER",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PARTNERCOMPANYCODENAME",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ACCOUNTINGDOCUMENTITEM",
+                        "type": "char"
+                    },
+                    {
+                        "name": "FINANCIALTRANSACTIONTYPE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FISCALYEAR",
+                        "type": "char"
+                    },
+                    {
+                        "name": "PLANT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PROFITCENTER",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "REFERENCEDOCUMENTITEM",
+                        "type": "char"
+                    },
+                    {
+                        "name": "REFERENCEDOCUMENTTYPE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "SOURCEREFERENCEDOCUMENT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PRODUCTGROUP",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "SALESDOCUMENT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "SALESORDERITEM",
+                        "type": "char"
+                    },
+                    {
+                        "name": "SALESORDER",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ORDERSUBOPERATION",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FIXEDASSET",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "VALUATIONAREA",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "VALUATIONQUANTITY",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 3
+                    },
+                    {
+                        "name": "WBSELEMENT",
+                        "type": "nvarchar"
+                    }
+                ],
+                "typeProperties": {
+                    "tableName": "[[Sap4Hanna].[ZCOPCACPROFCENT]"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/AzureSqlTable1')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "saec_powerbi_dev",
+                    "type": "LinkedServiceReference"
+                },
+                "folder": {
+                    "name": "Purchasing/_Archive_"
+                },
+                "annotations": [],
+                "type": "AzureSqlTable",
+                "schema": [
+                    {
+                        "name": "MANDT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "EBELN",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "BUKRS",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "BSTYP",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "BSART",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "BSAKZ",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "LOEKZ",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "STATU",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "AEDAT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ERNAM",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "LASTCHANGEDATETIME",
+                        "type": "decimal",
+                        "precision": 27,
+                        "scale": 7
+                    },
+                    {
+                        "name": "PINCR",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "LPONR",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "LIFNR",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "SPRAS",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ZTERM",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ZBD1T",
+                        "type": "decimal",
+                        "precision": 3,
+                        "scale": 0
+                    },
+                    {
+                        "name": "ZBD2T",
+                        "type": "decimal",
+                        "precision": 3,
+                        "scale": 0
+                    },
+                    {
+                        "name": "ZBD3T",
+                        "type": "decimal",
+                        "precision": 3,
+                        "scale": 0
+                    },
+                    {
+                        "name": "ZBD1P",
+                        "type": "decimal",
+                        "precision": 6,
+                        "scale": 3
+                    },
+                    {
+                        "name": "ZBD2P",
+                        "type": "decimal",
+                        "precision": 6,
+                        "scale": 3
+                    },
+                    {
+                        "name": "EKORG",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "EKGRP",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "WAERS",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "WKURS",
+                        "type": "decimal",
+                        "precision": 12,
+                        "scale": 5
+                    },
+                    {
+                        "name": "KUFIX",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "BEDAT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "KDATB",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "KDATE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "BWBDT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ANGDT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "BNDDT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "GWLDT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "AUSNR",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ANGNR",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "IHRAN",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "IHREZ",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "VERKF",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "TELF1",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "LLIEF",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "KUNNR",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "KONNR",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ABGRU",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "AUTLF",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "WEAKT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "RESWK",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "LBLIF",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "INCO1",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "INCO2",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "KTWRT",
+                        "type": "decimal",
+                        "precision": 20,
+                        "scale": 2
+                    },
+                    {
+                        "name": "SUBMI",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "KNUMV",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "KALSM",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "STAFO",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "LIFRE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "EXNUM",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "UNSEZ",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "LOGSY",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "UPINC",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "STAKO",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FRGGR",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FRGSX",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FRGKE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FRGZU",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FRGRL",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "LANDS",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "LPHIS",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ADRNR",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "STCEG_L",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "STCEG",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ABSGR",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ADDNR",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "KORNR",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "MEMORY",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PROCSTAT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "RLWRT",
+                        "type": "decimal",
+                        "precision": 20,
+                        "scale": 2
+                    },
+                    {
+                        "name": "REVNO",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "SCMPROC",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "REASON_CODE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "MEMORYTYPE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "RETTP",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "RETPC",
+                        "type": "decimal",
+                        "precision": 6,
+                        "scale": 2
+                    },
+                    {
+                        "name": "DPTYP",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "DPPCT",
+                        "type": "decimal",
+                        "precision": 6,
+                        "scale": 2
+                    },
+                    {
+                        "name": "DPAMT",
+                        "type": "decimal",
+                        "precision": 14,
+                        "scale": 2
+                    },
+                    {
+                        "name": "DPDAT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "MSR_ID",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "HIERARCHY_EXISTS",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "THRESHOLD_EXISTS",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "LEGAL_CONTRACT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "DESCRIPTION",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "RELEASE_DATE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "VSART",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "HANDOVERLOC",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "SHIPCOND",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "INCOV",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "INCO2_L",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "INCO3_L",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "GRWCU",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "INTRA_REL",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "INTRA_EXCL",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "QTN_ERLST_SUBMSN_DATE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FOLLOWON_DOC_CAT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FOLLOWON_DOC_TYPE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "DUMMY_EKKO_INCL_EEW_PS",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "EXTERNALSYSTEM",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "EXTERNALREFERENCEID",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "EXT_REV_TMSTMP",
+                        "type": "decimal",
+                        "precision": 27,
+                        "scale": 7
+                    },
+                    {
+                        "name": "ISEOPBLOCKED",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ISAGED",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FORCE_ID",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FORCE_CNT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "RELOC_ID",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "RELOC_SEQ_ID",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "SOURCE_LOGSYS",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FSH_TRANSACTION",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FSH_ITEM_GROUP",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FSH_VAS_LAST_ITEM",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FSH_OS_STG_CHANGE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OIEXGNUM",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OIEXGTYP",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OIAEVGTYPE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OIPIPEVAL",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OIC_LIFNR",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OIC_DCITYC",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OIC_DCOUNC",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OIC_DREGIO",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OIC_DLAND1",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OIC_OCITYC",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OIC_OCOUNC",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OIC_OREGIO",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OIC_OLAND1",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OIC_PORGIN",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OIC_PDESTN",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OIC_PTRIP",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OIC_PBATCH",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OIC_MOT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OIC_AORGIN",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OIC_ADESTN",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OIC_TRUCKN",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OIA_BASELO",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OID_EXTBOL",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OID_MISCDL",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "TMS_REF_UUID",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ZZDUMMY",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ZZDATA1",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ZZDATA2",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ZZDATA3",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ZZDATA4",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ZAPCGK",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "APCGK_EXTEND",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ZBAS_DATE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ZADATTYP",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ZSTART_DAT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "Z_DEV",
+                        "type": "decimal",
+                        "precision": 7,
+                        "scale": 3
+                    },
+                    {
+                        "name": "ZINDANX",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ZLIMIT_DAT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "NUMERATOR",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "HASHCAL_BDAT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "HASHCAL",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "NEGATIVE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "HASHCAL_EXISTS",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "KNOWN_INDEX",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "POSTAT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "VZSKZ",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FSH_SNST_STATUS",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PROCE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CONC",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CONT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "COMP",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OUTR",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "DESP",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "DESP_DAT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "DESP_CARGO",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PARE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PARE_DAT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PARE_CARGO",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PFM_CONTRACT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "POHF_TYPE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "EQ_EINDT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "EQ_WERKS",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FIXPO",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "EKGRP_ALLOW",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "WERKS_ALLOW",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CONTRACT_ALLOW",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PSTYP_ALLOW",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FIXPO_ALLOW",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "KEY_ID_ALLOW",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "AUREL_ALLOW",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "DELPER_ALLOW",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "EINDT_ALLOW",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "LTSNR_ALLOW",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OTB_LEVEL",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OTB_COND_TYPE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "KEY_ID",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OTB_VALUE",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "OTB_CURR",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OTB_RES_VALUE",
+                        "type": "decimal",
+                        "precision": 22,
+                        "scale": 2
+                    },
+                    {
+                        "name": "OTB_SPEC_VALUE",
+                        "type": "decimal",
+                        "precision": 22,
+                        "scale": 2
+                    },
+                    {
+                        "name": "SPR_RSN_PROFILE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "BUDG_TYPE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OTB_STATUS",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OTB_REASON",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CHECK_TYPE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CON_OTB_REQ",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CON_PREBOOK_LEV",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CON_DISTR_LEV",
+                        "type": "nvarchar"
+                    }
+                ],
+                "typeProperties": {
+                    "schema": "lnd",
+                    "table": "T000_Client_1"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/adf_LoadConfig')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "description": "Contains the relevant metadata for the loads to be executed in the pipes",
+                "linkedServiceName": {
+                    "referenceName": "saec_powerbi_dev",
+                    "type": "LinkedServiceReference"
+                },
+                "parameters": {
+                    "AdfSchemaName": {
+                        "type": "string"
+                    }
+                },
+                "folder": {
+                    "name": "Purchasing/0_Config"
+                },
+                "annotations": [],
+                "type": "AzureSqlTable",
+                "schema": [
+                    {
+                        "name": "LoadConfigID",
+                        "type": "int",
+                        "precision": 10
+                    },
+                    {
+                        "name": "LoadType",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "SourceSystemName",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "SourceEntityType",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "SourceIntegrationRuntime",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "SourceServerName",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "SourceDatabaseInstanceName",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "SourceDatabaseName",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "SourceSchemaName",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "SourceEntityName",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "SourceStaticFieldList",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "TargetSystemName",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "TargetEntityType",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "TargetIntegrationRuntime",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "TargetServerName",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "TargetDatabaseInstanceName",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "TargetSchemaName",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "TargetEntityName",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PrimaryKeyColumn",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CdcCreatedDtColumn",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CdcCreatedDtValue",
+                        "type": "datetime2",
+                        "scale": 7
+                    },
+                    {
+                        "name": "CdcUpdatedDtColumn",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CdcUpdatedDtValue",
+                        "type": "datetime2",
+                        "scale": 7
+                    },
+                    {
+                        "name": "IsUseExternalCdc",
+                        "type": "bit"
+                    },
+                    {
+                        "name": "ExCdcSystemName",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ExCdcEntityType",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ExCdcServerName",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ExCdcDatabaseInstanceName",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ExCdcDatabaseName",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ExCdcSchemaName",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ExCdcEntityName",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ExCdcJoinColumn",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "SourceCdcJoinColumn",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "IsDropAndRecreateTarget",
+                        "type": "bit"
+                    },
+                    {
+                        "name": "CreatedDT",
+                        "type": "datetime2",
+                        "scale": 7
+                    },
+                    {
+                        "name": "UpdatedDT",
+                        "type": "datetime2",
+                        "scale": 7
+                    },
+                    {
+                        "name": "IsActive",
+                        "type": "bit"
+                    }
+                ],
+                "typeProperties": {
+                    "schema": {
+                        "value": "@dataset().AdfSchemaName",
+                        "type": "Expression"
+                    },
+                    "table": "vw_LoadConfig"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/dataset_saec_powerbi_dev')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "description": "Generic Destination Table for the SQL Azure Server, will be changed to be dynamic based on the values the foreach loop passes",
+                "linkedServiceName": {
+                    "referenceName": "saec_powerbi_dev",
+                    "type": "LinkedServiceReference"
+                },
+                "parameters": {
+                    "EntityName": {
+                        "type": "string",
+                        "defaultValue": "EntityName"
+                    },
+                    "SchemaName": {
+                        "type": "string",
+                        "defaultValue": "dbo"
+                    }
+                },
+                "folder": {
+                    "name": "Purchasing/3_Load"
+                },
+                "annotations": [],
+                "type": "AzureSqlTable",
+                "schema": [
+                    {
+                        "name": "MANDT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "EBELN",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "BUKRS",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "BSTYP",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "BSART",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "BSAKZ",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "LOEKZ",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "STATU",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "AEDAT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ERNAM",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "LASTCHANGEDATETIME",
+                        "type": "decimal",
+                        "precision": 27,
+                        "scale": 7
+                    },
+                    {
+                        "name": "PINCR",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "LPONR",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "LIFNR",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "SPRAS",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ZTERM",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ZBD1T",
+                        "type": "decimal",
+                        "precision": 3,
+                        "scale": 0
+                    },
+                    {
+                        "name": "ZBD2T",
+                        "type": "decimal",
+                        "precision": 3,
+                        "scale": 0
+                    },
+                    {
+                        "name": "ZBD3T",
+                        "type": "decimal",
+                        "precision": 3,
+                        "scale": 0
+                    },
+                    {
+                        "name": "ZBD1P",
+                        "type": "decimal",
+                        "precision": 6,
+                        "scale": 3
+                    },
+                    {
+                        "name": "ZBD2P",
+                        "type": "decimal",
+                        "precision": 6,
+                        "scale": 3
+                    },
+                    {
+                        "name": "EKORG",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "EKGRP",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "WAERS",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "WKURS",
+                        "type": "decimal",
+                        "precision": 12,
+                        "scale": 5
+                    },
+                    {
+                        "name": "KUFIX",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "BEDAT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "KDATB",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "KDATE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "BWBDT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ANGDT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "BNDDT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "GWLDT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "AUSNR",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ANGNR",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "IHRAN",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "IHREZ",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "VERKF",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "TELF1",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "LLIEF",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "KUNNR",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "KONNR",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ABGRU",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "AUTLF",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "WEAKT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "RESWK",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "LBLIF",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "INCO1",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "INCO2",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "KTWRT",
+                        "type": "decimal",
+                        "precision": 20,
+                        "scale": 2
+                    },
+                    {
+                        "name": "SUBMI",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "KNUMV",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "KALSM",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "STAFO",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "LIFRE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "EXNUM",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "UNSEZ",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "LOGSY",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "UPINC",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "STAKO",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FRGGR",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FRGSX",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FRGKE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FRGZU",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FRGRL",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "LANDS",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "LPHIS",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ADRNR",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "STCEG_L",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "STCEG",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ABSGR",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ADDNR",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "KORNR",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "MEMORY",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PROCSTAT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "RLWRT",
+                        "type": "decimal",
+                        "precision": 20,
+                        "scale": 2
+                    },
+                    {
+                        "name": "REVNO",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "SCMPROC",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "REASON_CODE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "MEMORYTYPE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "RETTP",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "RETPC",
+                        "type": "decimal",
+                        "precision": 6,
+                        "scale": 2
+                    },
+                    {
+                        "name": "DPTYP",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "DPPCT",
+                        "type": "decimal",
+                        "precision": 6,
+                        "scale": 2
+                    },
+                    {
+                        "name": "DPAMT",
+                        "type": "decimal",
+                        "precision": 14,
+                        "scale": 2
+                    },
+                    {
+                        "name": "DPDAT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "MSR_ID",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "HIERARCHY_EXISTS",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "THRESHOLD_EXISTS",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "LEGAL_CONTRACT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "DESCRIPTION",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "RELEASE_DATE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "VSART",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "HANDOVERLOC",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "SHIPCOND",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "INCOV",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "INCO2_L",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "INCO3_L",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "GRWCU",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "INTRA_REL",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "INTRA_EXCL",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "QTN_ERLST_SUBMSN_DATE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FOLLOWON_DOC_CAT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FOLLOWON_DOC_TYPE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "DUMMY_EKKO_INCL_EEW_PS",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "EXTERNALSYSTEM",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "EXTERNALREFERENCEID",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "EXT_REV_TMSTMP",
+                        "type": "decimal",
+                        "precision": 27,
+                        "scale": 7
+                    },
+                    {
+                        "name": "ISEOPBLOCKED",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ISAGED",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FORCE_ID",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FORCE_CNT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "RELOC_ID",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "RELOC_SEQ_ID",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "SOURCE_LOGSYS",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FSH_TRANSACTION",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FSH_ITEM_GROUP",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FSH_VAS_LAST_ITEM",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FSH_OS_STG_CHANGE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OIEXGNUM",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OIEXGTYP",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OIAEVGTYPE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OIPIPEVAL",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OIC_LIFNR",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OIC_DCITYC",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OIC_DCOUNC",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OIC_DREGIO",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OIC_DLAND1",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OIC_OCITYC",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OIC_OCOUNC",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OIC_OREGIO",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OIC_OLAND1",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OIC_PORGIN",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OIC_PDESTN",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OIC_PTRIP",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OIC_PBATCH",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OIC_MOT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OIC_AORGIN",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OIC_ADESTN",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OIC_TRUCKN",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OIA_BASELO",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OID_EXTBOL",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OID_MISCDL",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "TMS_REF_UUID",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ZZDUMMY",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ZZDATA1",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ZZDATA2",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ZZDATA3",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ZZDATA4",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ZAPCGK",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "APCGK_EXTEND",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ZBAS_DATE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ZADATTYP",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ZSTART_DAT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "Z_DEV",
+                        "type": "decimal",
+                        "precision": 7,
+                        "scale": 3
+                    },
+                    {
+                        "name": "ZINDANX",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ZLIMIT_DAT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "NUMERATOR",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "HASHCAL_BDAT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "HASHCAL",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "NEGATIVE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "HASHCAL_EXISTS",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "KNOWN_INDEX",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "POSTAT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "VZSKZ",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FSH_SNST_STATUS",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PROCE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CONC",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CONT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "COMP",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OUTR",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "DESP",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "DESP_DAT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "DESP_CARGO",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PARE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PARE_DAT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PARE_CARGO",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PFM_CONTRACT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "POHF_TYPE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "EQ_EINDT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "EQ_WERKS",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FIXPO",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "EKGRP_ALLOW",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "WERKS_ALLOW",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CONTRACT_ALLOW",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PSTYP_ALLOW",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FIXPO_ALLOW",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "KEY_ID_ALLOW",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "AUREL_ALLOW",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "DELPER_ALLOW",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "EINDT_ALLOW",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "LTSNR_ALLOW",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OTB_LEVEL",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OTB_COND_TYPE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "KEY_ID",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OTB_VALUE",
+                        "type": "decimal",
+                        "precision": 23,
+                        "scale": 2
+                    },
+                    {
+                        "name": "OTB_CURR",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OTB_RES_VALUE",
+                        "type": "decimal",
+                        "precision": 22,
+                        "scale": 2
+                    },
+                    {
+                        "name": "OTB_SPEC_VALUE",
+                        "type": "decimal",
+                        "precision": 22,
+                        "scale": 2
+                    },
+                    {
+                        "name": "SPR_RSN_PROFILE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "BUDG_TYPE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OTB_STATUS",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OTB_REASON",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CHECK_TYPE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CON_OTB_REQ",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CON_PREBOOK_LEV",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CON_DISTR_LEV",
+                        "type": "nvarchar"
+                    }
+                ],
+                "typeProperties": {
+                    "schema": {
+                        "value": "@dataset().SchemaName",
+                        "type": "Expression"
+                    },
+                    "table": {
+                        "value": "@dataset().EntityName",
+                        "type": "Expression"
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/SoapXmlReturn')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "HttpLinkedForSoap",
+                    "type": "LinkedServiceReference"
+                },
+                "folder": {
+                    "name": "Purchasing"
+                },
+                "annotations": [],
+                "type": "Xml",
+                "typeProperties": {
+                    "location": {
+                        "type": "HttpServerLocation"
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/SoapDelimetedReturn')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "AzureBlobStorage1",
+                    "type": "LinkedServiceReference"
+                },
+                "folder": {
+                    "name": "Purchasing"
+                },
+                "annotations": [],
+                "type": "DelimitedText",
+                "typeProperties": {
+                    "location": {
+                        "type": "AzureBlobStorageLocation",
+                        "fileName": "ContractHeaders.csv",
+                        "container": "saec"
+                    },
+                    "columnDelimiter": ",",
+                    "escapeChar": "\\",
+                    "firstRowAsHeader": true,
+                    "quoteChar": "\""
+                },
+                "schema": []
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Binary1')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "AzureBlobStorage1",
+                    "type": "LinkedServiceReference"
+                },
+                "folder": {
+                    "name": "Purchasing"
+                },
+                "annotations": [],
+                "type": "Binary",
+                "typeProperties": {
+                    "location": {
+                        "type": "AzureBlobStorageLocation",
+                        "fileName": "98db3e22-12ca-4f4d-8e8f-b9c1bee67992.gz",
+                        "container": "saec"
+                    },
+                    "compression": {
+                        "type": "gzip"
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/SoapBinaryReturn')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "HttpLinkedForSoap",
+                    "type": "LinkedServiceReference"
+                },
+                "folder": {
+                    "name": "Purchasing"
+                },
+                "annotations": [],
+                "type": "Binary",
+                "typeProperties": {
+                    "location": {
+                        "type": "HttpServerLocation"
+                    },
+                    "compression": {
+                        "type": "gzip"
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/BinaryDeflate')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "AzureBlobStorage1",
+                    "type": "LinkedServiceReference"
+                },
+                "folder": {
+                    "name": "Purchasing"
+                },
+                "annotations": [],
+                "type": "Binary",
+                "typeProperties": {
+                    "location": {
+                        "type": "AzureBlobStorageLocation",
+                        "fileName": "contractheaders.csv",
+                        "folderPath": "extracted",
+                        "container": "saec"
+                    },
+                    "compression": {
+                        "type": "ZipDeflate",
+                        "level": "Optimal"
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/SoapBinaryReturn_copy1')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "AzureBlobStorage1",
+                    "type": "LinkedServiceReference"
+                },
+                "folder": {
+                    "name": "Purchasing"
+                },
+                "annotations": [],
+                "type": "Binary",
+                "typeProperties": {
+                    "location": {
+                        "type": "AzureBlobStorageLocation",
+                        "container": "saec"
+                    },
+                    "compression": {
+                        "type": "ZipDeflate",
+                        "level": "Optimal"
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/SoapDelimetedReturn_copy1')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "AzureBlobStorage1",
+                    "type": "LinkedServiceReference"
+                },
+                "folder": {
+                    "name": "Purchasing"
+                },
+                "annotations": [],
+                "type": "DelimitedText",
+                "typeProperties": {
+                    "location": {
+                        "type": "AzureBlobStorageLocation",
+                        "fileName": "application.zip",
+                        "container": "saec"
+                    },
+                    "columnDelimiter": ",",
+                    "compressionCodec": "ZipDeflate",
+                    "compressionLevel": "Optimal",
+                    "escapeChar": "\\",
+                    "firstRowAsHeader": true,
+                    "quoteChar": "\""
+                },
+                "schema": []
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/RESTJsonReturn')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "HttpLinkedForREST",
+                    "type": "LinkedServiceReference"
+                },
+                "folder": {
+                    "name": "Purchasing"
+                },
+                "annotations": [],
+                "type": "Json",
+                "typeProperties": {
+                    "location": {
+                        "type": "HttpServerLocation"
+                    }
+                },
+                "schema": {}
+            },
+            "dependsOn": []
+        }
+    ]
+}

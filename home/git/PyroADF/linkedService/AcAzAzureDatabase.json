@@ -1,0 +1,17 @@
+{
+	"name": "AcAzAzureDatabase",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"connectionString": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "AcAzAzureKeyVault",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "emilefraser"
+			}
+		}
+	}
+}

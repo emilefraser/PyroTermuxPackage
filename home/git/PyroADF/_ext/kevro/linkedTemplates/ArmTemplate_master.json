@@ -1,0 +1,138 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "factoryName": {
+            "type": "string",
+            "metadata": "Data Factory name",
+            "defaultValue": "KevroDataFactory02"
+        },
+        "dmgr_AutoIR_AzureSqlMI_DataManager_Local_connectionString": {
+            "type": "secureString",
+            "metadata": "Secure string for 'connectionString' of 'dmgr_AutoIR_AzureSqlMI_DataManager_Local'"
+        },
+        "dmgr_AutoIR_AzureSqlMI_connectionString": {
+            "type": "secureString",
+            "metadata": "Secure string for 'connectionString' of 'dmgr_AutoIR_AzureSqlMI'"
+        },
+        "dmgr_KEVADFIR01_MySQL_connectionString": {
+            "type": "secureString",
+            "metadata": "Secure string for 'connectionString' of 'dmgr_KEVADFIR01_MySQL'"
+        },
+        "dmgr_AutoIR_AzureSqlMI_DataManager_connectionString": {
+            "type": "secureString",
+            "metadata": "Secure string for 'connectionString' of 'dmgr_AutoIR_AzureSqlMI_DataManager'"
+        },
+        "dmgr_AutoIR_AzureMySQL_connectionString": {
+            "type": "secureString",
+            "metadata": "Secure string for 'connectionString' of 'dmgr_AutoIR_AzureMySQL'"
+        },
+        "FS_TestDB_connectionString": {
+            "type": "secureString",
+            "metadata": "Secure string for 'connectionString' of 'FS_TestDB'"
+        },
+        "SourceTableCheck-1h_properties_CheckSourceTableRowCount_parameters_UpperLimitDate": {
+            "type": "string",
+            "defaultValue": "2019-12-08T08:00:00Z"
+        },
+        "KEVADFIR01_properties_typeProperties_linkedInfo_resourceId": {
+            "type": "string",
+            "defaultValue": "/subscriptions/c52e8c00-4626-414d-a898-eadbceeb694b/resourcegroups/Kevro_Online/providers/Microsoft.DataFactory/factories/KevroDataFactory01/integrationruntimes/KEVADFIR01"
+        },
+        "containerUri": {
+            "type": "string",
+            "metadata": "URI to storage account containing linked ARM templates"
+        },
+        "containerSasToken": {
+            "type": "string",
+            "metadata": "Sas token to storage account containing linked ARM templates"
+        }
+    },
+    "variables": {
+        "factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+    },
+    "resources": [
+        {
+            "name": "KevroDataFactory02_ArmTemplate_0",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2018-02-01",
+            "properties": {
+                "mode": "incremental",
+                "templateLink": {
+                    "uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "factoryName": {
+                        "value": "[parameters('factoryName')]"
+                    },
+                    "dmgr_AutoIR_AzureSqlMI_DataManager_Local_connectionString": {
+                        "value": "[parameters('dmgr_AutoIR_AzureSqlMI_DataManager_Local_connectionString')]"
+                    },
+                    "dmgr_AutoIR_AzureSqlMI_connectionString": {
+                        "value": "[parameters('dmgr_AutoIR_AzureSqlMI_connectionString')]"
+                    },
+                    "dmgr_AutoIR_AzureSqlMI_DataManager_connectionString": {
+                        "value": "[parameters('dmgr_AutoIR_AzureSqlMI_DataManager_connectionString')]"
+                    },
+                    "dmgr_AutoIR_AzureMySQL_connectionString": {
+                        "value": "[parameters('dmgr_AutoIR_AzureMySQL_connectionString')]"
+                    },
+                    "FS_TestDB_connectionString": {
+                        "value": "[parameters('FS_TestDB_connectionString')]"
+                    },
+                    "dmgr_KEVADFIR01_MySQL_connectionString": {
+                        "value": "[parameters('dmgr_KEVADFIR01_MySQL_connectionString')]"
+                    },
+                    "KEVADFIR01_properties_typeProperties_linkedInfo_resourceId": {
+                        "value": "[parameters('KEVADFIR01_properties_typeProperties_linkedInfo_resourceId')]"
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "KevroDataFactory02_ArmTemplate_1",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2018-02-01",
+            "properties": {
+                "mode": "incremental",
+                "templateLink": {
+                    "uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "factoryName": {
+                        "value": "[parameters('factoryName')]"
+                    }
+                }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments', 'KevroDataFactory02_ArmTemplate_0')]"
+            ]
+        },
+        {
+            "name": "KevroDataFactory02_ArmTemplate_2",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2018-02-01",
+            "properties": {
+                "mode": "incremental",
+                "templateLink": {
+                    "uri": "[concat(parameters('containerUri'), '/ArmTemplate_2.json', parameters('containerSasToken'))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "factoryName": {
+                        "value": "[parameters('factoryName')]"
+                    },
+                    "SourceTableCheck-1h_properties_CheckSourceTableRowCount_parameters_UpperLimitDate": {
+                        "value": "[parameters('SourceTableCheck-1h_properties_CheckSourceTableRowCount_parameters_UpperLimitDate')]"
+                    }
+                }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments', 'KevroDataFactory02_ArmTemplate_1')]"
+            ]
+        }
+    ]
+}

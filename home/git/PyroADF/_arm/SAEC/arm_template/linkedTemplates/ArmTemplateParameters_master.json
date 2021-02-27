@@ -1,0 +1,99 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "factoryName": {
+            "value": "saecpowerbidev"
+        },
+        "saec_powerbi_dev_connectionString": {
+            "value": ""
+        },
+        "AzureDataLakeStorage_accountKey": {
+            "value": ""
+        },
+        "AzureTableStorage_connectionString": {
+            "value": ""
+        },
+        "SAPS4HANA_PROD_password": {
+            "value": ""
+        },
+        "SAAZS_V_SAP13_connectionString": {
+            "value": ""
+        },
+        "SAAS_V_SAP13_QA_connectionString": {
+            "value": ""
+        },
+        "SAAZS_V_SAP33_PROD_connectionString": {
+            "value": ""
+        },
+        "HttpLinkedForSoap_password": {
+            "value": ""
+        },
+        "AzureBlobStorage1_connectionString": {
+            "value": ""
+        },
+        "Isometrix_Api_test_password": {
+            "value": ""
+        },
+        "HttpLinkedForREST_password": {
+            "value": ""
+        },
+        "XtractIS-IR_properties_typeProperties_ssisProperties_catalogInfo_catalogServerEndpoint": {
+            "value": "saazs-v-pwrbidev.database.windows.net"
+        },
+        "XtractIS-IR_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminUserName": {
+            "value": "saecadmin"
+        },
+        "XtractIS-IR_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminPassword": {
+            "value": ""
+        },
+        "XtractIS-IR_properties_typeProperties_ssisProperties_customSetupScriptProperties_sasToken": {
+            "value": ""
+        },
+        "AzureDataLakeStorage_properties_typeProperties_url": {
+            "value": "https://saecpowerbidev.dfs.core.windows.net"
+        },
+        "AzureBlobStorage_XtractIS_sasUri": {
+            "value": ""
+        },
+        "SAPS4HANA_PROD_properties_typeProperties_clientId": {
+            "value": "100"
+        },
+        "SAPS4HANA_PROD_properties_typeProperties_userName": {
+            "value": "XSTRACTIS"
+        },
+        "SAPS4HANA_PROD_properties_typeProperties_server": {
+            "value": "saazs-v-sap30.satcc.co.za"
+        },
+        "SAPS4HANA_PROD_properties_typeProperties_systemNumber": {
+            "value": "30"
+        },
+        "HttpLinkedForSoap_properties_typeProperties_url": {
+            "value": "https://s1-eu.ariba.com/Sourcing/soap/saec-T/ContractHeaderExport"
+        },
+        "HttpLinkedForSoap_properties_typeProperties_userName": {
+            "value": "BIUSER"
+        },
+        "Isometrix_Api_test_properties_typeProperties_url": {
+            "value": "https://ch17.isometrix.net/RestAPI.SAEC.QA/api/ModuleTemplate"
+        },
+        "Isometrix_Api_test_properties_typeProperties_userName": {
+            "value": "isoApiuser"
+        },
+        "HttpLinkedForREST_properties_typeProperties_url": {
+            "value": "https://ch17.isometrix.net/RestAPI.SAEC.QA/api"
+        },
+        "HttpLinkedForREST_properties_typeProperties_userName": {
+            "value": "isoApiuser"
+        },
+        "AzureBlobStorageHistoricData_sasUri": {
+            "value": ""
+        },
+        "containerUri": {
+            "value": ""
+        },
+        "containerSasToken": {
+            "value": ""
+        }
+    }
+}

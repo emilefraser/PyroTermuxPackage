@@ -1,0 +1,57 @@
+﻿{
+  "$schema": "http://datafactories.schema.management.azure.com/vsschemas/V1/Microsoft.DataFactory.Config.json",
+  "DataDownloaderSamplePipeline": [
+    {
+      "name": "$.properties.activities[*].policy.timeout",
+      "value": "00:30:00" /* overwrite Timeout to 30 Minutes */
+    },
+    {
+      "name": "$.properties.isPaused",
+      "value": true
+    },
+    {
+      "name": "$.properties.activities[*].typeProperties.extendedProperties",
+      "value": {
+        "urlFormat": "http://dumps.wikimedia.org/other/pagecounts-raw/{0}/{0}-{1}/pagecounts-{0}{1}{2}-{3}00{4}.gz",
+        "dataStorageAccountName": "<Azure storage account name>",
+        "dataStorageAccountKey": "<Azure storage account key>",
+        "dataStorageContainer": "<Blob container name in Azure storage>",
+        "sliceStart": "$$Text.Format('{0:yyyyMM--ddHHmm}', Time.AddHours(SliceStart, -1), SliceEnd)",
+        "sliceEnd": "$$Text.Format('{0:yyyy-MM-dd HH:mm:ss}', SliceEnd)"
+      }
+    }
+  ],
+  "AzureBatchLinkedService": [
+    {
+      "name": "$.properties.typeProperties.accountName",
+      "value": "Name of the Batch Account"
+    },
+    {
+      "name": "$.properties.typeProperties.accessKey",
+      "value": "AccessKey for the Batch Account"
+    },
+    {
+      "name": "$.properties.typeProperties.poolName",
+      "value": "Name of the Pool in the Batch Account"
+    },
+    {
+      "name": "$.properties.typeProperties.batchUri",
+      "value": "URL without accountName. Ex: https://<region>.batch.azure.com"
+    }
+  ],
+  "AzureStorageLinkedService": [
+    {
+      "name": "$.properties.typeProperties.connectionString",
+      "value": "ConnectionString to the BlobStore"
+    }
+  ],
+  "OutputTable": [
+    {
+      "name": "$.properties.availability",
+      "value": {
+        "frequency": "Hour",
+        "interval": 2
+      }
+    }
+  ]
+}

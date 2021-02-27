@@ -1,0 +1,3291 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "factoryName": {
+            "type": "string",
+            "metadata": "Data Factory name",
+            "defaultValue": "saecpowerbidev"
+        }
+    },
+    "variables": {
+        "factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+    },
+    "resources": [
+        {
+            "name": "[concat(parameters('factoryName'), '/VaultLineage_EXT')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "saec_powerbi_dev",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "AzureSqlTable",
+                "schema": [],
+                "typeProperties": {
+                    "schema": "adf",
+                    "table": "DataVaultLoad_1_EXT"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/VaultLineage_STG')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "saec_powerbi_dev",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "AzureSqlTable",
+                "schema": [
+                    {
+                        "name": "EnsambleName",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "EntityType",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "LoadName",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "EntitySchema_TAR",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "EntityName_TAR",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "EntitySchema_SRC",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "EntityName_SRC",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "LoadProcedureRank",
+                        "type": "int",
+                        "precision": 10
+                    },
+                    {
+                        "name": "LoadSchemaName_INIT",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "LoadProcedureName_INIT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "LoadSchemaName_INCR",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "LoadProcedureName_INCR",
+                        "type": "nvarchar"
+                    }
+                ],
+                "typeProperties": {
+                    "schema": "adf",
+                    "table": "DataVaultLoad_2_STG"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/VaultLineage_SAT')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "saec_powerbi_dev",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "AzureSqlTable",
+                "schema": [
+                    {
+                        "name": "EnsambleName",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "EntityType",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "LoadName",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "EntitySchema_TAR",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "EntityName_TAR",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "EntitySchema_SRC",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "EntityName_SRC",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "LoadProcedureRank",
+                        "type": "int",
+                        "precision": 10
+                    },
+                    {
+                        "name": "LoadSchemaName_INIT",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "LoadProcedureName_INIT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "LoadSchemaName_INCR",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "LoadProcedureName_INCR",
+                        "type": "nvarchar"
+                    }
+                ],
+                "typeProperties": {
+                    "schema": "adf",
+                    "table": "DataVaultLoad_3_SAT"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/VaultLineage_LINKSAT')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "saec_powerbi_dev",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "AzureSqlTable",
+                "schema": [
+                    {
+                        "name": "EnsambleName",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "EntityType",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "LoadName",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "EntitySchema_TAR",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "EntityName_TAR",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "EntitySchema_SRC",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "EntityName_SRC",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "LoadProcedureRank",
+                        "type": "int",
+                        "precision": 10
+                    },
+                    {
+                        "name": "LoadSchemaName_INIT",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "LoadProcedureName_INIT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "LoadSchemaName_INCR",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "LoadProcedureName_INCR",
+                        "type": "nvarchar"
+                    }
+                ],
+                "typeProperties": {
+                    "schema": "adf",
+                    "table": "DataVaultLoad_3_LINKSAT"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/VaultLineage_HUB')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "saec_powerbi_dev",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "AzureSqlTable",
+                "schema": [
+                    {
+                        "name": "EnsambleName",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "EntityType",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "LoadName",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "EntitySchema_TAR",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "EntityName_TAR",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "EntitySchema_SRC",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "EntityName_SRC",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "LoadProcedureRank",
+                        "type": "int",
+                        "precision": 10
+                    },
+                    {
+                        "name": "LoadSchemaName_INIT",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "LoadProcedureName_INIT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "LoadSchemaName_INCR",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "LoadProcedureName_INCR",
+                        "type": "nvarchar"
+                    }
+                ],
+                "typeProperties": {
+                    "schema": "adf",
+                    "table": "DataVaultLoad_3_HUB"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/VaultLineage_LINK')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "saec_powerbi_dev",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "AzureSqlTable",
+                "schema": [
+                    {
+                        "name": "EnsambleName",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "EntityType",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "LoadName",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "EntitySchema_TAR",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "EntityName_TAR",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "EntitySchema_SRC",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "EntityName_SRC",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "LoadProcedureRank",
+                        "type": "int",
+                        "precision": 10
+                    },
+                    {
+                        "name": "LoadSchemaName_INIT",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "LoadProcedureName_INIT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "LoadSchemaName_INCR",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "LoadProcedureName_INCR",
+                        "type": "nvarchar"
+                    }
+                ],
+                "typeProperties": {
+                    "schema": "adf",
+                    "table": "DataVaultLoad_3_LINK"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/DataVaultLoad_0_TEMPEXCLUSIONS')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "saec_powerbi_dev",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "AzureSqlTable",
+                "schema": [
+                    {
+                        "name": "EnsambleName",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "EntityType",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "LoadName",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "EntitySchema_TAR",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "EntityName_TAR",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "EntitySchema_SRC",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "EntityName_SRC",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "LoadProcedureRank",
+                        "type": "int",
+                        "precision": 10
+                    },
+                    {
+                        "name": "LoadSchemaName_INIT",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "LoadProcedureName_INIT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "LoadSchemaName_INCR",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "LoadProcedureName_INCR",
+                        "type": "nvarchar"
+                    }
+                ],
+                "typeProperties": {
+                    "schema": "adf",
+                    "table": "DataVaultLoad_0_TEMPEXCLUSIONS"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/VaultLineage_SRC')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "saec_powerbi_dev",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "AzureSqlTable",
+                "schema": [
+                    {
+                        "name": "EnsambleName",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "EntityType",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "LoadName",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "EntitySchema_TAR",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "EntityName_TAR",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "EntitySchema_SRC",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "EntityName_SRC",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "LoadProcedureRank",
+                        "type": "int",
+                        "precision": 10
+                    },
+                    {
+                        "name": "LoadSchemaName_INIT",
+                        "type": "int",
+                        "precision": 10
+                    },
+                    {
+                        "name": "LoadProcedureName_INIT",
+                        "type": "int",
+                        "precision": 10
+                    },
+                    {
+                        "name": "LoadSchemaName_INCR",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "LoadProcedureName_INCR",
+                        "type": "nvarchar"
+                    }
+                ],
+                "typeProperties": {
+                    "schema": "adf",
+                    "table": "0_DataVaultLoad_0_SRC"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/ReleaseDataset')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "AzureBlobStorage1",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "Binary",
+                "typeProperties": {
+                    "location": {
+                        "type": "AzureBlobStorageLocation"
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Finance_Pipelyne_Dimensions_Part1')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "STG_DimCompany",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_STG_DimCompany]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "LDW_DimCompany",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [
+                            {
+                                "activity": "STG_DimCompany",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_LDW_DimCompany]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "STG_DimCurrency",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_STG_DimCurrency]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "LDW_DimCurrency",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [
+                            {
+                                "activity": "STG_DimCurrency",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_LDW_DimCurrency]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "STG_DimGLAccount",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_STG_DimGLAccount]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "LDW_DimGLAccount",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [
+                            {
+                                "activity": "STG_DimGLAccount",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_LDW_DimGLAccount]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "STG_DimProfitCentre",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_STG_DimProfitCentre]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "LDW_DimProfitCentre",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [
+                            {
+                                "activity": "STG_DimProfitCentre",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_LDW_DimProfitCentre]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_STG_DimActivityType",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_STG_DimActivityType]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_LDW_DimActivityType",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [
+                            {
+                                "activity": "SP_STG_DimActivityType",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_LDW_DimActivityType]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_STG_DimCostCentre",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_STG_DimCostCentre]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_LDW_DimCostCentre",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [
+                            {
+                                "activity": "SP_STG_DimCostCentre",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_LDW_DimCostCentre]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_STG_DimFunctioinalArea",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_STG_DimFunctioinalArea]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_LDW_DimFunctioinalArea",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [
+                            {
+                                "activity": "SP_STG_DimFunctioinalArea",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_LDW_DimFunctioinalArea]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_STG_DimSegment",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_STG_DimSegment]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_LDW_DimSegment",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [
+                            {
+                                "activity": "SP_STG_DimSegment",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_LDW_DimSegment]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_STG_DimSKF",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_STG_DimSKF]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_LDW_DimSKF",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [
+                            {
+                                "activity": "SP_STG_DimSKF",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_LDW_DimSKF]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_STG_DimWBSElement",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_STG_DimWBSElement]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_LDW_DimWBSElement",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [
+                            {
+                                "activity": "SP_STG_DimWBSElement",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_LDW_DimWBSElement]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_STG_DimFiscalDate",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_STG_DimFiscalDate]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_LDW_DimFiscalDate",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [
+                            {
+                                "activity": "SP_STG_DimFiscalDate",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_LDW_DimFiscalDate]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_STG_DimVendor",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_STG_DimVendor]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_LDW_DimVendor",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [
+                            {
+                                "activity": "SP_STG_DimVendor",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_LDW_DimVendor]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_STG_PlannerGroup",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_STG_DimPlannerGroup]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_LDW_PlannerGroup",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [
+                            {
+                                "activity": "SP_STG_PlannerGroup",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_LDW_DimPlannerGroup]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_STG_DimWOPriority",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_STG_DimWOPriority]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_LDW_DimWOPriority",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [
+                            {
+                                "activity": "SP_STG_DimWOPriority",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_LDW_DimWOPriority]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_STG_DimTaskListGroup",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_STG_DimTaskListGroup]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_LDW_DimTaskListGroup",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [
+                            {
+                                "activity": "SP_STG_DimTaskListGroup",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_LDW_DimTaskListGroup]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_STG_DimRealestateObjectKey",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_STG_DimRealestateObjectKey]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_LDW_DimRealestateObjectKey",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [
+                            {
+                                "activity": "SP_STG_DimRealestateObjectKey",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_LDW_DimRealestateObjectKey]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_STG_DimMaintaninceItem",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_STG_DimMaintaninceItem]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_LDW_DimMaintaninceItem",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [
+                            {
+                                "activity": "SP_STG_DimMaintaninceItem",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_LDW_DimMaintaninceItem]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_STG_DimWorkOrder",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_STG_DimWorkOrder]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_LDW_DimWorkOrder",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [
+                            {
+                                "activity": "SP_STG_DimWorkOrder",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_LDW_DimWorkOrder]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_STG_DimProjectDefinition",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_STG_DimProjectDefinition]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_LDW_DimProjectDefinition",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [
+                            {
+                                "activity": "SP_STG_DimProjectDefinition",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_LDW_DimProjectDefinition]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_STG_DimUnitOfMeasure",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_STG_DimUnitOfMeasure]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_LDW_DimUnitOfMeasure",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [
+                            {
+                                "activity": "SP_STG_DimUnitOfMeasure",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_LDW_DimUnitOfMeasure]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    }
+                ],
+                "folder": {
+                    "name": "Data warehouse"
+                },
+                "annotations": [],
+                "lastPublishTime": "2019-10-02T21:39:09Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Finance_Pipelyne_Facts')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "SP_STG_FactProfitCentreAccounting",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_STG_FactProfitCentreAccounting]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_LDW_FactProfitCentreAccounting",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [
+                            {
+                                "activity": "SP_STG_FactProfitCentreAccounting",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_LDW_FactProfitCentreAccounting]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_STG_FactSPS_CCP_OUTPUT",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_STG_FactSPS_CCP_OUTPUT]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_LDW_FactSPS_CCP_OUTPUT",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [
+                            {
+                                "activity": "SP_STG_FactSPS_CCP_OUTPUT",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_LDW_FactSPS_CCP_OUTPUT]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_STG_FactSPS_PSP_ADJ_DATA",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_STG_FactSPS_PSP_ADJ_DATA]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_LDW_FactSPS_PSP_ADJ_DATA",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [
+                            {
+                                "activity": "SP_STG_FactSPS_PSP_ADJ_DATA",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_LDW_FactSPS_PSP_ADJ_DATA]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_STG_FactSPS_PSP_OUTPUT_DATA",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_STG_FactSPS_PSP_OUTPUT_DATA]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_LDW_FactSPS_PSP_OUTPUT_DATA",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [
+                            {
+                                "activity": "SP_STG_FactSPS_PSP_OUTPUT_DATA",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_LDW_FactSPS_PSP_OUTPUT_DATA]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_STG_FactSPS_WBS_OUTPUT_DATA",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_STG_FactSPS_WBS_OUTPUT_DATA]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_LDW_FactSPS_WBS_OUTPUT_DATA",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [
+                            {
+                                "activity": "SP_STG_FactSPS_WBS_OUTPUT_DATA",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_LDW_FactSPS_WBS_OUTPUT_DATA]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_STG_FactCostAndAllocations",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_STG_FactCostAndAllocations]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_LDW_FactCostAndAllocations",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [
+                            {
+                                "activity": "SP_STG_FactCostAndAllocations",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_LDW_FactCostAndAllocations]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    }
+                ],
+                "folder": {
+                    "name": "Data warehouse"
+                },
+                "annotations": [],
+                "lastPublishTime": "2019-10-04T12:19:14Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Finance_Pipelyne_Dimensions_Part2')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "SP_STG_DimMaterial",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_STG_DimMaterial]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_LDW_DimMaterial",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [
+                            {
+                                "activity": "SP_STG_DimMaterial",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_LDW_DimMaterial]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_STG_DimReferenceTransaction",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_STG_DimReferenceTransaction]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_LDW_DimReferenceTransaction",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [
+                            {
+                                "activity": "SP_STG_DimReferenceTransaction",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_LDW_DimReferenceTransaction]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_STG_DimCoBusinessTransaction",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_STG_DimCoBusinessTransaction]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_LDW_DimCoBusinessTransaction",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [
+                            {
+                                "activity": "SP_STG_DimCoBusinessTransaction",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_LDW_DimCoBusinessTransaction]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_STG_DimAccountingDocument",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_STG_DimAccountingDocument]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_LDW_DimAccountingDocument",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [
+                            {
+                                "activity": "SP_STG_DimAccountingDocument",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_LDW_DimAccountingDocument]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_STG_DimDocumentLine",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_STG_DimDocumentLine]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_LDW_DimDocumentLine",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [
+                            {
+                                "activity": "SP_STG_DimDocumentLine",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_LDW_DimDocumentLine]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_STG_DimCoOrder",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_STG_DimCoOrder]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_LDW_DimCoOrder",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [
+                            {
+                                "activity": "SP_STG_DimCoOrder",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_LDW_DimCoOrder]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_STG_DimControllingArea",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_STG_DimControllingArea]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_LDW_DimControllingArea",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [
+                            {
+                                "activity": "SP_STG_DimControllingArea",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_LDW_DimControllingArea]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_STG_DimPlant",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_STG_DimPlant]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_LDW_DimPlant",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [
+                            {
+                                "activity": "SP_STG_DimPlant",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_LDW_DimPlant]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_STG_DimPartnerCostObject",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_STG_DimPartnerCostObject]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_LDW_DimPartnerCostObject",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [
+                            {
+                                "activity": "SP_STG_DimPartnerCostObject",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_LDW_DimPartnerCostObject]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_STG_DimProfitabilitySegment",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_STG_DimProfitabilitySegment]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_LDW_DimProfitabilitySegment",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [
+                            {
+                                "activity": "SP_STG_DimProfitabilitySegment",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_LDW_DimProfitabilitySegment]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_STG_DocumentCreatedBy",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_STG_DimDocumentCreatedBy]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_LDW_DocumentCreatedBy",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [
+                            {
+                                "activity": "SP_STG_DocumentCreatedBy",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_LDW_DimDocumentCreatedBy]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_STG_DimReferenceDocumentItem",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_STG_DimReferenceDocumentItem]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_LDW_DimReferenceDocumentItem",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [
+                            {
+                                "activity": "SP_STG_DimReferenceDocumentItem",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_LDW_DimReferenceDocumentItem]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_STG_DimCoDocumentNumber",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_STG_DimCoDocumentNumber]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_LDW_DimCoDocumentNumber",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [
+                            {
+                                "activity": "SP_STG_DimCoDocumentNumber",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_LDW_DimCoDocumentNumber]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_STG_DimPurchasingDocument",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_STG_DimPurchasingDocument]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_LDW_DimPurchasingDocument",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [
+                            {
+                                "activity": "SP_STG_DimPurchasingDocument",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_LDW_DimPurchasingDocument]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_STG_DimBusinessArea",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_STG_DimBusinessArea]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SP_LDW_DimBusinessArea",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [
+                            {
+                                "activity": "SP_STG_DimBusinessArea",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[dbo].[SP_LDW_DimBusinessArea]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    }
+                ],
+                "folder": {
+                    "name": "Data warehouse"
+                },
+                "annotations": [],
+                "lastPublishTime": "2019-11-01T08:30:55Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Finance_Pipelyne_SSIS')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Execute SSIS package1",
+                        "type": "ExecuteSSISPackage",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "packageLocation": {
+                                "packagePath": "azure_Finance_SSIS/Finance SSIS/Run_ALL.dtsx",
+                                "type": "SSISDB"
+                            },
+                            "environmentPath": null,
+                            "connectVia": {
+                                "referenceName": "XtractIS-IR",
+                                "type": "IntegrationRuntimeReference"
+                            },
+                            "loggingLevel": "Basic",
+                            "projectConnectionManagers": {},
+                            "packageConnectionManagers": {}
+                        }
+                    }
+                ],
+                "folder": {
+                    "name": "Data warehouse"
+                },
+                "annotations": [],
+                "lastPublishTime": "2020-06-01T18:26:28Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/1 Schedule Loading')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "2_3 Populate Dimension Tables",
+                        "type": "ExecuteSSISPackage",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "packageLocation": {
+                                "packagePath": "Azure Work Management SSIS/WM Azure SSIS/2.3 Populate Dimension tables.dtsx",
+                                "type": "SSISDB"
+                            },
+                            "environmentPath": null,
+                            "connectVia": {
+                                "referenceName": "XtractIS-IR",
+                                "type": "IntegrationRuntimeReference"
+                            },
+                            "loggingLevel": "Basic",
+                            "projectConnectionManagers": {},
+                            "packageConnectionManagers": {}
+                        }
+                    },
+                    {
+                        "name": "1 Schedule Loading",
+                        "type": "ExecuteSSISPackage",
+                        "dependsOn": [
+                            {
+                                "activity": "2_3 Populate Dimension Tables",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "packageLocation": {
+                                "packagePath": "Azure Work Management SSIS/WM Azure SSIS/1 Schedule Loading.dtsx",
+                                "type": "SSISDB"
+                            },
+                            "environmentPath": null,
+                            "connectVia": {
+                                "referenceName": "XtractIS-IR",
+                                "type": "IntegrationRuntimeReference"
+                            },
+                            "loggingLevel": "Basic",
+                            "projectConnectionManagers": {},
+                            "packageConnectionManagers": {}
+                        }
+                    },
+                    {
+                        "name": "Refresh Cube",
+                        "type": "ExecuteSSISPackage",
+                        "dependsOn": [
+                            {
+                                "activity": "1 Schedule Loading",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "packageLocation": {
+                                "packagePath": "Azure Work Management SSIS/WM Azure SSIS/Refresh Cube.dtsx",
+                                "type": "SSISDB"
+                            },
+                            "environmentPath": null,
+                            "connectVia": {
+                                "referenceName": "XtractIS-IR",
+                                "type": "IntegrationRuntimeReference"
+                            },
+                            "loggingLevel": "Basic",
+                            "projectConnectionManagers": {},
+                            "packageConnectionManagers": {}
+                        }
+                    }
+                ],
+                "folder": {
+                    "name": "Work Management"
+                },
+                "annotations": [],
+                "lastPublishTime": "2020-05-27T14:59:17Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/2 WM Source Tables')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "description": "Retrieve order related source data",
+                "activities": [
+                    {
+                        "name": "2_1 Get Order Data",
+                        "type": "ExecuteSSISPackage",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "packageLocation": {
+                                "packagePath": "Azure Work Management SSIS/WM Azure SSIS/2.1 Get Order Data.dtsx",
+                                "type": "SSISDB"
+                            },
+                            "environmentPath": null,
+                            "connectVia": {
+                                "referenceName": "XtractIS-IR",
+                                "type": "IntegrationRuntimeReference"
+                            },
+                            "loggingLevel": "Basic",
+                            "projectConnectionManagers": {},
+                            "packageConnectionManagers": {
+                                "SAP QA Connection": {
+                                    "Password": {
+                                        "value": {
+                                            "type": "SecureString",
+                                            "value": "**********"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "name": "2_2 Get Maintenance Data",
+                        "type": "ExecuteSSISPackage",
+                        "dependsOn": [
+                            {
+                                "activity": "2_1 Get Order Data",
+                                "dependencyConditions": [
+                                    "Completed"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "packageLocation": {
+                                "packagePath": "Azure Work Management SSIS/WM Azure SSIS/2.2 Get Maintenance Data.dtsx",
+                                "type": "SSISDB"
+                            },
+                            "environmentPath": null,
+                            "connectVia": {
+                                "referenceName": "XtractIS-IR",
+                                "type": "IntegrationRuntimeReference"
+                            },
+                            "loggingLevel": "Basic",
+                            "projectConnectionManagers": {},
+                            "packageConnectionManagers": {
+                                "SAP QA Connection": {
+                                    "Password": {
+                                        "value": {
+                                            "type": "SecureString",
+                                            "value": "**********"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "name": "2_3 Populate Dimension Tables",
+                        "type": "ExecuteSSISPackage",
+                        "dependsOn": [
+                            {
+                                "activity": "2_2 Get Maintenance Data",
+                                "dependencyConditions": [
+                                    "Completed"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "packageLocation": {
+                                "packagePath": "Azure Work Management SSIS/WM Azure SSIS/2.3 Populate Dimension tables.dtsx",
+                                "type": "SSISDB"
+                            },
+                            "environmentPath": null,
+                            "connectVia": {
+                                "referenceName": "XtractIS-IR",
+                                "type": "IntegrationRuntimeReference"
+                            },
+                            "loggingLevel": "Basic",
+                            "projectConnectionManagers": {
+                                "Azure Connection": {
+                                    "Password": {
+                                        "value": {
+                                            "type": "SecureString",
+                                            "value": "**********"
+                                        }
+                                    }
+                                },
+                                "Cube Connection": {
+                                    "Password": {
+                                        "value": {
+                                            "type": "SecureString",
+                                            "value": "**********"
+                                        }
+                                    }
+                                }
+                            },
+                            "packageConnectionManagers": {
+                                "SAP QA Connection": {
+                                    "Password": {
+                                        "value": {
+                                            "type": "SecureString",
+                                            "value": "**********"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "name": "3 Populate Fact Actual Tables",
+                        "type": "ExecuteSSISPackage",
+                        "dependsOn": [
+                            {
+                                "activity": "2_3 Populate Dimension Tables",
+                                "dependencyConditions": [
+                                    "Completed"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "packageLocation": {
+                                "packagePath": "Azure Work Management SSIS/WM Azure SSIS/3 Populate Fact Actual Tables.dtsx",
+                                "type": "SSISDB"
+                            },
+                            "environmentPath": null,
+                            "connectVia": {
+                                "referenceName": "XtractIS-IR",
+                                "type": "IntegrationRuntimeReference"
+                            },
+                            "loggingLevel": "Basic",
+                            "projectConnectionManagers": {},
+                            "packageConnectionManagers": {}
+                        }
+                    },
+                    {
+                        "name": "Refresh Cube",
+                        "type": "ExecuteSSISPackage",
+                        "dependsOn": [
+                            {
+                                "activity": "3 Populate Fact Actual Tables",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "packageLocation": {
+                                "packagePath": "Azure Work Management SSIS/WM Azure SSIS/Refresh Cube.dtsx",
+                                "type": "SSISDB"
+                            },
+                            "environmentPath": null,
+                            "connectVia": {
+                                "referenceName": "XtractIS-IR",
+                                "type": "IntegrationRuntimeReference"
+                            },
+                            "loggingLevel": "Basic",
+                            "projectConnectionManagers": {
+                                "Cube Connection": {
+                                    "Password": {
+                                        "value": {
+                                            "type": "SecureString",
+                                            "value": "**********"
+                                        }
+                                    }
+                                }
+                            },
+                            "packageConnectionManagers": {}
+                        }
+                    }
+                ],
+                "folder": {
+                    "name": "Work Management"
+                },
+                "annotations": [],
+                "lastPublishTime": "2020-11-16T22:20:51Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/5 WM Phase 2')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "description": "Retrieve and Populate WM Phase 2 data",
+                "activities": [
+                    {
+                        "name": "Get Phase 2 data",
+                        "type": "ExecuteSSISPackage",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "packageLocation": {
+                                "packagePath": "Azure Work Management SSIS/WM Azure SSIS/4 Get Phase 2 Data.dtsx",
+                                "type": "SSISDB"
+                            },
+                            "environmentPath": null,
+                            "connectVia": {
+                                "referenceName": "XtractIS-IR",
+                                "type": "IntegrationRuntimeReference"
+                            },
+                            "loggingLevel": "Basic",
+                            "projectConnectionManagers": {},
+                            "packageConnectionManagers": {
+                                "SAP QA Connection": {
+                                    "Password": {
+                                        "value": {
+                                            "type": "SecureString",
+                                            "value": "**********"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "name": "Populate WM Phase 2 tables",
+                        "type": "ExecuteSSISPackage",
+                        "dependsOn": [
+                            {
+                                "activity": "Get Phase 2 data",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "packageLocation": {
+                                "packagePath": "Azure Work Management SSIS/WM Azure SSIS/5 Populate Work Management Phase 2 tables.dtsx",
+                                "type": "SSISDB"
+                            },
+                            "environmentPath": null,
+                            "connectVia": {
+                                "referenceName": "XtractIS-IR",
+                                "type": "IntegrationRuntimeReference"
+                            },
+                            "loggingLevel": "Basic",
+                            "projectConnectionManagers": {},
+                            "packageConnectionManagers": {}
+                        }
+                    }
+                ],
+                "folder": {
+                    "name": "Work Management"
+                },
+                "annotations": [],
+                "lastPublishTime": "2020-11-10T03:11:29Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/4 Strategies')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Strategies",
+                        "type": "ExecuteSSISPackage",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "packageLocation": {
+                                "packagePath": "Azure Work Management SSIS/WM Azure SSIS/Strategies.dtsx",
+                                "type": "SSISDB"
+                            },
+                            "environmentPath": null,
+                            "connectVia": {
+                                "referenceName": "XtractIS-IR",
+                                "type": "IntegrationRuntimeReference"
+                            },
+                            "loggingLevel": "Basic",
+                            "projectConnectionManagers": {},
+                            "packageConnectionManagers": {}
+                        }
+                    }
+                ],
+                "folder": {
+                    "name": "Work Management"
+                },
+                "annotations": [],
+                "lastPublishTime": "2020-05-27T14:59:17Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/3 Process Cube')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "description": "Process Tabular Cube",
+                "activities": [
+                    {
+                        "name": "3 Refresh Cube",
+                        "type": "ExecuteSSISPackage",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "packageLocation": {
+                                "packagePath": "Azure Work Management SSIS/WM Azure SSIS/Refresh Cube.dtsx",
+                                "type": "SSISDB"
+                            },
+                            "environmentPath": null,
+                            "connectVia": {
+                                "referenceName": "XtractIS-IR",
+                                "type": "IntegrationRuntimeReference"
+                            },
+                            "loggingLevel": "Verbose",
+                            "projectConnectionManagers": {
+                                "Cube Connection": {
+                                    "Password": {
+                                        "value": {
+                                            "type": "SecureString",
+                                            "value": "**********"
+                                        }
+                                    }
+                                }
+                            },
+                            "packageConnectionManagers": {}
+                        }
+                    }
+                ],
+                "folder": {
+                    "name": "Work Management"
+                },
+                "annotations": [],
+                "lastPublishTime": "2020-10-27T11:57:58Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Supply KPI')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Supply Source",
+                        "type": "ExecuteSSISPackage",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "packageLocation": {
+                                "packagePath": "Azure Supply/Supply Azure SSIS/3 Supply.dtsx",
+                                "type": "SSISDB"
+                            },
+                            "environmentPath": null,
+                            "connectVia": {
+                                "referenceName": "XtractIS-IR",
+                                "type": "IntegrationRuntimeReference"
+                            },
+                            "loggingLevel": "Basic",
+                            "projectConnectionManagers": {},
+                            "packageConnectionManagers": {}
+                        }
+                    },
+                    {
+                        "name": "Populate Supply Tables",
+                        "type": "ExecuteSSISPackage",
+                        "dependsOn": [
+                            {
+                                "activity": "Supply Source",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "packageLocation": {
+                                "packagePath": "Azure Supply/Supply Azure SSIS/5 Populate Supply tables.dtsx",
+                                "type": "SSISDB"
+                            },
+                            "environmentPath": null,
+                            "connectVia": {
+                                "referenceName": "XtractIS-IR",
+                                "type": "IntegrationRuntimeReference"
+                            },
+                            "loggingLevel": "Basic",
+                            "projectConnectionManagers": {},
+                            "packageConnectionManagers": {}
+                        }
+                    }
+                ],
+                "annotations": [],
+                "lastPublishTime": "2020-06-09T14:20:11Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/EventLog')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "description": "Writes the results of a pipeline  to the metadata database log",
+                "activities": [
+                    {
+                        "name": "WriteEventToMetaDataDB",
+                        "description": "Stored Procedure that writes the results of a pipeline  to the metadata database",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "0.00:05:00",
+                            "retry": 5,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[adf].[SetEventLog]",
+                            "storedProcedureParameters": {
+                                "DataFactoryName": {
+                                    "value": {
+                                        "value": "@pipeline().parameters.DataFactoryName",
+                                        "type": "Expression"
+                                    },
+                                    "type": "String"
+                                },
+                                "EventType": {
+                                    "value": {
+                                        "value": "@pipeline().parameters.EventType",
+                                        "type": "Expression"
+                                    },
+                                    "type": "String"
+                                },
+                                "LoadConfigID": {
+                                    "value": {
+                                        "value": "@pipeline().parameters.LoadConfigID",
+                                        "type": "Expression"
+                                    },
+                                    "type": "Int32"
+                                },
+                                "OutputJSON": {
+                                    "value": {
+                                        "value": "@pipeline().parameters.OutputJSON",
+                                        "type": "Expression"
+                                    },
+                                    "type": "String"
+                                },
+                                "PipelineName": {
+                                    "value": {
+                                        "value": "@pipeline().parameters.PipelineName",
+                                        "type": "Expression"
+                                    },
+                                    "type": "String"
+                                },
+                                "PipelineRunID": {
+                                    "value": {
+                                        "value": "@pipeline().parameters.PipelineRunID",
+                                        "type": "Expression"
+                                    },
+                                    "type": "Guid"
+                                },
+                                "PipelineTriggerID": {
+                                    "value": {
+                                        "value": "@pipeline().parameters.PipelineTriggerID",
+                                        "type": "Expression"
+                                    },
+                                    "type": "Guid"
+                                },
+                                "PipelineTriggerName": {
+                                    "value": {
+                                        "value": "@pipeline().parameters.PipelineTriggerName",
+                                        "type": "Expression"
+                                    },
+                                    "type": "String"
+                                },
+                                "PipelineTriggerTime": {
+                                    "value": {
+                                        "value": "@pipeline().parameters.PipelineTriggerTime",
+                                        "type": "Expression"
+                                    },
+                                    "type": "DateTime"
+                                },
+                                "PipelineTriggerType": {
+                                    "value": {
+                                        "value": "@pipeline().parameters.PipelineTriggerType",
+                                        "type": "Expression"
+                                    },
+                                    "type": "String"
+                                }
+                            }
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    }
+                ],
+                "parameters": {
+                    "PipelineRunID": {
+                        "type": "string"
+                    },
+                    "DataFactoryName": {
+                        "type": "string"
+                    },
+                    "PipelineName": {
+                        "type": "string"
+                    },
+                    "PipelineTriggerID": {
+                        "type": "string"
+                    },
+                    "PipelineTriggerName": {
+                        "type": "string"
+                    },
+                    "PipelineTriggerTime": {
+                        "type": "string"
+                    },
+                    "PipelineTriggerType": {
+                        "type": "string"
+                    },
+                    "OutputJSON": {
+                        "type": "string"
+                    },
+                    "LoadConfigID": {
+                        "type": "int"
+                    },
+                    "EventType": {
+                        "type": "string"
+                    }
+                },
+                "folder": {
+                    "name": "Purchasing/Utility"
+                },
+                "annotations": [
+                    "Utility"
+                ],
+                "lastPublishTime": "2020-09-17T23:05:01Z"
+            },
+            "dependsOn": []
+        }
+    ]
+}

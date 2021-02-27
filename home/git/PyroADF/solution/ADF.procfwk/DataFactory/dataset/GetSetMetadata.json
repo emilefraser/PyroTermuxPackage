@@ -1,0 +1,14 @@
+{
+	"name": "GetSetMetadata",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SupportDatabase",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [
+			"ADF.procfwk"
+		],
+		"type": "AzureSqlTable",
+		"schema": []
+	}
+}

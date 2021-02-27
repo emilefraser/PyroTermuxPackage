@@ -1,0 +1,20 @@
+{
+	"name": "AzureKeyVault",
+	"properties": {
+		"description": "Linked Service for Azure Key Vault",
+		"parameters": {
+			"baseUrl": {
+				"type": "String"
+			}
+		},
+		"annotations": [
+			"keyvault",
+			"acaz"
+		],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://acazeukeyvault.vault.azure.net/",
+			"baseURL": "@{linkedService().baseUrl}"
+		}
+	}
+}

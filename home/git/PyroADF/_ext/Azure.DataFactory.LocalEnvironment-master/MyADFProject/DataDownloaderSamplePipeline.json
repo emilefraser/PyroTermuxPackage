@@ -1,0 +1,55 @@
+﻿{
+  "$schema": "http://datafactories.schema.management.azure.com/schemas/2015-09-01/Microsoft.DataFactory.Pipeline.json",
+  "name": "DataDownloaderSamplePipeline",
+  "properties": {
+    "description": "Custom Data Downloader from an HTTP EndPoint Sample Pipeline",
+    "activities": [
+      {
+        "name": "DownloadData",
+        "description": "Download raw data from an http endpoint",
+        "linkedServiceName": "AzureBatchLinkedService",
+        "type": "DotNetActivity",
+        "typeProperties": {
+          "assemblyName": "MyCustomActivity.dll",
+          "entryPoint": "DataDownloaderActivityNS.DataDownloaderActivity",
+          "packageLinkedService": "AzureStorageLinkedService",
+          "packageFile": "adfcontainer/package/MyCustomActivity.zip",
+          "extendedProperties": {
+            "sliceStart": "$$Text.Format('{0:yyyyMMddHHmm}', Time.AddHours(SliceStart, -1), SliceEnd)",
+            "sliceEnd": "$$Text.Format('{0:yyyy-MM-dd HH:mm:ss}', SliceEnd)",
+            "urlFormat": "http://dumps.wikimedia.org/other/pagecounts-raw/{0}/{0}-{1}/pagecounts-{0}{1}{2}-{3}00{4}.gz",
+            "dataStorageAccountName": "<Azure storage account name>",
+            "dataStorageAccountKey": "<Azure storage account key>",
+            "dataStorageContainer": "<Blob container name in Azure storage>"
+          }
+        },
+        "inputs": [
+          {
+            "name": "AzureSqlTableInput"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "OutputTable"
+          },
+          {
+            "name": "AzureDataLakeStoreOutput"
+          }
+        ],
+        "policy": {
+          "executionPriorityOrder": "OldestFirst",
+          "timeout": "01:00:00",
+          "concurrency": 2,
+          "retry": 2
+        },
+        "scheduler": {
+          "frequency": "Hour",
+          "interval": 1
+        }
+      }
+    ],
+    "start": "2014-03-08T00:00:00+02:00",
+    "end": "2015-03-09T00:00:00+02:00",
+    "isPaused": false
+  }
+}

@@ -1,0 +1,7 @@
+{
+	"name": "PYROMANIC-integrationRuntime",
+	"properties": {
+		"type": "SelfHosted",
+		"description": "Integration runtime on my personal machine"
+	}
+}

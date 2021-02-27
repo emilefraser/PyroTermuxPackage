@@ -1,0 +1,82 @@
+2020-09-13 00:05:39	This log contains information about the import schema operation into project 'AcAzMetadataDB' on computer 'PYROMANIAC' by user 'efras'.
+2020-09-13 00:05:40	Import of database schema has started.
+2020-09-13 00:09:21	Gathering database credentials
+2020-09-13 00:09:21	Gathering database options
+2020-09-13 00:09:21	Gathering generic database scoped configuration option
+2020-09-13 00:09:21	Gathering users
+2020-09-13 00:09:21	Gathering roles
+2020-09-13 00:09:21	Gathering application roles
+2020-09-13 00:09:21	Gathering role memberships
+2020-09-13 00:09:21	Gathering filegroups
+2020-09-13 00:09:21	Gathering full-text catalogs
+2020-09-13 00:09:21	Gathering assemblies
+2020-09-13 00:09:21	Gathering certificates
+2020-09-13 00:09:21	Gathering symmetric keys
+2020-09-13 00:09:21	Gathering encrypted symmetric keys
+2020-09-13 00:09:21	Gathering schemas
+2020-09-13 00:09:21	Gathering XML schema collections
+2020-09-13 00:09:21	Gathering user-defined data types
+2020-09-13 00:09:21	Gathering user-defined types
+2020-09-13 00:09:21	Gathering table types
+2020-09-13 00:09:21	Gathering unique keys for table types
+2020-09-13 00:09:21	Gathering primary keys for table types
+2020-09-13 00:09:21	Gathering indexes for table types
+2020-09-13 00:09:21	Gathering check constraints for table types
+2020-09-13 00:09:21	Gathering default constraints for table types
+2020-09-13 00:09:22	Gathering partition functions
+2020-09-13 00:09:22	Gathering partition schemes
+2020-09-13 00:09:22	Gathering functions
+2020-09-13 00:09:22	Gathering encrypted functions
+2020-09-13 00:09:22	Gathering aggregates
+2020-09-13 00:09:22	Gathering procedures
+2020-09-13 00:09:22	Gathering encrypted procedures
+2020-09-13 00:09:22	Gathering tables
+2020-09-13 00:09:23	Gathering primary keys
+2020-09-13 00:09:23	Gathering unique constraints
+2020-09-13 00:09:23	Gathering foreign keys
+2020-09-13 00:09:23	Gathering default constraints
+2020-09-13 00:09:23	Gathering check constraints
+2020-09-13 00:09:23	Gathering views
+2020-09-13 00:09:23	Gathering encrypted views
+2020-09-13 00:09:23	Gathering indexes
+2020-09-13 00:09:23	Gathering statistics
+2020-09-13 00:09:23	Gathering full-text index stoplists
+2020-09-13 00:09:23	Gathering search property lists
+2020-09-13 00:09:23	Gathering search properties
+2020-09-13 00:09:23	Gathering full-text indexes
+2020-09-13 00:09:23	Gathering column store indexes
+2020-09-13 00:09:23	Gathering spatial indexes
+2020-09-13 00:09:23	Gathering XML indexes
+2020-09-13 00:09:23	Gathering Selective XML indexes
+2020-09-13 00:09:24	Gathering encrypted triggers
+2020-09-13 00:09:24	Gathering triggers
+2020-09-13 00:09:24	Gathering encrypted and clr ddl triggers
+2020-09-13 00:09:24	Gathering ddl triggers
+2020-09-13 00:09:24	Creating edge constraints
+2020-09-13 00:09:24	Gathering synonyms
+2020-09-13 00:09:24	Gathering defaults
+2020-09-13 00:09:24	Gathering data constraint uddt bindings
+2020-09-13 00:09:24	Gathering rules
+2020-09-13 00:09:24	Gathering data constraint uddt bindings
+2020-09-13 00:09:24	Gathering message types
+2020-09-13 00:09:24	Gathering queues
+2020-09-13 00:09:24	Gathering contracts
+2020-09-13 00:09:24	Gathering services
+2020-09-13 00:09:24	Gathering event notifications
+2020-09-13 00:09:24	Gathering remote service bindings
+2020-09-13 00:09:24	Gathering broker priorities
+2020-09-13 00:09:24	Gathering signatures
+2020-09-13 00:09:24	Gathering data compression options
+2020-09-13 00:09:24	Gathering sequence types
+2020-09-13 00:09:24	Gathering security policies
+2020-09-13 00:09:24	Gather column encryption keys
+2020-09-13 00:09:24	Gathering column master keys
+2020-09-13 00:09:24	Gathering external data sources
+2020-09-13 00:09:24	Gathering external tables
+2020-09-13 00:09:24	Gathering database permissions
+2020-09-13 00:09:25	Gathering extended properties
+2020-09-13 00:09:35	Scanning project for duplicate elements
+2020-09-13 00:09:36	Finished duplicate element processing
+2020-09-13 00:09:38	Finished importing database.
+2020-09-13 00:09:38	A summary of the import was saved to the following location: C:\Repos\PyroADF\AcAzMetadataDB\Import Schema Logs\AcAzMetadataDB_20200912100539.log
+2020-09-13 00:09:38	Click Finish to continue...

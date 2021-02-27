@@ -1,0 +1,43 @@
+{
+	"name": "pipe-child-GetMedataDataDB_Connection",
+	"properties": {
+		"description": "Gets all the ConfigConnection details to connect to source and sink",
+		"activities": [
+			{
+				"name": "Lookup1",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderStoredProcedureName": "[ETL].[GetLoadConnection]",
+						"storedProcedureParameters": {
+							"ServerName": {
+								"type": "String"
+							}
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "dataset_AcAzMetadataDB_ETL_LoadConfig",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
+				}
+			}
+		],
+		"folder": {
+			"name": "Connectors"
+		},
+		"annotations": []
+	}
+}

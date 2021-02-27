@@ -1,0 +1,26 @@
+{
+	"name": "DynamicCustomerLInkedServices",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"description": "Same as Linked Service to Central DataManager but will use the connection info from there to loop through connection information and execute queries",
+		"parameters": {
+			"ServerName": {
+				"type": "string"
+			},
+			"UserPassword": {
+				"type": "string"
+			},
+			"DatabaseName": {
+				"type": "string"
+			},
+			"AuthUserName": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"connectionString": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=@{linkedService().ServerName};Initial Catalog=@{linkedService().DatabaseName};User ID=@{linkedService().AuthUserName};Password=@{linkedService().UserPassword}"
+		}
+	}
+}

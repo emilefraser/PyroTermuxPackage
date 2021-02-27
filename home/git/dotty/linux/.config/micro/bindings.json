@@ -1,0 +1,8 @@
+{
+    "Alt-/": "lua:comment.comment",
+    "F5": "lua:wc.wordCount",
+    "F6": "command-edit:gorename ",
+    "Alt-]": "NextSplit",
+    "Alt-[": "PreviousSplit"
+    
+}

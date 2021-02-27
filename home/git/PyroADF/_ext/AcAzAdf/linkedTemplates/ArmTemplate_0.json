@@ -1,0 +1,701 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "factoryName": {
+            "type": "string",
+            "metadata": "Data Factory name",
+            "defaultValue": "AcAzAdf"
+        },
+        "AcAzVM_SqlInstance_connectionString": {
+            "type": "secureString",
+            "metadata": "Secure string for 'connectionString' of 'AcAzVM_SqlInstance'"
+        },
+        "DataManger_COMPARE_connectionString": {
+            "type": "secureString",
+            "metadata": "Secure string for 'connectionString' of 'DataManger_COMPARE'"
+        },
+        "DynamicCustomerLInkedServices_connectionString": {
+            "type": "secureString",
+            "metadata": "Secure string for 'connectionString' of 'DynamicCustomerLInkedServices'"
+        },
+        "AcAzMetadataDB_properties_typeProperties_baseUrl": {
+            "type": "string",
+            "defaultValue": "https://AcAzAzureKeyVault.vault.azure.net"
+        },
+        "AcAzMetadataDB_properties_typeProperties_connectionString_secretName": {
+            "type": "string",
+            "defaultValue": "emilekey"
+        },
+        "Keys_properties_typeProperties_baseUrl": {
+            "type": "string",
+            "defaultValue": "https://FrameworkKeys.vault.azure.net/"
+        },
+        "acazazurekeyvault_properties_typeProperties_baseUrl": {
+            "type": "string",
+            "defaultValue": "https://AcAzAzureKeyVault.vault.azure.net/"
+        },
+        "kev_AcAzEuKeyVault_properties_typeProperties_baseUrl": {
+            "type": "string",
+            "defaultValue": "https://acazazurekeyvault.vault.azure.net/"
+        }
+    },
+    "variables": {
+        "factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+    },
+    "resources": [
+        {
+            "name": "[concat(parameters('factoryName'), '/Wait 1')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "description": "Used just so the ADF.procfwk has something to call during development.",
+                "activities": [
+                    {
+                        "name": "Wait1",
+                        "type": "Wait",
+                        "dependsOn": [],
+                        "userProperties": [],
+                        "typeProperties": {
+                            "waitTimeInSeconds": {
+                                "value": "@pipeline().parameters.WaitTime",
+                                "type": "Expression"
+                            }
+                        }
+                    }
+                ],
+                "parameters": {
+                    "WaitTime": {
+                        "type": "int",
+                        "defaultValue": 5
+                    }
+                },
+                "folder": {
+                    "name": "_Workers"
+                },
+                "annotations": [
+                    "Worker"
+                ]
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Wait 10')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "description": "Used just so the ADF.procfwk has something to call during development.",
+                "activities": [
+                    {
+                        "name": "Wait10",
+                        "type": "Wait",
+                        "dependsOn": [],
+                        "userProperties": [],
+                        "typeProperties": {
+                            "waitTimeInSeconds": {
+                                "value": "@pipeline().parameters.WaitTime",
+                                "type": "Expression"
+                            }
+                        }
+                    }
+                ],
+                "parameters": {
+                    "WaitTime": {
+                        "type": "int",
+                        "defaultValue": 5
+                    }
+                },
+                "folder": {
+                    "name": "_Workers"
+                },
+                "annotations": [
+                    "Worker"
+                ]
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Wait 2')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "description": "Used just so the ADF.procfwk has something to call during development.",
+                "activities": [
+                    {
+                        "name": "Wait2",
+                        "type": "Wait",
+                        "dependsOn": [],
+                        "userProperties": [],
+                        "typeProperties": {
+                            "waitTimeInSeconds": {
+                                "value": "@pipeline().parameters.WaitTime",
+                                "type": "Expression"
+                            }
+                        }
+                    }
+                ],
+                "parameters": {
+                    "WaitTime": {
+                        "type": "int",
+                        "defaultValue": 5
+                    }
+                },
+                "folder": {
+                    "name": "_Workers"
+                },
+                "annotations": [
+                    "Worker"
+                ]
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Wait 3')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "description": "Used just so the ADF.procfwk has something to call during development.",
+                "activities": [
+                    {
+                        "name": "Wait3",
+                        "type": "Wait",
+                        "dependsOn": [],
+                        "userProperties": [],
+                        "typeProperties": {
+                            "waitTimeInSeconds": {
+                                "value": "@pipeline().parameters.WaitTime",
+                                "type": "Expression"
+                            }
+                        }
+                    }
+                ],
+                "parameters": {
+                    "WaitTime": {
+                        "type": "int",
+                        "defaultValue": 5
+                    }
+                },
+                "folder": {
+                    "name": "_Workers"
+                },
+                "annotations": [
+                    "Worker"
+                ]
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Wait 4')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "description": "Used just so the ADF.procfwk has something to call during development.",
+                "activities": [
+                    {
+                        "name": "Wait4",
+                        "type": "Wait",
+                        "dependsOn": [],
+                        "userProperties": [],
+                        "typeProperties": {
+                            "waitTimeInSeconds": {
+                                "value": "@pipeline().parameters.WaitTime",
+                                "type": "Expression"
+                            }
+                        }
+                    }
+                ],
+                "parameters": {
+                    "WaitTime": {
+                        "type": "int",
+                        "defaultValue": 5
+                    }
+                },
+                "folder": {
+                    "name": "_Workers"
+                },
+                "annotations": [
+                    "Worker"
+                ]
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Wait 5')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "description": "Used just so the ADF.procfwk has something to call during development.",
+                "activities": [
+                    {
+                        "name": "Wait5",
+                        "type": "Wait",
+                        "dependsOn": [],
+                        "userProperties": [],
+                        "typeProperties": {
+                            "waitTimeInSeconds": {
+                                "value": "@pipeline().parameters.WaitTime",
+                                "type": "Expression"
+                            }
+                        }
+                    }
+                ],
+                "parameters": {
+                    "WaitTime": {
+                        "type": "int",
+                        "defaultValue": 5
+                    }
+                },
+                "folder": {
+                    "name": "_Workers"
+                },
+                "annotations": [
+                    "Worker"
+                ]
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Wait 6')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "description": "Used just so the ADF.procfwk has something to call during development.",
+                "activities": [
+                    {
+                        "name": "Wait6",
+                        "type": "Wait",
+                        "dependsOn": [],
+                        "userProperties": [],
+                        "typeProperties": {
+                            "waitTimeInSeconds": {
+                                "value": "@pipeline().parameters.WaitTime",
+                                "type": "Expression"
+                            }
+                        }
+                    }
+                ],
+                "parameters": {
+                    "WaitTime": {
+                        "type": "int",
+                        "defaultValue": 5
+                    }
+                },
+                "folder": {
+                    "name": "_Workers"
+                },
+                "annotations": [
+                    "Worker"
+                ]
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Wait 7')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "description": "Used just so the ADF.procfwk has something to call during development.",
+                "activities": [
+                    {
+                        "name": "Wait7",
+                        "type": "Wait",
+                        "dependsOn": [],
+                        "userProperties": [],
+                        "typeProperties": {
+                            "waitTimeInSeconds": {
+                                "value": "@pipeline().parameters.WaitTime",
+                                "type": "Expression"
+                            }
+                        }
+                    }
+                ],
+                "parameters": {
+                    "WaitTime": {
+                        "type": "int",
+                        "defaultValue": 5
+                    }
+                },
+                "folder": {
+                    "name": "_Workers"
+                },
+                "annotations": [
+                    "Worker"
+                ]
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Wait 8')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "description": "Used just so the ADF.procfwk has something to call during development.",
+                "activities": [
+                    {
+                        "name": "Wait8",
+                        "type": "Wait",
+                        "dependsOn": [],
+                        "userProperties": [],
+                        "typeProperties": {
+                            "waitTimeInSeconds": {
+                                "value": "@pipeline().parameters.WaitTime",
+                                "type": "Expression"
+                            }
+                        }
+                    }
+                ],
+                "parameters": {
+                    "WaitTime": {
+                        "type": "int",
+                        "defaultValue": 5
+                    }
+                },
+                "folder": {
+                    "name": "_Workers"
+                },
+                "annotations": [
+                    "Worker"
+                ]
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Wait 9')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "description": "Used just so the ADF.procfwk has something to call during development.",
+                "activities": [
+                    {
+                        "name": "Wait9",
+                        "type": "Wait",
+                        "dependsOn": [],
+                        "userProperties": [],
+                        "typeProperties": {
+                            "waitTimeInSeconds": {
+                                "value": "@pipeline().parameters.WaitTime",
+                                "type": "Expression"
+                            }
+                        }
+                    }
+                ],
+                "parameters": {
+                    "WaitTime": {
+                        "type": "int",
+                        "defaultValue": 15
+                    }
+                },
+                "folder": {
+                    "name": "_Workers"
+                },
+                "annotations": [
+                    "Worker"
+                ]
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/AcAzMetadataDB')]",
+            "type": "Microsoft.DataFactory/factories/linkedServices",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "annotations": [],
+                "type": "AzureKeyVault",
+                "typeProperties": {
+                    "baseUrl": "[parameters('AcAzMetadataDB_properties_typeProperties_baseUrl')]",
+                    "connectionString": {
+                        "type": "AzureKeyVaultSecret",
+                        "store": {
+                            "referenceName": "acazazurekeyvault",
+                            "type": "LinkedServiceReference"
+                        },
+                        "secretName": "[parameters('AcAzMetadataDB_properties_typeProperties_connectionString_secretName')]"
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/AcAzVM_SqlInstance')]",
+            "type": "Microsoft.DataFactory/factories/linkedServices",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "annotations": [],
+                "type": "SqlServer",
+                "typeProperties": {
+                    "connectionString": "[parameters('AcAzVM_SqlInstance_connectionString')]"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/DataManger_COMPARE')]",
+            "type": "Microsoft.DataFactory/factories/linkedServices",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "description": "Linked ADF Service to DataManger_COMPARE",
+                "annotations": [],
+                "type": "AzureSqlDatabase",
+                "typeProperties": {
+                    "connectionString": "[parameters('DataManger_COMPARE_connectionString')]"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/DynamicCustomerLInkedServices')]",
+            "type": "Microsoft.DataFactory/factories/linkedServices",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "description": "Same as Linked Service to Central DataManager but will use the connection info from there to loop through connection information and execute queries",
+                "parameters": {
+                    "ServerName": {
+                        "type": "string"
+                    },
+                    "UserPassword": {
+                        "type": "string"
+                    },
+                    "DatabaseName": {
+                        "type": "string"
+                    },
+                    "AuthUserName": {
+                        "type": "string"
+                    }
+                },
+                "annotations": [],
+                "type": "AzureSqlDatabase",
+                "typeProperties": {
+                    "connectionString": "[parameters('DynamicCustomerLInkedServices_connectionString')]"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Keys')]",
+            "type": "Microsoft.DataFactory/factories/linkedServices",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "description": "Connection to Key Vault for all other ADF linked service credentials required to run the processing framework.",
+                "annotations": [
+                    "ADF.procfwk"
+                ],
+                "type": "AzureKeyVault",
+                "typeProperties": {
+                    "baseUrl": "[parameters('Keys_properties_typeProperties_baseUrl')]"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/acazazurekeyvault')]",
+            "type": "Microsoft.DataFactory/factories/linkedServices",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "annotations": [
+                    "AcAz"
+                ],
+                "type": "AzureKeyVault",
+                "typeProperties": {
+                    "baseUrl": "[parameters('acazazurekeyvault_properties_typeProperties_baseUrl')]"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/kev_AcAzEuKeyVault')]",
+            "type": "Microsoft.DataFactory/factories/linkedServices",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "description": "My KeyVault for secrets and certs",
+                "annotations": [
+                    "AcAzAdf"
+                ],
+                "type": "AzureKeyVault",
+                "typeProperties": {
+                    "baseUrl": "[parameters('kev_AcAzEuKeyVault_properties_typeProperties_baseUrl')]"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/PYROMANIC-integrationRuntime')]",
+            "type": "Microsoft.DataFactory/factories/integrationRuntimes",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "type": "SelfHosted",
+                "description": "Integration runtime on my personal machine",
+                "typeProperties": {}
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/AcAzVm')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "AcAzVM_SqlInstance",
+                    "type": "LinkedServiceReference"
+                },
+                "folder": {
+                    "name": "Config"
+                },
+                "annotations": [],
+                "type": "SqlServerTable",
+                "schema": [
+                    {
+                        "name": "empid",
+                        "type": "int",
+                        "precision": 10
+                    },
+                    {
+                        "name": "lastname",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "firstname",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "title",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "titleofcourtesy",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "birthdate",
+                        "type": "date"
+                    },
+                    {
+                        "name": "hiredate",
+                        "type": "date"
+                    },
+                    {
+                        "name": "address",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "city",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "region",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "postalcode",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "country",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "phone",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "mgrid",
+                        "type": "int",
+                        "precision": 10
+                    }
+                ],
+                "typeProperties": {
+                    "schema": "Sales",
+                    "table": "Customers"
+                }
+            },
+            "dependsOn": [
+                "[concat(variables('factoryId'), '/linkedServices/AcAzVM_SqlInstance')]"
+            ]
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Execute_StatementOverAllDynamicConnections')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "DynamicCustomerLInkedServices",
+                    "type": "LinkedServiceReference",
+                    "parameters": {
+                        "ServerName": {
+                            "value": "@dataset().ServerName",
+                            "type": "Expression"
+                        },
+                        "UserPassword": {
+                            "value": "@dataset().AuthPassword",
+                            "type": "Expression"
+                        },
+                        "DatabaseName": {
+                            "value": "@dataset().DatabaseName",
+                            "type": "Expression"
+                        },
+                        "AuthUserName": {
+                            "value": "@dataset().AuthUserName",
+                            "type": "Expression"
+                        }
+                    }
+                },
+                "parameters": {
+                    "ServerName": {
+                        "type": "string"
+                    },
+                    "AuthPassword": {
+                        "type": "string"
+                    },
+                    "DatabaseName": {
+                        "type": "string"
+                    },
+                    "AuthUserName": {
+                        "type": "string"
+                    }
+                },
+                "annotations": [],
+                "type": "AzureSqlTable",
+                "schema": [
+                    {
+                        "name": "ServerName",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "IsDefaultInstance",
+                        "type": "bit"
+                    },
+                    {
+                        "name": "DatabaseInstanceName",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "DBAuthTypeName",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "AuthUsername",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "AuthPassword",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "DatabaseName",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "SchemaName",
+                        "type": "varchar"
+                    }
+                ],
+                "typeProperties": {
+                    "schema": "INTEGRATION",
+                    "table": "ingress_DataCatalog"
+                }
+            },
+            "dependsOn": [
+                "[concat(variables('factoryId'), '/linkedServices/DynamicCustomerLInkedServices')]"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,71 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "factoryName": {
+            "type": "string",
+            "metadata": "Data Factory name",
+            "defaultValue": "AcAzAdf"
+        },
+        "dataFactory_properties_globalParameters_MetaDataDB_Server_value": {
+            "type": "string",
+            "defaultValue": "acazmssql01.database.windows.net"
+        },
+        "dataFactory_properties_globalParameters_MetaDataDB_Database_value": {
+            "type": "string",
+            "defaultValue": "AcAzMetadataDB"
+        },
+        "dataFactory_properties_globalParameters_MetaDataDB_AuthenticationType_value": {
+            "type": "string",
+            "defaultValue": "SQL"
+        },
+        "dataFactory_properties_globalParameters_MetaDataDB_Username_value": {
+            "type": "string",
+            "defaultValue": "emilefraser"
+        },
+        "dataFactory_properties_globalParameters_MetaDataDB_Password_value": {
+            "type": "string",
+            "defaultValue": "105022_Alpha"
+        },
+        "dataFactory_location": {
+            "type": "string",
+            "defaultValue": "northeurope"
+        }
+    },
+    "variables": {
+        "factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+    },
+    "resources": [
+        {
+            "name": "[parameters('factoryName')]",
+            "type": "Microsoft.DataFactory/factories",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "globalParameters": {
+                    "MetaDataDB_Server": {
+                        "type": "string",
+                        "value": "[parameters('dataFactory_properties_globalParameters_MetaDataDB_Server_value')]"
+                    },
+                    "MetaDataDB_Database": {
+                        "type": "string",
+                        "value": "[parameters('dataFactory_properties_globalParameters_MetaDataDB_Database_value')]"
+                    },
+                    "MetaDataDB_AuthenticationType": {
+                        "type": "string",
+                        "value": "[parameters('dataFactory_properties_globalParameters_MetaDataDB_AuthenticationType_value')]"
+                    },
+                    "MetaDataDB_Username": {
+                        "type": "string",
+                        "value": "[parameters('dataFactory_properties_globalParameters_MetaDataDB_Username_value')]"
+                    },
+                    "MetaDataDB_Password": {
+                        "type": "string",
+                        "value": "[parameters('dataFactory_properties_globalParameters_MetaDataDB_Password_value')]"
+                    }
+                }
+            },
+            "dependsOn": [],
+            "location": "[parameters('dataFactory_location')]"
+        }
+    ]
+}

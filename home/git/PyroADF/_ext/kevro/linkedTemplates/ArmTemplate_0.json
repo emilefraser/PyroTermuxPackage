@@ -1,0 +1,1992 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "factoryName": {
+            "type": "string",
+            "metadata": "Data Factory name",
+            "defaultValue": "KevroDataFactory02"
+        },
+        "dmgr_AutoIR_AzureSqlMI_DataManager_Local_connectionString": {
+            "type": "secureString",
+            "metadata": "Secure string for 'connectionString' of 'dmgr_AutoIR_AzureSqlMI_DataManager_Local'"
+        },
+        "dmgr_AutoIR_AzureSqlMI_connectionString": {
+            "type": "secureString",
+            "metadata": "Secure string for 'connectionString' of 'dmgr_AutoIR_AzureSqlMI'"
+        },
+        "dmgr_AutoIR_AzureSqlMI_DataManager_connectionString": {
+            "type": "secureString",
+            "metadata": "Secure string for 'connectionString' of 'dmgr_AutoIR_AzureSqlMI_DataManager'"
+        },
+        "dmgr_AutoIR_AzureMySQL_connectionString": {
+            "type": "secureString",
+            "metadata": "Secure string for 'connectionString' of 'dmgr_AutoIR_AzureMySQL'"
+        },
+        "FS_TestDB_connectionString": {
+            "type": "secureString",
+            "metadata": "Secure string for 'connectionString' of 'FS_TestDB'"
+        },
+        "dmgr_KEVADFIR01_MySQL_connectionString": {
+            "type": "secureString",
+            "metadata": "Secure string for 'connectionString' of 'dmgr_KEVADFIR01_MySQL'"
+        },
+        "KEVADFIR01_properties_typeProperties_linkedInfo_resourceId": {
+            "type": "string",
+            "defaultValue": "/subscriptions/c52e8c00-4626-414d-a898-eadbceeb694b/resourcegroups/Kevro_Online/providers/Microsoft.DataFactory/factories/KevroDataFactory01/integrationruntimes/KEVADFIR01"
+        }
+    },
+    "variables": {
+        "factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+    },
+    "resources": [
+        {
+            "name": "[concat(parameters('factoryName'), '/dmgr_AutoIR_AzureSqlMI_DataManager_Local')]",
+            "type": "Microsoft.DataFactory/factories/linkedServices",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "description": "Points to the DataManager DB with fixed parameters",
+                "annotations": [],
+                "type": "AzureSqlMI",
+                "typeProperties": {
+                    "connectionString": "[parameters('dmgr_AutoIR_AzureSqlMI_DataManager_Local_connectionString')]"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/dmgr_AutoIR_AzureSqlMI')]",
+            "type": "Microsoft.DataFactory/factories/linkedServices",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "description": "A connection to Azure servers",
+                "parameters": {
+                    "Server": {
+                        "type": "string",
+                        "defaultValue": "kevrosql02.public.4af7d6a3be3e.database.windows.net,3342"
+                    },
+                    "Database": {
+                        "type": "string",
+                        "defaultValue": "DataManager_Local"
+                    },
+                    "Username": {
+                        "type": "string",
+                        "defaultValue": "sqladmin"
+                    },
+                    "Password": {
+                        "type": "string",
+                        "defaultValue": "h@U\\!En&wV4/M5:K"
+                    }
+                },
+                "annotations": [],
+                "type": "AzureSqlMI",
+                "typeProperties": {
+                    "connectionString": "[parameters('dmgr_AutoIR_AzureSqlMI_connectionString')]"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/dmgr_AutoIR_AzureSqlMI_DataManager')]",
+            "type": "Microsoft.DataFactory/factories/linkedServices",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "description": "A connection to the DataManager",
+                "annotations": [],
+                "type": "AzureSqlMI",
+                "typeProperties": {
+                    "connectionString": "[parameters('dmgr_AutoIR_AzureSqlMI_DataManager_connectionString')]"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/dmgr_AutoIR_AzureMySQL')]",
+            "type": "Microsoft.DataFactory/factories/linkedServices",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "description": "A connection to a MySQL database in Azure",
+                "annotations": [],
+                "type": "AzureMySql",
+                "typeProperties": {
+                    "connectionString": "[parameters('dmgr_AutoIR_AzureMySQL_connectionString')]"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/FS_TestDB')]",
+            "type": "Microsoft.DataFactory/factories/linkedServices",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "annotations": [],
+                "type": "AzureSqlDatabase",
+                "typeProperties": {
+                    "connectionString": "[parameters('FS_TestDB_connectionString')]"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Run ODS Cloud Loads')]",
+            "type": "Microsoft.DataFactory/factories/triggers",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "annotations": [],
+                "runtimeState": "Stopped",
+                "pipelines": [],
+                "type": "ScheduleTrigger",
+                "typeProperties": {
+                    "recurrence": {
+                        "frequency": "Day",
+                        "interval": 1,
+                        "startTime": "2019-10-06T16:00:00Z",
+                        "timeZone": "UTC",
+                        "schedule": {}
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/KEVADFIR01')]",
+            "type": "Microsoft.DataFactory/factories/integrationRuntimes",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "type": "SelfHosted",
+                "typeProperties": {
+                    "linkedInfo": {
+                        "resourceId": "[parameters('KEVADFIR01_properties_typeProperties_linkedInfo_resourceId')]",
+                        "authorizationType": "Rbac"
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/MySQLdev')]",
+            "type": "Microsoft.DataFactory/factories/integrationRuntimes",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "type": "SelfHosted",
+                "description": "A MySQL Dev Server",
+                "typeProperties": {}
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/dmgr_KEVADFIR01_MySQL')]",
+            "type": "Microsoft.DataFactory/factories/linkedServices",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "description": "A connection to MySQL servers via KEVADFIR01",
+                "parameters": {
+                    "Server": {
+                        "type": "string",
+                        "defaultValue": "10.0.1.2"
+                    },
+                    "Database": {
+                        "type": "string",
+                        "defaultValue": "KAS"
+                    },
+                    "Username": {
+                        "type": "string",
+                        "defaultValue": "acctech"
+                    },
+                    "Password": {
+                        "type": "string",
+                        "defaultValue": "Ahzie2ae"
+                    }
+                },
+                "annotations": [],
+                "type": "MySql",
+                "typeProperties": {
+                    "connectionString": "[parameters('dmgr_KEVADFIR01_MySQL_connectionString')]"
+                },
+                "connectVia": {
+                    "referenceName": "KEVADFIR01",
+                    "type": "IntegrationRuntimeReference"
+                }
+            },
+            "dependsOn": [
+                "[concat(variables('factoryId'), '/integrationRuntimes/KEVADFIR01')]"
+            ]
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/dmgr_AutoIR_AzureSqlMI')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "dmgr_AutoIR_AzureSqlMI",
+                    "type": "LinkedServiceReference",
+                    "parameters": {
+                        "Server": {
+                            "value": "@dataset().Server",
+                            "type": "Expression"
+                        },
+                        "Database": {
+                            "value": "@dataset().Database",
+                            "type": "Expression"
+                        },
+                        "Username": {
+                            "value": "@dataset().Username",
+                            "type": "Expression"
+                        },
+                        "Password": {
+                            "value": "@dataset().Password",
+                            "type": "Expression"
+                        }
+                    }
+                },
+                "parameters": {
+                    "Server": {
+                        "type": "string",
+                        "defaultValue": "kevrosql02.public.4af7d6a3be3e.database.windows.net,3342"
+                    },
+                    "Database": {
+                        "type": "string",
+                        "defaultValue": "DataManager_Local"
+                    },
+                    "Username": {
+                        "type": "string",
+                        "defaultValue": "sqladmin"
+                    },
+                    "Password": {
+                        "type": "string",
+                        "defaultValue": "h@U\\!En&wV4/M5:K"
+                    },
+                    "StageSchema": {
+                        "type": "string",
+                        "defaultValue": "Stage"
+                    },
+                    "StageTable": {
+                        "type": "string",
+                        "defaultValue": "Table_Stage"
+                    }
+                },
+                "annotations": [],
+                "type": "AzureSqlMITable",
+                "schema": [],
+                "typeProperties": {
+                    "schema": {
+                        "value": "@dataset().StageSchema",
+                        "type": "Expression"
+                    },
+                    "table": {
+                        "value": "@dataset().StageTable",
+                        "type": "Expression"
+                    }
+                }
+            },
+            "dependsOn": [
+                "[concat(variables('factoryId'), '/linkedServices/dmgr_AutoIR_AzureSqlMI')]"
+            ]
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/dmgr_AutoIR_AzureSqlMI_DataManager_Local')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "dmgr_AutoIR_AzureSqlMI_DataManager_Local",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "AzureSqlMITable",
+                "schema": [],
+                "typeProperties": {
+                    "schema": "ETL",
+                    "table": "vw_get_LoadControlQueue"
+                }
+            },
+            "dependsOn": [
+                "[concat(variables('factoryId'), '/linkedServices/dmgr_AutoIR_AzureSqlMI_DataManager_Local')]"
+            ]
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/dmgr_AutoIR_AzureSqlMI_DataManager')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "dmgr_AutoIR_AzureSqlMI_DataManager",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "AzureSqlMITable",
+                "schema": [],
+                "typeProperties": {
+                    "schema": "DC",
+                    "table": "vw_mat_Credentials"
+                }
+            },
+            "dependsOn": [
+                "[concat(variables('factoryId'), '/linkedServices/dmgr_AutoIR_AzureSqlMI_DataManager')]"
+            ]
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/DestinationDataset_lbg')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "dmgr_AutoIR_AzureMySQL",
+                    "type": "LinkedServiceReference"
+                },
+                "folder": {
+                    "name": "Data Load"
+                },
+                "annotations": [],
+                "type": "AzureMySqlTable",
+                "schema": [
+                    {
+                        "name": "CustomerID",
+                        "precision": 10,
+                        "scale": 0
+                    },
+                    {
+                        "name": "Branch",
+                        "precision": 255,
+                        "scale": 0
+                    },
+                    {
+                        "name": "Name",
+                        "precision": 50,
+                        "scale": 0
+                    },
+                    {
+                        "name": "HoldingID",
+                        "precision": 10,
+                        "scale": 0
+                    },
+                    {
+                        "name": "HoldingName",
+                        "precision": 50,
+                        "scale": 0
+                    },
+                    {
+                        "name": "Tel",
+                        "precision": 15,
+                        "scale": 0
+                    },
+                    {
+                        "name": "Fax",
+                        "precision": 15,
+                        "scale": 0
+                    },
+                    {
+                        "name": "PostalAddress1",
+                        "precision": 255,
+                        "scale": 0
+                    },
+                    {
+                        "name": "PostalAddress2",
+                        "precision": 55,
+                        "scale": 0
+                    },
+                    {
+                        "name": "PostalAddress3",
+                        "precision": 55,
+                        "scale": 0
+                    },
+                    {
+                        "name": "PostalAddress4",
+                        "precision": 55,
+                        "scale": 0
+                    },
+                    {
+                        "name": "PhysicalAddress1",
+                        "precision": 255,
+                        "scale": 0
+                    },
+                    {
+                        "name": "PhysicalAddress2",
+                        "precision": 55,
+                        "scale": 0
+                    },
+                    {
+                        "name": "PhysicalAddress3",
+                        "precision": 55,
+                        "scale": 0
+                    },
+                    {
+                        "name": "PhysicalAddress4",
+                        "precision": 55,
+                        "scale": 0
+                    },
+                    {
+                        "name": "Country",
+                        "precision": 55,
+                        "scale": 0
+                    },
+                    {
+                        "name": "VATNumber",
+                        "precision": 20,
+                        "scale": 0
+                    },
+                    {
+                        "name": "BusinessType",
+                        "precision": 20,
+                        "scale": 0
+                    },
+                    {
+                        "name": "Salesman",
+                        "precision": 55,
+                        "scale": 0
+                    },
+                    {
+                        "name": "SalesmanEmail",
+                        "precision": 50,
+                        "scale": 0
+                    },
+                    {
+                        "name": "KevroAwareness",
+                        "precision": 20,
+                        "scale": 0
+                    },
+                    {
+                        "name": "VAT",
+                        "precision": 3,
+                        "scale": 0
+                    },
+                    {
+                        "name": "CustomerInfoForm",
+                        "precision": 3,
+                        "scale": 0
+                    },
+                    {
+                        "name": "CoDebtorship",
+                        "precision": 3,
+                        "scale": 0
+                    },
+                    {
+                        "name": "SuretyDoc",
+                        "precision": 3,
+                        "scale": 0
+                    },
+                    {
+                        "name": "Terms",
+                        "precision": 50,
+                        "scale": 0
+                    },
+                    {
+                        "name": "CreditLimit",
+                        "precision": 12,
+                        "scale": 2
+                    },
+                    {
+                        "name": "SpecialTerms",
+                        "precision": 3,
+                        "scale": 0
+                    },
+                    {
+                        "name": "CreditLimitReserved",
+                        "precision": 12,
+                        "scale": 2
+                    },
+                    {
+                        "name": "Discount",
+                        "precision": 12,
+                        "scale": 2
+                    },
+                    {
+                        "name": "OnHold",
+                        "precision": 3,
+                        "scale": 0
+                    },
+                    {
+                        "name": "Active",
+                        "precision": 3,
+                        "scale": 0
+                    },
+                    {
+                        "name": "FollowUp",
+                        "precision": 3,
+                        "scale": 0
+                    },
+                    {
+                        "name": "AutoPrepaid",
+                        "precision": 3,
+                        "scale": 0
+                    },
+                    {
+                        "name": "SalesComment",
+                        "precision": 255,
+                        "scale": 0
+                    },
+                    {
+                        "name": "CompanyRegistrationNo",
+                        "precision": 20,
+                        "scale": 0
+                    },
+                    {
+                        "name": "CreditGauranteeLimit",
+                        "precision": 12,
+                        "scale": 2
+                    },
+                    {
+                        "name": "CreditGuaranteeExpiryDate",
+                        "precision": 255,
+                        "scale": 0
+                    },
+                    {
+                        "name": "CreditGauranteeComment",
+                        "precision": 255,
+                        "scale": 0
+                    },
+                    {
+                        "name": "BudgetTurnover",
+                        "precision": 12,
+                        "scale": 2
+                    },
+                    {
+                        "name": "Royalty",
+                        "precision": 20,
+                        "scale": 0
+                    },
+                    {
+                        "name": "RoyaltyManual",
+                        "precision": 10,
+                        "scale": 0
+                    },
+                    {
+                        "name": "RoyaltyChanged",
+                        "precision": 20,
+                        "scale": 0
+                    },
+                    {
+                        "name": "RoyaltyManualChanged",
+                        "precision": 20,
+                        "scale": 0
+                    },
+                    {
+                        "name": "DefaultForeignCurrency",
+                        "precision": 10,
+                        "scale": 0
+                    },
+                    {
+                        "name": "AccountsComment",
+                        "precision": 255,
+                        "scale": 0
+                    },
+                    {
+                        "name": "CreditController",
+                        "precision": 100,
+                        "scale": 0
+                    },
+                    {
+                        "name": "BudgetPercIncrease",
+                        "precision": 12,
+                        "scale": 2
+                    },
+                    {
+                        "name": "LegalName",
+                        "precision": 255,
+                        "scale": 0
+                    },
+                    {
+                        "name": "Created",
+                        "precision": 255,
+                        "scale": 0
+                    },
+                    {
+                        "name": "CreatedBy",
+                        "precision": 45,
+                        "scale": 0
+                    },
+                    {
+                        "name": "BankName",
+                        "precision": 45,
+                        "scale": 0
+                    },
+                    {
+                        "name": "TradingTerms",
+                        "precision": 232,
+                        "scale": 0
+                    },
+                    {
+                        "name": "BankAccount",
+                        "precision": 45,
+                        "scale": 0
+                    },
+                    {
+                        "name": "BankBranchCode",
+                        "precision": 45,
+                        "scale": 0
+                    },
+                    {
+                        "name": "BankBranch",
+                        "precision": 45,
+                        "scale": 0
+                    },
+                    {
+                        "name": "logo",
+                        "precision": 45,
+                        "scale": 0
+                    },
+                    {
+                        "name": "OldCustomerID",
+                        "precision": 10,
+                        "scale": 0
+                    },
+                    {
+                        "name": "RoyaltySportManualChanged",
+                        "precision": 19,
+                        "scale": 0
+                    },
+                    {
+                        "name": "RoyaltySportManual",
+                        "precision": 10,
+                        "scale": 0
+                    },
+                    {
+                        "name": "RoyaltySport",
+                        "precision": 20,
+                        "scale": 0
+                    },
+                    {
+                        "name": "DiscountSport",
+                        "precision": 4,
+                        "scale": 2
+                    },
+                    {
+                        "name": "ProductInterests",
+                        "precision": 255,
+                        "scale": 0
+                    },
+                    {
+                        "name": "ClearanceID",
+                        "precision": 10,
+                        "scale": 0
+                    },
+                    {
+                        "name": "PPPSAStatus",
+                        "precision": 55,
+                        "scale": 0
+                    },
+                    {
+                        "name": "PPPSANo",
+                        "precision": 55,
+                        "scale": 0
+                    },
+                    {
+                        "name": "Agent",
+                        "precision": 55,
+                        "scale": 0
+                    },
+                    {
+                        "name": "KevroAgent",
+                        "precision": 55,
+                        "scale": 0
+                    },
+                    {
+                        "name": "CategoryRoyalty",
+                        "precision": 55,
+                        "scale": 0
+                    },
+                    {
+                        "name": "CategoryDiscount",
+                        "precision": 5,
+                        "scale": 2
+                    },
+                    {
+                        "name": "Segment",
+                        "precision": 55,
+                        "scale": 0
+                    },
+                    {
+                        "name": "SubSegment",
+                        "precision": 55,
+                        "scale": 0
+                    },
+                    {
+                        "name": "Provision",
+                        "precision": 10,
+                        "scale": 0
+                    },
+                    {
+                        "name": "CompanyStructure",
+                        "precision": 100,
+                        "scale": 0
+                    },
+                    {
+                        "name": "CompanyType",
+                        "precision": 100,
+                        "scale": 0
+                    },
+                    {
+                        "name": "CompanySize",
+                        "precision": 100,
+                        "scale": 0
+                    },
+                    {
+                        "name": "BEEClassified",
+                        "precision": 10,
+                        "scale": 0
+                    },
+                    {
+                        "name": "TradingYears",
+                        "precision": 10,
+                        "scale": 0
+                    },
+                    {
+                        "name": "BrandImportant",
+                        "precision": 10,
+                        "scale": 0
+                    },
+                    {
+                        "name": "WebAddress",
+                        "precision": 100,
+                        "scale": 0
+                    },
+                    {
+                        "name": "DefaultDeliveryMethod",
+                        "precision": 55,
+                        "scale": 0
+                    },
+                    {
+                        "name": "Kicker_Apparel",
+                        "precision": 5,
+                        "scale": 2
+                    },
+                    {
+                        "name": "Kicker_Gifting",
+                        "precision": 5,
+                        "scale": 2
+                    },
+                    {
+                        "name": "Kicker_Headwear",
+                        "precision": 5,
+                        "scale": 2
+                    },
+                    {
+                        "name": "Kicker_Workwear",
+                        "precision": 5,
+                        "scale": 2
+                    },
+                    {
+                        "name": "Kicker_Sport",
+                        "precision": 5,
+                        "scale": 2
+                    },
+                    {
+                        "name": "Kicker_Display",
+                        "precision": 5,
+                        "scale": 2
+                    },
+                    {
+                        "name": "Kicker_Branding",
+                        "precision": 5,
+                        "scale": 2
+                    },
+                    {
+                        "name": "Kicker_IgnoreFlag",
+                        "precision": 10,
+                        "scale": 0
+                    },
+                    {
+                        "name": "Created_By",
+                        "precision": 255,
+                        "scale": 0
+                    },
+                    {
+                        "name": "Created_Date",
+                        "precision": 19,
+                        "scale": 0
+                    },
+                    {
+                        "name": "Updated_By",
+                        "precision": 255,
+                        "scale": 0
+                    },
+                    {
+                        "name": "Updated_Date",
+                        "precision": 19,
+                        "scale": 0
+                    },
+                    {
+                        "name": "SubBranch",
+                        "precision": 10,
+                        "scale": 0
+                    }
+                ],
+                "typeProperties": {
+                    "tableName": "`customer_test`"
+                }
+            },
+            "dependsOn": [
+                "[concat(variables('factoryId'), '/linkedServices/dmgr_AutoIR_AzureMySQL')]"
+            ]
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/SourceDataset_lbg')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "dmgr_AutoIR_AzureSqlMI_DataManager",
+                    "type": "LinkedServiceReference"
+                },
+                "folder": {
+                    "name": "Data Load"
+                },
+                "annotations": [],
+                "type": "AzureSqlMITable",
+                "schema": [
+                    {
+                        "name": "CustomerID",
+                        "type": "int",
+                        "precision": 10,
+                        "scale": 255
+                    },
+                    {
+                        "name": "Branch",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "Name",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "HoldingID",
+                        "type": "int",
+                        "precision": 10,
+                        "scale": 255
+                    },
+                    {
+                        "name": "HoldingName",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "Tel",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "Fax",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "PostalAddress1",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "PostalAddress2",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "PostalAddress3",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "PostalAddress4",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "PhysicalAddress1",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "PhysicalAddress2",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "PhysicalAddress3",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "PhysicalAddress4",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "Country",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "VATNumber",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "BusinessType",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "Salesman",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "SalesmanEmail",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "KevroAwareness",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "VAT",
+                        "type": "tinyint",
+                        "precision": 3,
+                        "scale": 255
+                    },
+                    {
+                        "name": "CustomerInfoForm",
+                        "type": "tinyint",
+                        "precision": 3,
+                        "scale": 255
+                    },
+                    {
+                        "name": "CoDebtorship",
+                        "type": "tinyint",
+                        "precision": 3,
+                        "scale": 255
+                    },
+                    {
+                        "name": "SuretyDoc",
+                        "type": "tinyint",
+                        "precision": 3,
+                        "scale": 255
+                    },
+                    {
+                        "name": "Terms",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "CreditLimit",
+                        "type": "decimal",
+                        "precision": 12,
+                        "scale": 2
+                    },
+                    {
+                        "name": "SpecialTerms",
+                        "type": "tinyint",
+                        "precision": 3,
+                        "scale": 255
+                    },
+                    {
+                        "name": "CreditLimitReserved",
+                        "type": "decimal",
+                        "precision": 12,
+                        "scale": 2
+                    },
+                    {
+                        "name": "Discount",
+                        "type": "decimal",
+                        "precision": 12,
+                        "scale": 2
+                    },
+                    {
+                        "name": "OnHold",
+                        "type": "tinyint",
+                        "precision": 3,
+                        "scale": 255
+                    },
+                    {
+                        "name": "Active",
+                        "type": "tinyint",
+                        "precision": 3,
+                        "scale": 255
+                    },
+                    {
+                        "name": "FollowUp",
+                        "type": "tinyint",
+                        "precision": 3,
+                        "scale": 255
+                    },
+                    {
+                        "name": "AutoPrepaid",
+                        "type": "tinyint",
+                        "precision": 3,
+                        "scale": 255
+                    },
+                    {
+                        "name": "SalesComment",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "CompanyRegistrationNo",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "CreditGauranteeLimit",
+                        "type": "decimal",
+                        "precision": 12,
+                        "scale": 2
+                    },
+                    {
+                        "name": "CreditGuaranteeExpiryDate",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "CreditGauranteeComment",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "BudgetTurnover",
+                        "type": "decimal",
+                        "precision": 12,
+                        "scale": 2
+                    },
+                    {
+                        "name": "Royalty",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "RoyaltyManual",
+                        "type": "int",
+                        "precision": 10,
+                        "scale": 255
+                    },
+                    {
+                        "name": "RoyaltyChanged",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "RoyaltyManualChanged",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "DefaultForeignCurrency",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "AccountsComment",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "CreditController",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "BudgetPercIncrease",
+                        "type": "decimal",
+                        "precision": 12,
+                        "scale": 2
+                    },
+                    {
+                        "name": "LegalName",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "Created",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "CreatedBy",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "BankName",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "TradingTerms",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "BankAccount",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "BankBranchCode",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "BankBranch",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "logo",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "OldCustomerID",
+                        "type": "int",
+                        "precision": 10,
+                        "scale": 255
+                    },
+                    {
+                        "name": "RoyaltySportManualChanged",
+                        "type": "datetime2",
+                        "precision": 255,
+                        "scale": 0
+                    },
+                    {
+                        "name": "RoyaltySportManual",
+                        "type": "int",
+                        "precision": 10,
+                        "scale": 255
+                    },
+                    {
+                        "name": "RoyaltySport",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "DiscountSport",
+                        "type": "decimal",
+                        "precision": 4,
+                        "scale": 2
+                    },
+                    {
+                        "name": "ProductInterests",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "ClearanceID",
+                        "type": "int",
+                        "precision": 10,
+                        "scale": 255
+                    },
+                    {
+                        "name": "PPPSAStatus",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "PPPSANo",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "Agent",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "KevroAgent",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "CategoryRoyalty",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "CategoryDiscount",
+                        "type": "decimal",
+                        "precision": 5,
+                        "scale": 2
+                    },
+                    {
+                        "name": "Segment",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "SubSegment",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "Provision",
+                        "type": "int",
+                        "precision": 10,
+                        "scale": 255
+                    },
+                    {
+                        "name": "CompanyStructure",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "CompanyType",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "CompanySize",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "BEEClassified",
+                        "type": "int",
+                        "precision": 10,
+                        "scale": 255
+                    },
+                    {
+                        "name": "TradingYears",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "BrandImportant",
+                        "type": "int",
+                        "precision": 10,
+                        "scale": 255
+                    },
+                    {
+                        "name": "WebAddress",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "DefaultDeliveryMethod",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "Kicker_Apparel",
+                        "type": "decimal",
+                        "precision": 5,
+                        "scale": 2
+                    },
+                    {
+                        "name": "Kicker_Gifting",
+                        "type": "decimal",
+                        "precision": 5,
+                        "scale": 2
+                    },
+                    {
+                        "name": "Kicker_Headwear",
+                        "type": "decimal",
+                        "precision": 5,
+                        "scale": 2
+                    },
+                    {
+                        "name": "Kicker_Workwear",
+                        "type": "decimal",
+                        "precision": 5,
+                        "scale": 2
+                    },
+                    {
+                        "name": "Kicker_Sport",
+                        "type": "decimal",
+                        "precision": 5,
+                        "scale": 2
+                    },
+                    {
+                        "name": "Kicker_Display",
+                        "type": "decimal",
+                        "precision": 5,
+                        "scale": 2
+                    },
+                    {
+                        "name": "Kicker_Branding",
+                        "type": "decimal",
+                        "precision": 5,
+                        "scale": 2
+                    },
+                    {
+                        "name": "Kicker_IgnoreFlag",
+                        "type": "int",
+                        "precision": 10,
+                        "scale": 255
+                    },
+                    {
+                        "name": "Created_By",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "Created_Date",
+                        "type": "datetime2",
+                        "precision": 255,
+                        "scale": 0
+                    },
+                    {
+                        "name": "Updated_By",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "Updated_Date",
+                        "type": "datetime2",
+                        "precision": 255,
+                        "scale": 0
+                    },
+                    {
+                        "name": "SubBranch",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    }
+                ],
+                "typeProperties": {}
+            },
+            "dependsOn": [
+                "[concat(variables('factoryId'), '/linkedServices/dmgr_AutoIR_AzureSqlMI_DataManager')]"
+            ]
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/AzureMySqlTable1')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "dmgr_AutoIR_AzureMySQL",
+                    "type": "LinkedServiceReference"
+                },
+                "parameters": {
+                    "TargetTable": {
+                        "type": "string",
+                        "defaultValue": "TargetTable"
+                    }
+                },
+                "folder": {
+                    "name": "Data Load"
+                },
+                "annotations": [],
+                "type": "AzureMySqlTable",
+                "schema": [],
+                "typeProperties": {
+                    "tableName": {
+                        "value": "@dataset().TargetTable",
+                        "type": "Expression"
+                    }
+                }
+            },
+            "dependsOn": [
+                "[concat(variables('factoryId'), '/linkedServices/dmgr_AutoIR_AzureMySQL')]"
+            ]
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/dmgr_AutoIR_AzureMySQL')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "description": "dmgr_AutoIR_AzureMySQL",
+                "linkedServiceName": {
+                    "referenceName": "dmgr_AutoIR_AzureMySQL",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "AzureMySqlTable",
+                "schema": [],
+                "typeProperties": {}
+            },
+            "dependsOn": [
+                "[concat(variables('factoryId'), '/linkedServices/dmgr_AutoIR_AzureMySQL')]"
+            ]
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/SourceDataset_2tv')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "dmgr_AutoIR_AzureSqlMI_DataManager",
+                    "type": "LinkedServiceReference"
+                },
+                "folder": {
+                    "name": "Data Load"
+                },
+                "annotations": [],
+                "type": "AzureSqlMITable",
+                "schema": [
+                    {
+                        "name": "LogID",
+                        "type": "int",
+                        "precision": 10,
+                        "scale": 255
+                    },
+                    {
+                        "name": "Logtime",
+                        "type": "datetime2",
+                        "precision": 255,
+                        "scale": 0
+                    },
+                    {
+                        "name": "Branch",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "UserName",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "StockID",
+                        "type": "int",
+                        "precision": 10,
+                        "scale": 255
+                    },
+                    {
+                        "name": "Comment",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "Colours",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "Sizes",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "Qty",
+                        "type": "int",
+                        "precision": 10,
+                        "scale": 255
+                    },
+                    {
+                        "name": "QtyBefore",
+                        "type": "int",
+                        "precision": 10,
+                        "scale": 255
+                    },
+                    {
+                        "name": "QtyAfter",
+                        "type": "int",
+                        "precision": 10,
+                        "scale": 255
+                    },
+                    {
+                        "name": "AveCostBefore",
+                        "type": "decimal",
+                        "precision": 12,
+                        "scale": 2
+                    },
+                    {
+                        "name": "AveCostAfter",
+                        "type": "decimal",
+                        "precision": 12,
+                        "scale": 2
+                    },
+                    {
+                        "name": "MovementType",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "TrailType",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "TrailComment",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "GRNCost",
+                        "type": "float",
+                        "precision": 15,
+                        "scale": 255
+                    },
+                    {
+                        "name": "QtyBefore1",
+                        "type": "int",
+                        "precision": 10,
+                        "scale": 255
+                    },
+                    {
+                        "name": "QtyAfter1",
+                        "type": "int",
+                        "precision": 10,
+                        "scale": 255
+                    },
+                    {
+                        "name": "Created_By",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "Created_Date",
+                        "type": "datetime2",
+                        "precision": 255,
+                        "scale": 0
+                    },
+                    {
+                        "name": "Updated_By",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "Updated_Date",
+                        "type": "datetime2",
+                        "precision": 255,
+                        "scale": 0
+                    }
+                ],
+                "typeProperties": {}
+            },
+            "dependsOn": [
+                "[concat(variables('factoryId'), '/linkedServices/dmgr_AutoIR_AzureSqlMI_DataManager')]"
+            ]
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/DestinationDataset_2tv')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "dmgr_AutoIR_AzureMySQL",
+                    "type": "LinkedServiceReference"
+                },
+                "folder": {
+                    "name": "Data Load"
+                },
+                "annotations": [],
+                "type": "AzureMySqlTable",
+                "schema": [
+                    {
+                        "name": "LogID",
+                        "precision": 10,
+                        "scale": 0
+                    },
+                    {
+                        "name": "Logtime",
+                        "precision": 19,
+                        "scale": 0
+                    },
+                    {
+                        "name": "Branch",
+                        "precision": 5,
+                        "scale": 0
+                    },
+                    {
+                        "name": "UserName",
+                        "precision": 25,
+                        "scale": 0
+                    },
+                    {
+                        "name": "StockID",
+                        "precision": 10,
+                        "scale": 0
+                    },
+                    {
+                        "name": "Comment",
+                        "precision": 45,
+                        "scale": 0
+                    },
+                    {
+                        "name": "Colours",
+                        "precision": 45,
+                        "scale": 0
+                    },
+                    {
+                        "name": "Sizes",
+                        "precision": 45,
+                        "scale": 0
+                    },
+                    {
+                        "name": "Qty",
+                        "precision": 10,
+                        "scale": 0
+                    },
+                    {
+                        "name": "QtyBefore",
+                        "precision": 10,
+                        "scale": 0
+                    },
+                    {
+                        "name": "QtyAfter",
+                        "precision": 10,
+                        "scale": 0
+                    },
+                    {
+                        "name": "AveCostBefore",
+                        "precision": 12,
+                        "scale": 2
+                    },
+                    {
+                        "name": "AveCostAfter",
+                        "precision": 12,
+                        "scale": 2
+                    },
+                    {
+                        "name": "MovementType",
+                        "precision": 255,
+                        "scale": 0
+                    },
+                    {
+                        "name": "TrailType",
+                        "precision": 255,
+                        "scale": 0
+                    },
+                    {
+                        "name": "TrailComment",
+                        "precision": 255,
+                        "scale": 0
+                    },
+                    {
+                        "name": "GRNCost",
+                        "precision": 7,
+                        "scale": 0
+                    },
+                    {
+                        "name": "QtyBefore1",
+                        "precision": 10,
+                        "scale": 0
+                    },
+                    {
+                        "name": "QtyAfter1",
+                        "precision": 10,
+                        "scale": 0
+                    },
+                    {
+                        "name": "Created_By",
+                        "precision": 255,
+                        "scale": 0
+                    },
+                    {
+                        "name": "Created_Date",
+                        "precision": 19,
+                        "scale": 0
+                    },
+                    {
+                        "name": "Updated_By",
+                        "precision": 255,
+                        "scale": 0
+                    },
+                    {
+                        "name": "Updated_Date",
+                        "precision": 19,
+                        "scale": 0
+                    }
+                ],
+                "typeProperties": {
+                    "tableName": "`stock_trail`"
+                }
+            },
+            "dependsOn": [
+                "[concat(variables('factoryId'), '/linkedServices/dmgr_AutoIR_AzureMySQL')]"
+            ]
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/DestinationDataset_y85')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "dmgr_AutoIR_AzureMySQL",
+                    "type": "LinkedServiceReference"
+                },
+                "folder": {
+                    "name": "Data Load"
+                },
+                "annotations": [],
+                "type": "AzureMySqlTable",
+                "schema": [
+                    {
+                        "name": "LogID",
+                        "precision": 20,
+                        "scale": 0
+                    },
+                    {
+                        "name": "Branch",
+                        "precision": 5,
+                        "scale": 0
+                    },
+                    {
+                        "name": "Logtime",
+                        "precision": 19,
+                        "scale": 0
+                    },
+                    {
+                        "name": "UserName",
+                        "precision": 25,
+                        "scale": 0
+                    },
+                    {
+                        "name": "OrderID",
+                        "precision": 10,
+                        "scale": 0
+                    },
+                    {
+                        "name": "NoteType",
+                        "precision": 25,
+                        "scale": 0
+                    },
+                    {
+                        "name": "Note",
+                        "precision": 255,
+                        "scale": 0
+                    },
+                    {
+                        "name": "Amount",
+                        "precision": 12,
+                        "scale": 2
+                    },
+                    {
+                        "name": "TimeTaken",
+                        "precision": 10,
+                        "scale": 0
+                    },
+                    {
+                        "name": "Status",
+                        "precision": 255,
+                        "scale": 0
+                    },
+                    {
+                        "name": "Weight",
+                        "precision": 12,
+                        "scale": 2
+                    },
+                    {
+                        "name": "Processed",
+                        "precision": 10,
+                        "scale": 0
+                    },
+                    {
+                        "name": "OldOrderID",
+                        "precision": 10,
+                        "scale": 0
+                    },
+                    {
+                        "name": "Created_By",
+                        "precision": 255,
+                        "scale": 0
+                    },
+                    {
+                        "name": "Created_Date",
+                        "precision": 19,
+                        "scale": 0
+                    },
+                    {
+                        "name": "Updated_By",
+                        "precision": 255,
+                        "scale": 0
+                    },
+                    {
+                        "name": "Updated_Date",
+                        "precision": 19,
+                        "scale": 0
+                    }
+                ],
+                "typeProperties": {
+                    "tableName": "`sales_trail`"
+                }
+            },
+            "dependsOn": [
+                "[concat(variables('factoryId'), '/linkedServices/dmgr_AutoIR_AzureMySQL')]"
+            ]
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/SourceDataset_y85')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "dmgr_AutoIR_AzureSqlMI_DataManager",
+                    "type": "LinkedServiceReference"
+                },
+                "folder": {
+                    "name": "Data Load"
+                },
+                "annotations": [],
+                "type": "AzureSqlMITable",
+                "schema": [
+                    {
+                        "name": "LogID",
+                        "type": "decimal",
+                        "precision": 20,
+                        "scale": 0
+                    },
+                    {
+                        "name": "Branch",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "Logtime",
+                        "type": "datetime2",
+                        "precision": 255,
+                        "scale": 0
+                    },
+                    {
+                        "name": "UserName",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "OrderID",
+                        "type": "int",
+                        "precision": 10,
+                        "scale": 255
+                    },
+                    {
+                        "name": "NoteType",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "Note",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "Amount",
+                        "type": "decimal",
+                        "precision": 12,
+                        "scale": 2
+                    },
+                    {
+                        "name": "TimeTaken",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "Status",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "Weight",
+                        "type": "decimal",
+                        "precision": 12,
+                        "scale": 2
+                    },
+                    {
+                        "name": "Processed",
+                        "type": "int",
+                        "precision": 10,
+                        "scale": 255
+                    },
+                    {
+                        "name": "OldOrderID",
+                        "type": "int",
+                        "precision": 10,
+                        "scale": 255
+                    },
+                    {
+                        "name": "Created_By",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "Created_Date",
+                        "type": "datetime2",
+                        "precision": 255,
+                        "scale": 0
+                    },
+                    {
+                        "name": "Updated_By",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "Updated_Date",
+                        "type": "datetime2",
+                        "precision": 255,
+                        "scale": 0
+                    }
+                ],
+                "typeProperties": {}
+            },
+            "dependsOn": [
+                "[concat(variables('factoryId'), '/linkedServices/dmgr_AutoIR_AzureSqlMI_DataManager')]"
+            ]
+        }
+    ]
+}

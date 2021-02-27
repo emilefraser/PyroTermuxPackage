@@ -1,0 +1,957 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "factoryName": {
+            "type": "string",
+            "metadata": "Data Factory name",
+            "defaultValue": "saecpowerbidev"
+        },
+        "saec_powerbi_dev_connectionString": {
+            "type": "secureString",
+            "metadata": "Secure string for 'connectionString' of 'saec_powerbi_dev'"
+        },
+        "AzureDataLakeStorage_accountKey": {
+            "type": "secureString",
+            "metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage'"
+        },
+        "AzureTableStorage_connectionString": {
+            "type": "secureString",
+            "metadata": "Secure string for 'connectionString' of 'AzureTableStorage'"
+        },
+        "HttpLinkedForSoap_password": {
+            "type": "secureString",
+            "metadata": "Secure string for 'password' of 'HttpLinkedForSoap'"
+        },
+        "AzureBlobStorage1_connectionString": {
+            "type": "secureString",
+            "metadata": "Secure string for 'connectionString' of 'AzureBlobStorage1'"
+        },
+        "HttpLinkedForREST_password": {
+            "type": "secureString",
+            "metadata": "Secure string for 'password' of 'HttpLinkedForREST'"
+        },
+        "SAPS4HANA_PROD_password": {
+            "type": "secureString",
+            "metadata": "Secure string for 'password' of 'SAPS4HANA_PROD'"
+        },
+        "SAAZS_V_SAP13_connectionString": {
+            "type": "secureString",
+            "metadata": "Secure string for 'connectionString' of 'SAAZS_V_SAP13'"
+        },
+        "SAAS_V_SAP13_QA_connectionString": {
+            "type": "secureString",
+            "metadata": "Secure string for 'connectionString' of 'SAAS_V_SAP13_QA'"
+        },
+        "SAAZS_V_SAP33_PROD_connectionString": {
+            "type": "secureString",
+            "metadata": "Secure string for 'connectionString' of 'SAAZS_V_SAP33_PROD'"
+        },
+        "Isometrix_Api_test_password": {
+            "type": "secureString",
+            "metadata": "Secure string for 'password' of 'Isometrix_Api_test'"
+        },
+        "XtractIS-IR_properties_typeProperties_ssisProperties_catalogInfo_catalogServerEndpoint": {
+            "type": "string",
+            "defaultValue": "saazs-v-pwrbidev.database.windows.net"
+        },
+        "XtractIS-IR_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminUserName": {
+            "type": "string",
+            "defaultValue": "saecadmin"
+        },
+        "XtractIS-IR_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminPassword": {
+            "type": "secureString"
+        },
+        "XtractIS-IR_properties_typeProperties_ssisProperties_customSetupScriptProperties_sasToken": {
+            "type": "secureString"
+        },
+        "AzureDataLakeStorage_properties_typeProperties_url": {
+            "type": "string",
+            "defaultValue": "https://saecpowerbidev.dfs.core.windows.net"
+        },
+        "AzureBlobStorage_XtractIS_sasUri": {
+            "type": "secureString",
+            "metadata": "Secure string for 'sasUri' of 'AzureBlobStorage_XtractIS'"
+        },
+        "HttpLinkedForSoap_properties_typeProperties_url": {
+            "type": "string",
+            "defaultValue": "https://s1-eu.ariba.com/Sourcing/soap/saec-T/ContractHeaderExport"
+        },
+        "HttpLinkedForSoap_properties_typeProperties_userName": {
+            "type": "string",
+            "defaultValue": "BIUSER"
+        },
+        "HttpLinkedForREST_properties_typeProperties_url": {
+            "type": "string",
+            "defaultValue": "https://ch17.isometrix.net/RestAPI.SAEC.QA/api"
+        },
+        "HttpLinkedForREST_properties_typeProperties_userName": {
+            "type": "string",
+            "defaultValue": "isoApiuser"
+        },
+        "AzureBlobStorageHistoricData_sasUri": {
+            "type": "secureString",
+            "metadata": "Secure string for 'sasUri' of 'AzureBlobStorageHistoricData'"
+        },
+        "SAPS4HANA_PROD_properties_typeProperties_clientId": {
+            "type": "string",
+            "defaultValue": "100"
+        },
+        "SAPS4HANA_PROD_properties_typeProperties_userName": {
+            "type": "string",
+            "defaultValue": "XSTRACTIS"
+        },
+        "SAPS4HANA_PROD_properties_typeProperties_server": {
+            "type": "string",
+            "defaultValue": "saazs-v-sap30.satcc.co.za"
+        },
+        "SAPS4HANA_PROD_properties_typeProperties_systemNumber": {
+            "type": "string",
+            "defaultValue": "30"
+        },
+        "Isometrix_Api_test_properties_typeProperties_url": {
+            "type": "string",
+            "defaultValue": "https://ch17.isometrix.net/RestAPI.SAEC.QA/api/ModuleTemplate"
+        },
+        "Isometrix_Api_test_properties_typeProperties_userName": {
+            "type": "string",
+            "defaultValue": "isoApiuser"
+        }
+    },
+    "variables": {
+        "factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+    },
+    "resources": [
+        {
+            "name": "[concat(parameters('factoryName'), '/XtractIS-IR')]",
+            "type": "Microsoft.DataFactory/factories/integrationRuntimes",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "type": "Managed",
+                "description": "Runtime for Xtract IS connected to Azure Storage",
+                "typeProperties": {
+                    "computeProperties": {
+                        "location": "West Europe",
+                        "nodeSize": "Standard_D2_v3",
+                        "numberOfNodes": 2,
+                        "maxParallelExecutionsPerNode": 2,
+                        "vNetProperties": {
+                            "vNetId": "/subscriptions/3430843a-fd4d-476b-9463-3d4ed160c8f9/resourceGroups/SAEC-Networking/providers/Microsoft.Network/virtualNetworks/VNetSAPWUKSAEC",
+                            "subnet": "Production"
+                        }
+                    },
+                    "ssisProperties": {
+                        "catalogInfo": {
+                            "catalogServerEndpoint": "[parameters('XtractIS-IR_properties_typeProperties_ssisProperties_catalogInfo_catalogServerEndpoint')]",
+                            "catalogAdminUserName": "[parameters('XtractIS-IR_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminUserName')]",
+                            "catalogAdminPassword": {
+                                "type": "SecureString",
+                                "value": "[parameters('XtractIS-IR_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminPassword')]"
+                            },
+                            "catalogPricingTier": "S1"
+                        },
+                        "customSetupScriptProperties": {
+                            "blobContainerUri": "https://saecxtractis4pbiprod.blob.core.windows.net/xtractisir",
+                            "sasToken": {
+                                "type": "SecureString",
+                                "value": "[parameters('XtractIS-IR_properties_typeProperties_ssisProperties_customSetupScriptProperties_sasToken')]"
+                            }
+                        },
+                        "edition": "Standard",
+                        "licenseType": "LicenseIncluded",
+                        "expressCustomSetupProperties": [
+                            {
+                                "type": "ComponentSetup",
+                                "typeProperties": {
+                                    "componentName": "Theobald.XtractIS",
+                                    "licenseKey": {
+                                        "type": "SecureString",
+                                        "value": "**********"
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/SAWCC-P-BI01')]",
+            "type": "Microsoft.DataFactory/factories/integrationRuntimes",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "type": "SelfHosted",
+                "typeProperties": {}
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/saec_powerbi_dev')]",
+            "type": "Microsoft.DataFactory/factories/linkedServices",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "annotations": [],
+                "type": "AzureSqlDatabase",
+                "typeProperties": {
+                    "connectionString": "[parameters('saec_powerbi_dev_connectionString')]"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/AzureDataLakeStorage')]",
+            "type": "Microsoft.DataFactory/factories/linkedServices",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "annotations": [],
+                "type": "AzureBlobFS",
+                "typeProperties": {
+                    "url": "[parameters('AzureDataLakeStorage_properties_typeProperties_url')]",
+                    "accountKey": {
+                        "type": "SecureString",
+                        "value": "[parameters('AzureDataLakeStorage_accountKey')]"
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/AzureTableStorage')]",
+            "type": "Microsoft.DataFactory/factories/linkedServices",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "annotations": [],
+                "type": "AzureTableStorage",
+                "typeProperties": {
+                    "connectionString": "[parameters('AzureTableStorage_connectionString')]"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/AzureBlobStorage_XtractIS')]",
+            "type": "Microsoft.DataFactory/factories/linkedServices",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "annotations": [],
+                "type": "AzureBlobStorage",
+                "typeProperties": {
+                    "sasUri": "[parameters('AzureBlobStorage_XtractIS_sasUri')]"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/HttpLinkedForSoap')]",
+            "type": "Microsoft.DataFactory/factories/linkedServices",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "description": "Soap HTML",
+                "annotations": [],
+                "type": "HttpServer",
+                "typeProperties": {
+                    "url": "[parameters('HttpLinkedForSoap_properties_typeProperties_url')]",
+                    "enableServerCertificateValidation": false,
+                    "authenticationType": "Basic",
+                    "userName": "[parameters('HttpLinkedForSoap_properties_typeProperties_userName')]",
+                    "password": {
+                        "type": "SecureString",
+                        "value": "[parameters('HttpLinkedForSoap_password')]"
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/AzureBlobStorage1')]",
+            "type": "Microsoft.DataFactory/factories/linkedServices",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "description": "Blob",
+                "annotations": [],
+                "type": "AzureBlobStorage",
+                "typeProperties": {
+                    "connectionString": "[parameters('AzureBlobStorage1_connectionString')]"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/HttpLinkedForREST')]",
+            "type": "Microsoft.DataFactory/factories/linkedServices",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "description": "Rest API Linked Service",
+                "annotations": [],
+                "type": "HttpServer",
+                "typeProperties": {
+                    "url": "[parameters('HttpLinkedForREST_properties_typeProperties_url')]",
+                    "enableServerCertificateValidation": true,
+                    "authenticationType": "Basic",
+                    "userName": "[parameters('HttpLinkedForREST_properties_typeProperties_userName')]",
+                    "password": {
+                        "type": "SecureString",
+                        "value": "[parameters('HttpLinkedForREST_password')]"
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/AzureBlobStorageHistoricData')]",
+            "type": "Microsoft.DataFactory/factories/linkedServices",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "annotations": [],
+                "type": "AzureBlobStorage",
+                "typeProperties": {
+                    "sasUri": "[parameters('AzureBlobStorageHistoricData_sasUri')]"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/SoapCall')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Web1",
+                        "type": "WebActivity",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "url": "https://s1-eu.ariba.com/Sourcing/soap/saec-T/ContractHeaderExport",
+                            "method": "POST",
+                            "headers": {},
+                            "body": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:urn=\"urn:Ariba:Sourcing:vrealm_51073\">\n   <soapenv:Header>\n      <urn:Headers>\n      </urn:Headers>\n   </soapenv:Header>\n   <soapenv:Body>\n      <urn:ContractHeaderExportRequest>\n         <urn:WSContractHeaderExportInputBean_Item>\n            <urn:item>\n               <urn:ClassName>ariba.collaborate.contracts.ContractWorkspace</urn:ClassName>              \n            </urn:item>\n         </urn:WSContractHeaderExportInputBean_Item>\n      </urn:ContractHeaderExportRequest>\n   </soapenv:Body>\n</soapenv:Envelope>",
+                            "authentication": {
+                                "type": "Basic",
+                                "username": "BIUSER",
+                                "password": {
+                                    "type": "SecureString",
+                                    "value": "**********"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "name": "Set variable1",
+                        "type": "SetVariable",
+                        "dependsOn": [
+                            {
+                                "activity": "Web1",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "userProperties": [],
+                        "typeProperties": {
+                            "variableName": "test",
+                            "value": {
+                                "value": "@string(substring(\nactivity('Web1').output.Response, add(indexof(activity('Web1').output.Response,'<HeaderExportFile>'),18),\nsub(add(indexof(activity('Web1').output.Response,'</HeaderExportFile>'),-9),\nadd(indexof(activity('Web1').output.Response,'<HeaderExportFile>'),18))\n))",
+                                "type": "Expression"
+                            }
+                        }
+                    }
+                ],
+                "parameters": {
+                    "parobj": {
+                        "type": "object"
+                    },
+                    "parstr": {
+                        "type": "string"
+                    }
+                },
+                "variables": {
+                    "test": {
+                        "type": "String"
+                    }
+                },
+                "folder": {
+                    "name": "Purchasing/2_Extract"
+                },
+                "annotations": [],
+                "lastPublishTime": "2020-10-08T01:49:57Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/SAPS4HANA_PROD')]",
+            "type": "Microsoft.DataFactory/factories/linkedServices",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "annotations": [],
+                "type": "SapTable",
+                "typeProperties": {
+                    "clientId": "[parameters('SAPS4HANA_PROD_properties_typeProperties_clientId')]",
+                    "language": "EN",
+                    "sncMode": false,
+                    "userName": "[parameters('SAPS4HANA_PROD_properties_typeProperties_userName')]",
+                    "password": {
+                        "type": "SecureString",
+                        "value": "[parameters('SAPS4HANA_PROD_password')]"
+                    },
+                    "server": "[parameters('SAPS4HANA_PROD_properties_typeProperties_server')]",
+                    "systemNumber": "[parameters('SAPS4HANA_PROD_properties_typeProperties_systemNumber')]"
+                },
+                "connectVia": {
+                    "referenceName": "SAWCC-P-BI01",
+                    "type": "IntegrationRuntimeReference"
+                }
+            },
+            "dependsOn": [
+                "[concat(variables('factoryId'), '/integrationRuntimes/SAWCC-P-BI01')]"
+            ]
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/SAAZS_V_SAP13')]",
+            "type": "Microsoft.DataFactory/factories/linkedServices",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "description": "Linked service to the SAP HANA Database",
+                "annotations": [],
+                "type": "SapHana",
+                "typeProperties": {
+                    "connectionString": "[parameters('SAAZS_V_SAP13_connectionString')]"
+                },
+                "connectVia": {
+                    "referenceName": "SAWCC-P-BI01",
+                    "type": "IntegrationRuntimeReference"
+                }
+            },
+            "dependsOn": [
+                "[concat(variables('factoryId'), '/integrationRuntimes/SAWCC-P-BI01')]"
+            ]
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/SAAS_V_SAP13_QA')]",
+            "type": "Microsoft.DataFactory/factories/linkedServices",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "description": "The SAP Hana Linked Service to the QA Environment",
+                "annotations": [],
+                "type": "SapHana",
+                "typeProperties": {
+                    "connectionString": "[parameters('SAAS_V_SAP13_QA_connectionString')]"
+                },
+                "connectVia": {
+                    "referenceName": "SAWCC-P-BI01",
+                    "type": "IntegrationRuntimeReference"
+                }
+            },
+            "dependsOn": [
+                "[concat(variables('factoryId'), '/integrationRuntimes/SAWCC-P-BI01')]"
+            ]
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/SAAZS_V_SAP33_PROD')]",
+            "type": "Microsoft.DataFactory/factories/linkedServices",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "description": "PRODUCTION SAP HANA Environment Linked Service",
+                "annotations": [],
+                "type": "SapHana",
+                "typeProperties": {
+                    "connectionString": "[parameters('SAAZS_V_SAP33_PROD_connectionString')]"
+                },
+                "connectVia": {
+                    "referenceName": "SAWCC-P-BI01",
+                    "type": "IntegrationRuntimeReference"
+                }
+            },
+            "dependsOn": [
+                "[concat(variables('factoryId'), '/integrationRuntimes/SAWCC-P-BI01')]"
+            ]
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Isometrix_Api_test')]",
+            "type": "Microsoft.DataFactory/factories/linkedServices",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "description": "Testin",
+                "annotations": [],
+                "type": "RestService",
+                "typeProperties": {
+                    "url": "[parameters('Isometrix_Api_test_properties_typeProperties_url')]",
+                    "enableServerCertificateValidation": true,
+                    "authenticationType": "Basic",
+                    "userName": "[parameters('Isometrix_Api_test_properties_typeProperties_userName')]",
+                    "password": {
+                        "type": "SecureString",
+                        "value": "[parameters('Isometrix_Api_test_password')]"
+                    }
+                },
+                "connectVia": {
+                    "referenceName": "SAWCC-P-BI01",
+                    "type": "IntegrationRuntimeReference"
+                }
+            },
+            "dependsOn": [
+                "[concat(variables('factoryId'), '/integrationRuntimes/SAWCC-P-BI01')]"
+            ]
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/DSR_S4H_CCPROFITCENTER')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "saec_powerbi_dev",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "AzureSqlTable",
+                "schema": [
+                    {
+                        "name": "MANDT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PROFITCENTER",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CONTROLLINGAREA",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ADDITIONALMASTERDATATEXT",
+                        "type": "nvarchar"
+                    }
+                ],
+                "typeProperties": {
+                    "tableName": "[[Sap4Hanna].[CCPROFITCENTER]"
+                }
+            },
+            "dependsOn": [
+                "[concat(variables('factoryId'), '/linkedServices/saec_powerbi_dev')]"
+            ]
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/DSR_SPS_WBS')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "saec_powerbi_dev",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "AzureSqlTable",
+                "schema": [
+                    {
+                        "name": "RWBS_ELMT",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RPLANYEAR",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RVERSION",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RCOMPCODE",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RCOSTELMT",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RDBCR_IND",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RDOC_CAT",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RMATLGRUP",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RPIOVALUE",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RPIOBJTYP",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RPCOMPCOD",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RVNDRCAT",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "0FISCPER",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RAMOUNT",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RCURRENCY",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RCURTYPE",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RQUANTITY",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RUNIT",
+                        "type": "varchar"
+                    }
+                ],
+                "typeProperties": {
+                    "tableName": "[[SPSData].[SPS_WBS_OUTPUT_ALL_F09_RCOMPCODE_ALL_Booyj9]"
+                }
+            },
+            "dependsOn": [
+                "[concat(variables('factoryId'), '/linkedServices/saec_powerbi_dev')]"
+            ]
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/DSR_SPS_SPS')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "saec_powerbi_dev",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "AzureSqlTable",
+                "schema": [
+                    {
+                        "name": "RPRFT_CTR",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RPLANYEAR",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RVERSION",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RCOMPCODE",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RACCOUNT",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RPCATTYP",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RDOC_CAT",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RMATLGRUP",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RPCOMPANY",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "FISCPER",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RAMOUNT",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RCURRENCY",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RCURTYPE",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RQUANTITY",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RUNIT",
+                        "type": "varchar"
+                    }
+                ],
+                "typeProperties": {
+                    "tableName": "[[SPSData].[SPS_OUTPUT_F09_RCOMPCODE_ALL_Booyj9]"
+                }
+            },
+            "dependsOn": [
+                "[concat(variables('factoryId'), '/linkedServices/saec_powerbi_dev')]"
+            ]
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/DSR_S4H_ZFICACCOSTALLOC')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "saec_powerbi_dev",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "AzureSqlTable",
+                "schema": [
+                    {
+                        "name": "MANDT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "RBUKRS",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "GJAHR",
+                        "type": "char"
+                    },
+                    {
+                        "name": "BELNR",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "DOCLN",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "COORDERNUMBER",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CONTROLLINGAREA",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FISCALYEARVARIANT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FISCALYEAR",
+                        "type": "char"
+                    },
+                    {
+                        "name": "COMPANYCODE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PLANT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PARTNERCOSTOBJECT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PARTNERCOSTOBJECTTYPE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PROFITABILITYSEGMENT",
+                        "type": "char"
+                    },
+                    {
+                        "name": "CUSTOMER",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "VENDOR",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CHARTOFACCOUNTS",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "COSTELEMENT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "GLACCOUNT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ACTIVITYTYPE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CREDITDEBIT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ACCOUNTINGDOCUMENTTYPE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "DOCUMENTPOSTINGDATE",
+                        "type": "date"
+                    },
+                    {
+                        "name": "CODOCUMENTDATE",
+                        "type": "date"
+                    },
+                    {
+                        "name": "DOCUMENTCREATEDBY",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "COBUSINESSTRANSACTION",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "REFERENCEDOCUMENTITEM",
+                        "type": "char"
+                    },
+                    {
+                        "name": "REFERENCETRANSACTION",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CODOCUMENTNUMBER",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CODOCUMENTLINEITEM",
+                        "type": "char"
+                    },
+                    {
+                        "name": "CODOCUMENTSEGMENTTEXT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PURCHASINGDOCUMENT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PURCHASINGDOCLINEITEMNUMBER",
+                        "type": "char"
+                    },
+                    {
+                        "name": "MATERIAL",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "MATERIALGROUP",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "UNITOFMEASURE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CURRENCYKEY",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "WBSELEMENT",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PROJECTDEFINITION",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ORDERNUMBER",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "COORDERCATEGORY",
+                        "type": "char"
+                    },
+                    {
+                        "name": "COORDERTYPE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "WORKORDERNUMBER",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "FUNCTIONALLOCATION",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "MAINTENANCEITEM",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "WORKORDERTYPE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "REALESTATEOBJECTKEY",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "TASKLISTGROUP",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "WORKPLAN",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "WORKORDERHEADERSYSTEMSTATUS",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "WORKORDERHEADERSYSTEMSTATUS1",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "WOPRIORITY",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PLANNERGROUP",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "WORKORDERACTUALENDDATE",
+                        "type": "date"
+                    },
+                    {
+                        "name": "WORKORDERCOMPLETIONDATE",
+                        "type": "date"
+                    }
+                ],
+                "typeProperties": {
+                    "tableName": "[[Sap4Hanna].[ZFICACCOSTALLOC]"
+                }
+            },
+            "dependsOn": [
+                "[concat(variables('factoryId'), '/linkedServices/saec_powerbi_dev')]"
+            ]
+        }
+    ]
+}

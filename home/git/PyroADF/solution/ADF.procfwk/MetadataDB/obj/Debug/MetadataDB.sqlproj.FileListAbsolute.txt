@@ -1,0 +1,7 @@
+C:\Repos\PyroADF\solution\ADF.procfwk\MetadataDB\bin\Debug\MetadataDB.dacpac
+C:\Repos\PyroADF\solution\ADF.procfwk\MetadataDB\bin\Debug\MetadataDB.dll
+C:\Repos\PyroADF\solution\ADF.procfwk\MetadataDB\bin\Debug\MetadataDB.pdb
+C:\Repos\PyroADF\solution\ADF.procfwk\MetadataDB\bin\Debug\master.dacpac
+C:\Repos\PyroADF\solution\ADF.procfwk\MetadataDB\obj\Debug\MetadataDB.sqlproj.CopyComplete
+C:\Repos\PyroADF\solution\ADF.procfwk\MetadataDB\obj\Debug\MetadataDB.dll
+C:\Repos\PyroADF\solution\ADF.procfwk\MetadataDB\obj\Debug\MetadataDB.pdb

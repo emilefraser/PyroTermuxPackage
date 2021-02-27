@@ -1,0 +1,91 @@
+{
+	"name": "FlattenJson_JSON_Lookup_Arm_Proc",
+	"properties": {
+		"activities": [
+			{
+				"name": "Lookup Json Value in Blob",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "JsonSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "JsonReadSettings"
+						}
+					},
+					"dataset": {
+						"referenceName": "AzureBlobStorage_Json",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "Json Import Stored Procedure",
+				"description": "The Stored Procedure to Run the Json Import as Single blob",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Lookup Json Value in Blob",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[inout].[SetJsonIn]",
+					"storedProcedureParameters": {
+						"JsonString": {
+							"value": {
+								"value": "@string(activity('Lookup Json Value in Blob').output.value)",
+								"type": "Expression"
+							},
+							"type": "String"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"AzureKeyVaultBaseUrl": {
+							"value": "@pipeline().parameters.AzureKeyVaultBaseUrl",
+							"type": "Expression"
+						}
+					}
+				}
+			}
+		],
+		"parameters": {
+			"AzureKeyVaultBaseUrl": {
+				"type": "string",
+				"defaultValue": "https://acazeukeyvault.vault.azure.net/"
+			}
+		},
+		"folder": {
+			"name": "Utility"
+		},
+		"annotations": []
+	}
+}

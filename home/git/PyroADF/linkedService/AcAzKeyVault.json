@@ -1,0 +1,16 @@
+{
+    "name": "AcAzKeyVault",
+    "properties": {
+        "type": "AzureKeyVault",
+        "parameters": {
+            "baseUrl": {
+                "type": "String"
+            }
+        },
+        "annotations": [],
+        "typeProperties": {
+            "baseURL": "@{linkedService().baseUrl}"
+        },
+        "description": "My personal KeyVault used from storing keys and secrets"
+    }
+}

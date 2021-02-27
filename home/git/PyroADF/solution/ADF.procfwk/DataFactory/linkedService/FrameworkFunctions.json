@@ -1,0 +1,20 @@
+{
+	"name": "FrameworkFunctions",
+	"properties": {
+		"annotations": [
+			"ADF.procfwk"
+		],
+		"type": "AzureFunction",
+		"typeProperties": {
+			"functionAppUrl": "https://frameworksupportfunctions.azurewebsites.net",
+			"functionKey": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "Keys",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "FrameworkFunctionsKey"
+			}
+		}
+	}
+}

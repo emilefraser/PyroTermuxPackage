@@ -1,0 +1,336 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "factoryName": {
+            "type": "string",
+            "metadata": "Data Factory name",
+            "defaultValue": "saecpowerbidev"
+        },
+        "saec_powerbi_dev_connectionString": {
+            "type": "secureString",
+            "metadata": "Secure string for 'connectionString' of 'saec_powerbi_dev'"
+        },
+        "AzureDataLakeStorage_accountKey": {
+            "type": "secureString",
+            "metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage'"
+        },
+        "AzureTableStorage_connectionString": {
+            "type": "secureString",
+            "metadata": "Secure string for 'connectionString' of 'AzureTableStorage'"
+        },
+        "SAPS4HANA_PROD_password": {
+            "type": "secureString",
+            "metadata": "Secure string for 'password' of 'SAPS4HANA_PROD'"
+        },
+        "SAAZS_V_SAP13_connectionString": {
+            "type": "secureString",
+            "metadata": "Secure string for 'connectionString' of 'SAAZS_V_SAP13'"
+        },
+        "SAAS_V_SAP13_QA_connectionString": {
+            "type": "secureString",
+            "metadata": "Secure string for 'connectionString' of 'SAAS_V_SAP13_QA'"
+        },
+        "SAAZS_V_SAP33_PROD_connectionString": {
+            "type": "secureString",
+            "metadata": "Secure string for 'connectionString' of 'SAAZS_V_SAP33_PROD'"
+        },
+        "HttpLinkedForSoap_password": {
+            "type": "secureString",
+            "metadata": "Secure string for 'password' of 'HttpLinkedForSoap'"
+        },
+        "AzureBlobStorage1_connectionString": {
+            "type": "secureString",
+            "metadata": "Secure string for 'connectionString' of 'AzureBlobStorage1'"
+        },
+        "Isometrix_Api_test_password": {
+            "type": "secureString",
+            "metadata": "Secure string for 'password' of 'Isometrix_Api_test'"
+        },
+        "HttpLinkedForREST_password": {
+            "type": "secureString",
+            "metadata": "Secure string for 'password' of 'HttpLinkedForREST'"
+        },
+        "XtractIS-IR_properties_typeProperties_ssisProperties_catalogInfo_catalogServerEndpoint": {
+            "type": "string",
+            "defaultValue": "saazs-v-pwrbidev.database.windows.net"
+        },
+        "XtractIS-IR_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminUserName": {
+            "type": "string",
+            "defaultValue": "saecadmin"
+        },
+        "XtractIS-IR_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminPassword": {
+            "type": "secureString"
+        },
+        "XtractIS-IR_properties_typeProperties_ssisProperties_customSetupScriptProperties_sasToken": {
+            "type": "secureString"
+        },
+        "AzureDataLakeStorage_properties_typeProperties_url": {
+            "type": "string",
+            "defaultValue": "https://saecpowerbidev.dfs.core.windows.net"
+        },
+        "AzureBlobStorage_XtractIS_sasUri": {
+            "type": "secureString",
+            "metadata": "Secure string for 'sasUri' of 'AzureBlobStorage_XtractIS'"
+        },
+        "SAPS4HANA_PROD_properties_typeProperties_clientId": {
+            "type": "string",
+            "defaultValue": "100"
+        },
+        "SAPS4HANA_PROD_properties_typeProperties_userName": {
+            "type": "string",
+            "defaultValue": "XSTRACTIS"
+        },
+        "SAPS4HANA_PROD_properties_typeProperties_server": {
+            "type": "string",
+            "defaultValue": "saazs-v-sap30.satcc.co.za"
+        },
+        "SAPS4HANA_PROD_properties_typeProperties_systemNumber": {
+            "type": "string",
+            "defaultValue": "30"
+        },
+        "HttpLinkedForSoap_properties_typeProperties_url": {
+            "type": "string",
+            "defaultValue": "https://s1-eu.ariba.com/Sourcing/soap/saec-T/ContractHeaderExport"
+        },
+        "HttpLinkedForSoap_properties_typeProperties_userName": {
+            "type": "string",
+            "defaultValue": "BIUSER"
+        },
+        "Isometrix_Api_test_properties_typeProperties_url": {
+            "type": "string",
+            "defaultValue": "https://ch17.isometrix.net/RestAPI.SAEC.QA/api/ModuleTemplate"
+        },
+        "Isometrix_Api_test_properties_typeProperties_userName": {
+            "type": "string",
+            "defaultValue": "isoApiuser"
+        },
+        "HttpLinkedForREST_properties_typeProperties_url": {
+            "type": "string",
+            "defaultValue": "https://ch17.isometrix.net/RestAPI.SAEC.QA/api"
+        },
+        "HttpLinkedForREST_properties_typeProperties_userName": {
+            "type": "string",
+            "defaultValue": "isoApiuser"
+        },
+        "AzureBlobStorageHistoricData_sasUri": {
+            "type": "secureString",
+            "metadata": "Secure string for 'sasUri' of 'AzureBlobStorageHistoricData'"
+        },
+        "containerUri": {
+            "type": "string",
+            "metadata": "URI to storage account containing linked ARM templates"
+        },
+        "containerSasToken": {
+            "type": "string",
+            "metadata": "Sas token to storage account containing linked ARM templates"
+        }
+    },
+    "variables": {
+        "factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+    },
+    "resources": [
+        {
+            "name": "saecpowerbidev_ArmTemplate_0",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2018-02-01",
+            "properties": {
+                "mode": "incremental",
+                "templateLink": {
+                    "uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "factoryName": {
+                        "value": "[parameters('factoryName')]"
+                    },
+                    "saec_powerbi_dev_connectionString": {
+                        "value": "[parameters('saec_powerbi_dev_connectionString')]"
+                    },
+                    "AzureDataLakeStorage_accountKey": {
+                        "value": "[parameters('AzureDataLakeStorage_accountKey')]"
+                    },
+                    "AzureTableStorage_connectionString": {
+                        "value": "[parameters('AzureTableStorage_connectionString')]"
+                    },
+                    "HttpLinkedForSoap_password": {
+                        "value": "[parameters('HttpLinkedForSoap_password')]"
+                    },
+                    "AzureBlobStorage1_connectionString": {
+                        "value": "[parameters('AzureBlobStorage1_connectionString')]"
+                    },
+                    "HttpLinkedForREST_password": {
+                        "value": "[parameters('HttpLinkedForREST_password')]"
+                    },
+                    "SAPS4HANA_PROD_password": {
+                        "value": "[parameters('SAPS4HANA_PROD_password')]"
+                    },
+                    "SAAZS_V_SAP13_connectionString": {
+                        "value": "[parameters('SAAZS_V_SAP13_connectionString')]"
+                    },
+                    "SAAS_V_SAP13_QA_connectionString": {
+                        "value": "[parameters('SAAS_V_SAP13_QA_connectionString')]"
+                    },
+                    "SAAZS_V_SAP33_PROD_connectionString": {
+                        "value": "[parameters('SAAZS_V_SAP33_PROD_connectionString')]"
+                    },
+                    "Isometrix_Api_test_password": {
+                        "value": "[parameters('Isometrix_Api_test_password')]"
+                    },
+                    "XtractIS-IR_properties_typeProperties_ssisProperties_catalogInfo_catalogServerEndpoint": {
+                        "value": "[parameters('XtractIS-IR_properties_typeProperties_ssisProperties_catalogInfo_catalogServerEndpoint')]"
+                    },
+                    "XtractIS-IR_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminUserName": {
+                        "value": "[parameters('XtractIS-IR_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminUserName')]"
+                    },
+                    "XtractIS-IR_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminPassword": {
+                        "value": "[parameters('XtractIS-IR_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminPassword')]"
+                    },
+                    "XtractIS-IR_properties_typeProperties_ssisProperties_customSetupScriptProperties_sasToken": {
+                        "value": "[parameters('XtractIS-IR_properties_typeProperties_ssisProperties_customSetupScriptProperties_sasToken')]"
+                    },
+                    "AzureDataLakeStorage_properties_typeProperties_url": {
+                        "value": "[parameters('AzureDataLakeStorage_properties_typeProperties_url')]"
+                    },
+                    "AzureBlobStorage_XtractIS_sasUri": {
+                        "value": "[parameters('AzureBlobStorage_XtractIS_sasUri')]"
+                    },
+                    "HttpLinkedForSoap_properties_typeProperties_url": {
+                        "value": "[parameters('HttpLinkedForSoap_properties_typeProperties_url')]"
+                    },
+                    "HttpLinkedForSoap_properties_typeProperties_userName": {
+                        "value": "[parameters('HttpLinkedForSoap_properties_typeProperties_userName')]"
+                    },
+                    "HttpLinkedForREST_properties_typeProperties_url": {
+                        "value": "[parameters('HttpLinkedForREST_properties_typeProperties_url')]"
+                    },
+                    "HttpLinkedForREST_properties_typeProperties_userName": {
+                        "value": "[parameters('HttpLinkedForREST_properties_typeProperties_userName')]"
+                    },
+                    "AzureBlobStorageHistoricData_sasUri": {
+                        "value": "[parameters('AzureBlobStorageHistoricData_sasUri')]"
+                    },
+                    "SAPS4HANA_PROD_properties_typeProperties_clientId": {
+                        "value": "[parameters('SAPS4HANA_PROD_properties_typeProperties_clientId')]"
+                    },
+                    "SAPS4HANA_PROD_properties_typeProperties_userName": {
+                        "value": "[parameters('SAPS4HANA_PROD_properties_typeProperties_userName')]"
+                    },
+                    "SAPS4HANA_PROD_properties_typeProperties_server": {
+                        "value": "[parameters('SAPS4HANA_PROD_properties_typeProperties_server')]"
+                    },
+                    "SAPS4HANA_PROD_properties_typeProperties_systemNumber": {
+                        "value": "[parameters('SAPS4HANA_PROD_properties_typeProperties_systemNumber')]"
+                    },
+                    "Isometrix_Api_test_properties_typeProperties_url": {
+                        "value": "[parameters('Isometrix_Api_test_properties_typeProperties_url')]"
+                    },
+                    "Isometrix_Api_test_properties_typeProperties_userName": {
+                        "value": "[parameters('Isometrix_Api_test_properties_typeProperties_userName')]"
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "saecpowerbidev_ArmTemplate_1",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2018-02-01",
+            "properties": {
+                "mode": "incremental",
+                "templateLink": {
+                    "uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "factoryName": {
+                        "value": "[parameters('factoryName')]"
+                    }
+                }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments', 'saecpowerbidev_ArmTemplate_0')]"
+            ]
+        },
+        {
+            "name": "saecpowerbidev_ArmTemplate_2",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2018-02-01",
+            "properties": {
+                "mode": "incremental",
+                "templateLink": {
+                    "uri": "[concat(parameters('containerUri'), '/ArmTemplate_2.json', parameters('containerSasToken'))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "factoryName": {
+                        "value": "[parameters('factoryName')]"
+                    }
+                }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments', 'saecpowerbidev_ArmTemplate_1')]"
+            ]
+        },
+        {
+            "name": "saecpowerbidev_ArmTemplate_3",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2018-02-01",
+            "properties": {
+                "mode": "incremental",
+                "templateLink": {
+                    "uri": "[concat(parameters('containerUri'), '/ArmTemplate_3.json', parameters('containerSasToken'))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "factoryName": {
+                        "value": "[parameters('factoryName')]"
+                    }
+                }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments', 'saecpowerbidev_ArmTemplate_2')]"
+            ]
+        },
+        {
+            "name": "saecpowerbidev_ArmTemplate_4",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2018-02-01",
+            "properties": {
+                "mode": "incremental",
+                "templateLink": {
+                    "uri": "[concat(parameters('containerUri'), '/ArmTemplate_4.json', parameters('containerSasToken'))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "factoryName": {
+                        "value": "[parameters('factoryName')]"
+                    }
+                }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments', 'saecpowerbidev_ArmTemplate_3')]"
+            ]
+        },
+        {
+            "name": "saecpowerbidev_ArmTemplate_5",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2018-02-01",
+            "properties": {
+                "mode": "incremental",
+                "templateLink": {
+                    "uri": "[concat(parameters('containerUri'), '/ArmTemplate_5.json', parameters('containerSasToken'))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "factoryName": {
+                        "value": "[parameters('factoryName')]"
+                    }
+                }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments', 'saecpowerbidev_ArmTemplate_4')]"
+            ]
+        }
+    ]
+}

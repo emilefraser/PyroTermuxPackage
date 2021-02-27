@@ -1,0 +1,7 @@
+C:\Repos\PyroADF\AcAzMetadataDB\bin\Debug\AcAzMetadataDB.dacpac
+C:\Repos\PyroADF\AcAzMetadataDB\obj\Debug\Model.xml
+C:\Repos\PyroADF\AcAzMetadataDB\obj\Debug\refactor.xml
+C:\Repos\PyroADF\AcAzMetadataDB\obj\Debug\postdeploy.sql
+C:\Repos\PyroADF\AcAzMetadataDB\obj\Debug\predeploy.sql
+C:\Repos\PyroADF\AcAzMetadataDB\obj\Debug\AcAzMetadataDB.dll
+C:\Repos\PyroADF\AcAzMetadataDB\obj\Debug\AcAzMetadataDB.pdb

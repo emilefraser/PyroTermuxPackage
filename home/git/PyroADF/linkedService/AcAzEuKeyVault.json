@@ -1,0 +1,11 @@
+{
+    "name": "AcAzEuKeyVault",
+    "properties": {
+        "description": "Key Vault used for my keys and secret",
+        "annotations": [],
+        "type": "AzureKeyVault",
+        "typeProperties": {
+            "baseUrl": "https://AcAzEuKeyVault.vault.azure.net/"
+        }
+    }
+}

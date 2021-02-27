@@ -1,0 +1,28 @@
+{
+	"name": "AcAzAdf",
+	"properties": {
+		"globalParameters": {
+			"MetaDataDB_Server": {
+				"type": "string",
+				"value": "acazmssql01.database.windows.net"
+			},
+			"MetaDataDB_Database": {
+				"type": "string",
+				"value": "AcAzMetadataDB"
+			},
+			"MetaDataDB_AuthenticationType": {
+				"type": "string",
+				"value": "SQL"
+			},
+			"MetaDataDB_Username": {
+				"type": "string",
+				"value": "emilefraser"
+			},
+			"MetaDataDB_Password": {
+				"type": "string",
+				"value": "105022_Alpha"
+			}
+		}
+	},
+	"location": "northeurope"
+}

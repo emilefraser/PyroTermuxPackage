@@ -1,0 +1,33 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "factoryName": {
+            "value": "saecpowerbidev"
+        },
+        "dataFactory_properties_globalParameters_AzureSqlServerName_value": {
+            "value": "saazs-v-pwrbidev.database.windows.net"
+        },
+        "dataFactory_properties_globalParameters_AzureSqlDatabaseName_value": {
+            "value": "saec-powerbi-dev"
+        },
+        "dataFactory_properties_globalParameters_ExtractionSchemaName_value": {
+            "value": "ext"
+        },
+        "dataFactory_properties_globalParameters_RawDataVaultSchemaName_value": {
+            "value": "raw"
+        },
+        "dataFactory_properties_globalParameters_StageAreaSchemaName_value": {
+            "value": "stage"
+        },
+        "dataFactory_properties_globalParameters_MetaDataSchemaName_value": {
+            "value": "dm"
+        },
+        "dataFactory_properties_globalParameters_AdfSchemaName_value": {
+            "value": "adf"
+        },
+        "dataFactory_location": {
+            "value": "westeurope"
+        }
+    }
+}

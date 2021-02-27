@@ -1,0 +1,32 @@
+{
+	"name": "AzureSqlDatabase",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"description": "Linked Service to Azure Sql Database",
+		"parameters": {
+			"AzureKeyVaultBaseUrl": {
+				"type": "string",
+				"defaultValue": "https://acazeukeyvault.vault.azure.net/"
+			}
+		},
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"connectionString": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=acazmssql01.database.windows.net;Initial Catalog=AcAzMetadataDB;User ID=emilefraser",
+			"password": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "AzureKeyVault",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"baseUrl": {
+							"value": "@linkedService().AzureKeyVaultBaseUrl",
+							"type": "Expression"
+						}
+					}
+				},
+				"secretName": "emilefraser"
+			}
+		}
+	}
+}

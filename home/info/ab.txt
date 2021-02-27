@@ -1,0 +1,1 @@
+pkg i apt aria2 at apksigner bash-completion bat bc binutils bzip2

@@ -1,0 +1,10 @@
+
+
+
+
+Delete
+dd - line
+
+folding
+zR - Reduce
+zi - En/Disablw

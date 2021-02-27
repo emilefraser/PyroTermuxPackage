@@ -1,0 +1,14 @@
+﻿{
+    "$schema": "http://datafactories.schema.management.azure.com/schemas/2015-08-01/Microsoft.DataFactory.LinkedService.json",
+    "name": "AzureBatchLinkedService",
+    "properties": {
+        "type": "AzureBatch",
+      "typeProperties": {
+        "accountName": "<config>",
+        "accessKey": "<config>",
+        "poolName": "<config>",
+        "batchUri": "<config>",
+        "linkedServiceName": "AzureStorageLinkedService"
+      }
+    }
+}

@@ -1,0 +1,21 @@
+{
+	"name": "AzureBlobStorage_Parquet",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Utility"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}

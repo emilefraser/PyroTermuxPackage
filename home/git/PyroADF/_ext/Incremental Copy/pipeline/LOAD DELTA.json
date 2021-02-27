@@ -1,0 +1,376 @@
+{
+	"name": "LOAD DELTA",
+	"properties": {
+		"activities": [
+			{
+				"name": "GET CFG",
+				"type": "Lookup",
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"typeProperties": {
+					"source": {
+						"type": "SqlSource",
+						"sqlReaderQuery": {
+							"value": "SELECT * from @{pipeline().parameters.ConfigTable}\nIF @@ROWCOUNT = 0 THROW 50000,'ojej...',1",
+							"type": "Expression"
+						}
+					},
+					"dataset": {
+						"referenceName": "SQL",
+						"type": "DatasetReference",
+						"parameters": {
+							"TableName": "dummy"
+						}
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "FOR EACH ORA",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "ORA CFG",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('ORA CFG').output.value",
+						"type": "Expression"
+					},
+					"isSequential": false,
+					"activities": [
+						{
+							"name": "COPY ORA",
+							"type": "Copy",
+							"dependsOn": [
+								{
+									"activity": "GET MAX ORA",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false
+							},
+							"userProperties": [
+								{
+									"name": "Destination",
+									"value": "@{item().DST_tab}"
+								}
+							],
+							"typeProperties": {
+								"source": {
+									"type": "OracleSource",
+									"oracleReaderQuery": {
+										"value": "SELECT \n @{item().Cols} FROM @{item().SRC_tab} \n\nWHERE \n\n@{item().WatermarkColumn} > \nTO_DATE('@{item().WatermarkValue}', 'YYYY-MM-DD\"T\"HH24:MI:SS\"Z\"')\nAND\n@{item().WatermarkColumn} <=\nTO_DATE('@{activity('GET MAX ORA').output.firstRow.MAXD}', 'YYYY-MM-DD\"T\"HH24:MI:SS\"Z\"')",
+										"type": "Expression"
+									}
+								},
+								"sink": {
+									"type": "SqlSink",
+									"writeBatchSize": 10000,
+									"preCopyScript": {
+										"value": "TRUNCATE TABLE @{item().DST_tab}",
+										"type": "Expression"
+									}
+								},
+								"enableStaging": false,
+								"cloudDataMovementUnits": 0
+							},
+							"inputs": [
+								{
+									"referenceName": "ORA",
+									"type": "DatasetReference"
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "SQL",
+									"type": "DatasetReference",
+									"parameters": {
+										"TableName": {
+											"value": "@{item().DST_tab}",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						},
+						{
+							"name": "GET MAX ORA",
+							"type": "Lookup",
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false
+							},
+							"typeProperties": {
+								"source": {
+									"type": "OracleSource",
+									"oracleReaderQuery": {
+										"value": "SELECT MAX(@{item().WatermarkColumn}) as maxd FROM @{item().SRC_tab} ",
+										"type": "Expression"
+									}
+								},
+								"dataset": {
+									"referenceName": "ORA",
+									"type": "DatasetReference"
+								}
+							}
+						},
+						{
+							"name": "UPDATE WATERMARK ORA",
+							"type": "SqlServerStoredProcedure",
+							"dependsOn": [
+								{
+									"activity": "COPY ORA",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false
+							},
+							"typeProperties": {
+								"storedProcedureName": "[load].[usp_UpdateWatermark]",
+								"storedProcedureParameters": {
+									"id": {
+										"value": {
+											"value": "@{item().id}",
+											"type": "Expression"
+										},
+										"type": "Int16"
+									},
+									"NewWatermark": {
+										"value": {
+											"value": "@{activity('GET MAX ORA').output.firstRow.MAXD}",
+											"type": "Expression"
+										},
+										"type": "DateTime"
+									}
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "AzureSQL",
+								"type": "LinkedServiceReference"
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "ORA CFG",
+				"type": "Filter",
+				"dependsOn": [
+					{
+						"activity": "GET CFG",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('GET CFG').output.value",
+						"type": "Expression"
+					},
+					"condition": {
+						"value": "@equals(item().SRC_name,'ORA')",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "PG CFG",
+				"type": "Filter",
+				"dependsOn": [
+					{
+						"activity": "GET CFG",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('GET CFG').output.value",
+						"type": "Expression"
+					},
+					"condition": {
+						"value": "@equals(item().SRC_name,'PG')",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "FOR EACH PG",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "PG CFG",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('PG CFG').output.value",
+						"type": "Expression"
+					},
+					"isSequential": false,
+					"activities": [
+						{
+							"name": "Copy PG",
+							"type": "Copy",
+							"dependsOn": [
+								{
+									"activity": "GET MAX PG",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false
+							},
+							"userProperties": [
+								{
+									"name": "Destination",
+									"value": "@{item().DST_tab}"
+								}
+							],
+							"typeProperties": {
+								"source": {
+									"type": "RelationalSource",
+									"query": {
+										"value": "SELECT @{item().Cols} FROM @{item().SRC_tab} \n\nWHERE \n\n@{item().WatermarkColumn} > \n'@{item().WatermarkValue}'\nAND\n@{item().WatermarkColumn} <=\n'@{activity('GET MAX PG').output.firstRow.MAXD}'",
+										"type": "Expression"
+									}
+								},
+								"sink": {
+									"type": "SqlSink",
+									"writeBatchSize": 10000,
+									"preCopyScript": {
+										"value": "TRUNCATE TABLE @{item().DST_tab}",
+										"type": "Expression"
+									}
+								},
+								"enableStaging": false,
+								"cloudDataMovementUnits": 0
+							},
+							"inputs": [
+								{
+									"referenceName": "PG",
+									"type": "DatasetReference"
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "SQL",
+									"type": "DatasetReference",
+									"parameters": {
+										"TableName": {
+											"value": "@{item().DST_tab}",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						},
+						{
+							"name": "GET MAX PG",
+							"type": "Lookup",
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false
+							},
+							"typeProperties": {
+								"source": {
+									"type": "RelationalSource",
+									"query": {
+										"value": "SELECT MAX(@{item().WatermarkColumn}) as maxd FROM @{item().SRC_tab} ",
+										"type": "Expression"
+									}
+								},
+								"dataset": {
+									"referenceName": "PG",
+									"type": "DatasetReference"
+								}
+							}
+						},
+						{
+							"name": "UPDATE WATERMARK PG",
+							"type": "SqlServerStoredProcedure",
+							"dependsOn": [
+								{
+									"activity": "Copy PG",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false
+							},
+							"typeProperties": {
+								"storedProcedureName": "[load].[usp_UpdateWatermark]",
+								"storedProcedureParameters": {
+									"id": {
+										"value": {
+											"value": "@{item().id}",
+											"type": "Expression"
+										},
+										"type": "Int16"
+									},
+									"NewWatermark": {
+										"value": {
+											"value": "@{activity('GET MAX PG').output.firstRow.MAXD}",
+											"type": "Expression"
+										},
+										"type": "DateTime"
+									}
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "AzureSQL",
+								"type": "LinkedServiceReference"
+							}
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"ConfigTable": {
+				"type": "String",
+				"defaultValue": "load.cfg"
+			}
+		}
+	}
+}

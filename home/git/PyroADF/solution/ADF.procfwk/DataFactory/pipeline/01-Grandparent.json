@@ -1,0 +1,28 @@
+{
+	"name": "01-Grandparent",
+	"properties": {
+		"description": "ADF.procfwk grandparent pipeline used optionally to bootstrap any wider processes in your Data Factory that then calls the processing framework.",
+		"activities": [
+			{
+				"name": "Framework Processing",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "02-Parent",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"folder": {
+			"name": "_ProcFwk"
+		},
+		"annotations": [
+			"ADF.procfwk",
+			"Grandparent"
+		]
+	}
+}

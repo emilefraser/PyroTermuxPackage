@@ -1,0 +1,6 @@
+﻿DROP SCHEMA IF EXISTS [procfwk]
+GO
+
+CREATE SCHEMA [procfwk] AUTHORIZATION [dbo];
+GO
+

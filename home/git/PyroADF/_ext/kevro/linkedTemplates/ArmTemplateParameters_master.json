@@ -1,0 +1,39 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "factoryName": {
+            "value": "KevroDataFactory02"
+        },
+        "dmgr_AutoIR_AzureSqlMI_DataManager_Local_connectionString": {
+            "value": ""
+        },
+        "dmgr_AutoIR_AzureSqlMI_connectionString": {
+            "value": ""
+        },
+        "dmgr_KEVADFIR01_MySQL_connectionString": {
+            "value": ""
+        },
+        "dmgr_AutoIR_AzureSqlMI_DataManager_connectionString": {
+            "value": ""
+        },
+        "dmgr_AutoIR_AzureMySQL_connectionString": {
+            "value": ""
+        },
+        "FS_TestDB_connectionString": {
+            "value": ""
+        },
+        "SourceTableCheck-1h_properties_CheckSourceTableRowCount_parameters_UpperLimitDate": {
+            "value": "2019-12-08T08:00:00Z"
+        },
+        "KEVADFIR01_properties_typeProperties_linkedInfo_resourceId": {
+            "value": "/subscriptions/c52e8c00-4626-414d-a898-eadbceeb694b/resourcegroups/Kevro_Online/providers/Microsoft.DataFactory/factories/KevroDataFactory01/integrationruntimes/KEVADFIR01"
+        },
+        "containerUri": {
+            "value": ""
+        },
+        "containerSasToken": {
+            "value": ""
+        }
+    }
+}

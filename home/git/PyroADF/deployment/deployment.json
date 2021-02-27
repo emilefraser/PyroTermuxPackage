@@ -1,0 +1,74 @@
+{
+  "id": "/subscriptions/65b6d768-d2b9-42be-b034-e8bd2a5d3ff7/resourceGroups/DMGR/providers/Microsoft.Resources/deployments/Microsoft.DataFactory-AcAzAdf",
+  "name": "Microsoft.DataFactory-AcAzAdf",
+  "type": "Microsoft.Resources/deployments",
+  "tags": {
+    "marketplaceItemId": "Microsoft.DataFactory",
+    "primaryResourceId": "/subscriptions/65b6d768-d2b9-42be-b034-e8bd2a5d3ff7/resourcegroups/DMGR/providers/Microsoft.DataFactory/factories/AcAzAdf"
+  },
+  "properties": {
+    "templateHash": "16987804144913193243",
+    "parameters": {
+      "name": {
+        "type": "String",
+        "value": "AcAzAdf"
+      },
+      "location": {
+        "type": "String",
+        "value": "northeurope"
+      },
+      "apiVersion": {
+        "type": "String",
+        "value": "2018-06-01"
+      },
+      "gitAccountName": {
+        "type": "String",
+        "value": "emilefraser"
+      },
+      "gitRepositoryName": {
+        "type": "String",
+        "value": "DMGR"
+      },
+      "gitBranchName": {
+        "type": "String",
+        "value": "master"
+      },
+      "gitRootFolder": {
+        "type": "String",
+        "value": "/adf"
+      },
+      "gitProjectName": {
+        "type": "String",
+        "value": "DMGR"
+      }
+    },
+    "mode": "Incremental",
+    "debugSetting": {
+      "detailLevel": "None"
+    },
+    "provisioningState": "Succeeded",
+    "timestamp": "2019-11-02T19:23:00.7213694Z",
+    "duration": "PT24.8304092S",
+    "correlationId": "1b4b78bf-0a88-436f-90de-35a885543bdb",
+    "providers": [
+      {
+        "namespace": "Microsoft.DataFactory",
+        "resourceTypes": [
+          {
+            "resourceType": "factories",
+            "locations": [
+              "northeurope"
+            ]
+          }
+        ]
+      }
+    ],
+    "dependencies": [],
+    "outputResources": [
+      {
+        "id": "/subscriptions/65b6d768-d2b9-42be-b034-e8bd2a5d3ff7/resourceGroups/DMGR/providers/Microsoft.DataFactory/factories/AcAzAdf"
+      }
+    ],
+    "validationLevel": "Template"
+  }
+}

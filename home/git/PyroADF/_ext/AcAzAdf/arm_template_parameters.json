@@ -1,0 +1,48 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "factoryName": {
+            "value": "AcAzAdf"
+        },
+        "AcAzVM_SqlInstance_connectionString": {
+            "value": ""
+        },
+        "DataManger_COMPARE_connectionString": {
+            "value": ""
+        },
+        "DynamicCustomerLInkedServices_connectionString": {
+            "value": ""
+        },
+        "PyroSQL_connectionString": {
+            "value": ""
+        },
+        "linkservice__connectionString": {
+            "value": ""
+        },
+        "sql_AcAzMetadataDB_ETL_LoadConfig_connectionString": {
+            "value": ""
+        },
+        "AcAzMetadataDB_properties_typeProperties_baseUrl": {
+            "value": "https://AcAzAzureKeyVault.vault.azure.net"
+        },
+        "AcAzMetadataDB_properties_typeProperties_connectionString_secretName": {
+            "value": "emilekey"
+        },
+        "FrameworkFunctions_properties_typeProperties_functionAppUrl": {
+            "value": "https://frameworksupportfunctions.azurewebsites.net"
+        },
+        "Keys_properties_typeProperties_baseUrl": {
+            "value": "https://FrameworkKeys.vault.azure.net/"
+        },
+        "SupportDatabase_properties_typeProperties_connectionString_secretName": {
+            "value": "FrameworkMetadataDev"
+        },
+        "acazazurekeyvault_properties_typeProperties_baseUrl": {
+            "value": "https://AcAzAzureKeyVault.vault.azure.net/"
+        },
+        "kev_AcAzEuKeyVault_properties_typeProperties_baseUrl": {
+            "value": "https://acazazurekeyvault.vault.azure.net/"
+        }
+    }
+}

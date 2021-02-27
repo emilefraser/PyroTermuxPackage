@@ -1,0 +1,82 @@
+{
+	"name": "Execute_StatementOverAllDynamicConnections",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DynamicCustomerLInkedServices",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"ServerName": {
+					"value": "@dataset().ServerName",
+					"type": "Expression"
+				},
+				"UserPassword": {
+					"value": "@dataset().AuthPassword",
+					"type": "Expression"
+				},
+				"DatabaseName": {
+					"value": "@dataset().DatabaseName",
+					"type": "Expression"
+				},
+				"AuthUserName": {
+					"value": "@dataset().AuthUserName",
+					"type": "Expression"
+				}
+			}
+		},
+		"parameters": {
+			"ServerName": {
+				"type": "string"
+			},
+			"AuthPassword": {
+				"type": "string"
+			},
+			"DatabaseName": {
+				"type": "string"
+			},
+			"AuthUserName": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ServerName",
+				"type": "varchar"
+			},
+			{
+				"name": "IsDefaultInstance",
+				"type": "bit"
+			},
+			{
+				"name": "DatabaseInstanceName",
+				"type": "varchar"
+			},
+			{
+				"name": "DBAuthTypeName",
+				"type": "varchar"
+			},
+			{
+				"name": "AuthUsername",
+				"type": "varchar"
+			},
+			{
+				"name": "AuthPassword",
+				"type": "varchar"
+			},
+			{
+				"name": "DatabaseName",
+				"type": "varchar"
+			},
+			{
+				"name": "SchemaName",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "INTEGRATION",
+			"table": "ingress_DataCatalog"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

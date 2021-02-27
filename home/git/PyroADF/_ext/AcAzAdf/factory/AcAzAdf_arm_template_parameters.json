@@ -1,0 +1,27 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "factoryName": {
+            "value": "AcAzAdf"
+        },
+        "dataFactory_properties_globalParameters_MetaDataDB_Server_value": {
+            "value": "acazmssql01.database.windows.net"
+        },
+        "dataFactory_properties_globalParameters_MetaDataDB_Database_value": {
+            "value": "AcAzMetadataDB"
+        },
+        "dataFactory_properties_globalParameters_MetaDataDB_AuthenticationType_value": {
+            "value": "SQL"
+        },
+        "dataFactory_properties_globalParameters_MetaDataDB_Username_value": {
+            "value": "emilefraser"
+        },
+        "dataFactory_properties_globalParameters_MetaDataDB_Password_value": {
+            "value": "105022_Alpha"
+        },
+        "dataFactory_location": {
+            "value": "northeurope"
+        }
+    }
+}

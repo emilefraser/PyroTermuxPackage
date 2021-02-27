@@ -1,0 +1,1 @@
+su -c "cp /sdcard/testscript.sh /data/adb/service.d/testscript.sh”

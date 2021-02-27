@@ -1,0 +1,23 @@
+{
+	"name": "AzureBlobStorage_Json_sample0",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Utility"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "sample0.json",
+				"folderPath": "json",
+				"container": "test"
+			}
+		},
+		"schema": {}
+	}
+}

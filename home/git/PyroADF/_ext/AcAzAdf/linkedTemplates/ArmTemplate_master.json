@@ -1,0 +1,173 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "factoryName": {
+            "type": "string",
+            "metadata": "Data Factory name",
+            "defaultValue": "AcAzAdf"
+        },
+        "AcAzVM_SqlInstance_connectionString": {
+            "type": "secureString",
+            "metadata": "Secure string for 'connectionString' of 'AcAzVM_SqlInstance'"
+        },
+        "DataManger_COMPARE_connectionString": {
+            "type": "secureString",
+            "metadata": "Secure string for 'connectionString' of 'DataManger_COMPARE'"
+        },
+        "DynamicCustomerLInkedServices_connectionString": {
+            "type": "secureString",
+            "metadata": "Secure string for 'connectionString' of 'DynamicCustomerLInkedServices'"
+        },
+        "PyroSQL_connectionString": {
+            "type": "secureString",
+            "metadata": "Secure string for 'connectionString' of 'PyroSQL'"
+        },
+        "linkservice__connectionString": {
+            "type": "secureString",
+            "metadata": "Secure string for 'connectionString' of 'linkservice_'"
+        },
+        "sql_AcAzMetadataDB_ETL_LoadConfig_connectionString": {
+            "type": "secureString",
+            "metadata": "Secure string for 'connectionString' of 'sql_AcAzMetadataDB_ETL_LoadConfig'"
+        },
+        "AcAzMetadataDB_properties_typeProperties_baseUrl": {
+            "type": "string",
+            "defaultValue": "https://AcAzAzureKeyVault.vault.azure.net"
+        },
+        "AcAzMetadataDB_properties_typeProperties_connectionString_secretName": {
+            "type": "string",
+            "defaultValue": "emilekey"
+        },
+        "FrameworkFunctions_properties_typeProperties_functionAppUrl": {
+            "type": "string",
+            "defaultValue": "https://frameworksupportfunctions.azurewebsites.net"
+        },
+        "Keys_properties_typeProperties_baseUrl": {
+            "type": "string",
+            "defaultValue": "https://FrameworkKeys.vault.azure.net/"
+        },
+        "SupportDatabase_properties_typeProperties_connectionString_secretName": {
+            "type": "string",
+            "defaultValue": "FrameworkMetadataDev"
+        },
+        "acazazurekeyvault_properties_typeProperties_baseUrl": {
+            "type": "string",
+            "defaultValue": "https://AcAzAzureKeyVault.vault.azure.net/"
+        },
+        "kev_AcAzEuKeyVault_properties_typeProperties_baseUrl": {
+            "type": "string",
+            "defaultValue": "https://acazazurekeyvault.vault.azure.net/"
+        },
+        "containerUri": {
+            "type": "string",
+            "metadata": "URI to storage account containing linked ARM templates"
+        },
+        "containerSasToken": {
+            "type": "string",
+            "metadata": "Sas token to storage account containing linked ARM templates"
+        }
+    },
+    "variables": {
+        "factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+    },
+    "resources": [
+        {
+            "name": "AcAzAdf_ArmTemplate_0",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2018-02-01",
+            "properties": {
+                "mode": "incremental",
+                "templateLink": {
+                    "uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "factoryName": {
+                        "value": "[parameters('factoryName')]"
+                    },
+                    "AcAzVM_SqlInstance_connectionString": {
+                        "value": "[parameters('AcAzVM_SqlInstance_connectionString')]"
+                    },
+                    "DataManger_COMPARE_connectionString": {
+                        "value": "[parameters('DataManger_COMPARE_connectionString')]"
+                    },
+                    "DynamicCustomerLInkedServices_connectionString": {
+                        "value": "[parameters('DynamicCustomerLInkedServices_connectionString')]"
+                    },
+                    "AcAzMetadataDB_properties_typeProperties_baseUrl": {
+                        "value": "[parameters('AcAzMetadataDB_properties_typeProperties_baseUrl')]"
+                    },
+                    "AcAzMetadataDB_properties_typeProperties_connectionString_secretName": {
+                        "value": "[parameters('AcAzMetadataDB_properties_typeProperties_connectionString_secretName')]"
+                    },
+                    "Keys_properties_typeProperties_baseUrl": {
+                        "value": "[parameters('Keys_properties_typeProperties_baseUrl')]"
+                    },
+                    "acazazurekeyvault_properties_typeProperties_baseUrl": {
+                        "value": "[parameters('acazazurekeyvault_properties_typeProperties_baseUrl')]"
+                    },
+                    "kev_AcAzEuKeyVault_properties_typeProperties_baseUrl": {
+                        "value": "[parameters('kev_AcAzEuKeyVault_properties_typeProperties_baseUrl')]"
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "AcAzAdf_ArmTemplate_1",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2018-02-01",
+            "properties": {
+                "mode": "incremental",
+                "templateLink": {
+                    "uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "factoryName": {
+                        "value": "[parameters('factoryName')]"
+                    },
+                    "PyroSQL_connectionString": {
+                        "value": "[parameters('PyroSQL_connectionString')]"
+                    },
+                    "linkservice__connectionString": {
+                        "value": "[parameters('linkservice__connectionString')]"
+                    },
+                    "sql_AcAzMetadataDB_ETL_LoadConfig_connectionString": {
+                        "value": "[parameters('sql_AcAzMetadataDB_ETL_LoadConfig_connectionString')]"
+                    },
+                    "FrameworkFunctions_properties_typeProperties_functionAppUrl": {
+                        "value": "[parameters('FrameworkFunctions_properties_typeProperties_functionAppUrl')]"
+                    },
+                    "SupportDatabase_properties_typeProperties_connectionString_secretName": {
+                        "value": "[parameters('SupportDatabase_properties_typeProperties_connectionString_secretName')]"
+                    }
+                }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments', 'AcAzAdf_ArmTemplate_0')]"
+            ]
+        },
+        {
+            "name": "AcAzAdf_ArmTemplate_2",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2018-02-01",
+            "properties": {
+                "mode": "incremental",
+                "templateLink": {
+                    "uri": "[concat(parameters('containerUri'), '/ArmTemplate_2.json', parameters('containerSasToken'))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "factoryName": {
+                        "value": "[parameters('factoryName')]"
+                    }
+                }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments', 'AcAzAdf_ArmTemplate_1')]"
+            ]
+        }
+    ]
+}

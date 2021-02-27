@@ -1,0 +1,16 @@
+{
+	"name": "dataset_AzureSqlServer",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AcAzMetadataDynamic",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "inout",
+			"table": "arm_template"
+		}
+	}
+}

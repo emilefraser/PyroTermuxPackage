@@ -1,0 +1,14 @@
+set imap_user = "efraser25@gmail.com"
+set imap_pass = "105022_Alpha"
+set smtp_url = "smtp://efraser25@smtp.gmail.com:587/"
+set smtp_pass = "105022_Alpha"
+set from = "efraser25@gmail.com"
+set realname = "Emile Fraser"
+set folder = "imaps://imap.gmail.com:993"
+set spoolfile = "+INBOX"
+set postponed = "+[Gmail]/Drafts"
+set header_cache = ~/.mutt/cache/headers
+set message_cachedir = ~/.mutt/cache/bodies
+set certificate_file = ~/.mutt/certificates
+set move = no
+set smtp_authenticators = ‘gssapi:login’

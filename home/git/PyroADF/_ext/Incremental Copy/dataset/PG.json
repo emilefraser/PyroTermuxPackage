@@ -1,0 +1,11 @@
+{
+	"name": "PG",
+	"properties": {
+		"description": "LEGO",
+		"linkedServiceName": {
+			"referenceName": "PostgreSql",
+			"type": "LinkedServiceReference"
+		},
+		"type": "RelationalTable"
+	}
+}

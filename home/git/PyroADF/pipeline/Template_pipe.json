@@ -1,0 +1,25 @@
+{
+	"name": "Template_pipe",
+	"properties": {
+		"description": "Gets all the ConfigConnection details to connect to source and sink",
+		"activities": [
+			{
+				"name": "templatepipe",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "templatepipe",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"folder": {
+			"name": "Resurse"
+		},
+		"annotations": []
+	}
+}

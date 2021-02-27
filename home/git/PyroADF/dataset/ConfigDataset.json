@@ -1,0 +1,30 @@
+{
+	"name": "ConfigDataset",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "acazmssql01_databbox",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "SchemaName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Tablename",
+				"type": "nvarchar"
+			},
+			{
+				"name": "rn",
+				"type": "bigint",
+				"precision": 19
+			}
+		],
+		"typeProperties": {
+			"schema": "ods",
+			"table": "Config_HousePrices"
+		}
+	}
+}

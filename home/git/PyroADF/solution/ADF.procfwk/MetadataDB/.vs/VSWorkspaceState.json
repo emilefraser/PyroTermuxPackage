@@ -1,0 +1,14 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\bin",
+    "\\bin\\Debug",
+    "\\dbo",
+    "\\obj",
+    "\\obj\\Debug",
+    "\\Scripts",
+    "\\Scripts\\Metadata"
+  ],
+  "SelectedNode": "\\Scripts\\Script.PreDeployment.sql",
+  "PreviewInSolutionExplorer": false
+}

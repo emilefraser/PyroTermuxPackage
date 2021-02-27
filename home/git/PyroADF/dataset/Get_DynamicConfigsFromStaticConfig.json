@@ -1,0 +1,50 @@
+{
+	"name": "Get_DynamicConfigsFromStaticConfig",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DataManger_COMPARE",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ServerName",
+				"type": "varchar"
+			},
+			{
+				"name": "IsDefaultInstance",
+				"type": "bit"
+			},
+			{
+				"name": "DatabaseInstanceName",
+				"type": "varchar"
+			},
+			{
+				"name": "DBAuthTypeName",
+				"type": "varchar"
+			},
+			{
+				"name": "AuthUsername",
+				"type": "varchar"
+			},
+			{
+				"name": "AuthPassword",
+				"type": "varchar"
+			},
+			{
+				"name": "DatabaseName",
+				"type": "varchar"
+			},
+			{
+				"name": "SchemaName",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "DC",
+			"table": "vw_get_All_AdfConnections"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

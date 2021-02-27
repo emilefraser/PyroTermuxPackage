@@ -1,0 +1,17 @@
+{
+	"name": "PYROSQL",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "PyroSQL",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "HR",
+			"table": "Employee"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

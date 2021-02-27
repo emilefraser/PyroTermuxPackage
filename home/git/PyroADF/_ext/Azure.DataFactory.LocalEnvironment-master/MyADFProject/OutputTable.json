@@ -1,0 +1,33 @@
+﻿{
+
+  "name": "OutputTable",
+  "properties": {
+    "type": "AzureBlob",
+    "linkedServiceName": "AzureStorageLinkedService",
+    "typeProperties": {
+      "folderPath": "adfcontainer/httpDownloadDataIn/{YearMonth}/{DayHour}/",
+      "partitionedBy": [
+        {
+          "name": "YearMonth",
+          "value": {
+            "type": "DateTime",
+            "date": "SliceStart",
+            "format": "yyyyMM"
+          }
+        },
+		{
+          "name": "DayHour",
+          "value": {
+            "type": "DateTime",
+            "date": "WindowEnd",
+            "format": "ddHHmm"
+          }
+        }
+      ]
+    },
+    "availability": {
+      "frequency": "Hour",
+      "interval": 1
+    }
+  }
+}

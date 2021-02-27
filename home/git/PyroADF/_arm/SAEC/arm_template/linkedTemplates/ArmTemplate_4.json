@@ -1,0 +1,3077 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "factoryName": {
+            "type": "string",
+            "metadata": "Data Factory name",
+            "defaultValue": "saecpowerbidev"
+        }
+    },
+    "variables": {
+        "factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+    },
+    "resources": [
+        {
+            "name": "[concat(parameters('factoryName'), '/SoapCall_copy2')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Web1",
+                        "type": "WebActivity",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "url": "https://s1-eu.ariba.com/Sourcing/soap/saec-T/ContractHeaderExport",
+                            "method": "POST",
+                            "headers": {},
+                            "body": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:urn=\"urn:Ariba:Sourcing:vrealm_51073\">\n   <soapenv:Header>\n      <urn:Headers>\n      </urn:Headers>\n   </soapenv:Header>\n   <soapenv:Body>\n      <urn:ContractHeaderExportRequest>\n         <urn:WSContractHeaderExportInputBean_Item>\n            <urn:item>\n               <urn:ClassName>ariba.collaborate.contracts.ContractWorkspace</urn:ClassName>              \n            </urn:item>\n         </urn:WSContractHeaderExportInputBean_Item>\n      </urn:ContractHeaderExportRequest>\n   </soapenv:Body>\n</soapenv:Envelope>",
+                            "authentication": {
+                                "type": "Basic",
+                                "username": "BIUSER",
+                                "password": {
+                                    "type": "SecureString",
+                                    "value": "**********"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "name": "Copy data1",
+                        "type": "Copy",
+                        "dependsOn": [
+                            {
+                                "activity": "Set variable1",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "source": {
+                                "type": "DelimitedTextSource",
+                                "storeSettings": {
+                                    "type": "AzureBlobStorageReadSettings",
+                                    "recursive": false
+                                },
+                                "formatSettings": {
+                                    "type": "DelimitedTextReadSettings",
+                                    "skipLineCount": 1,
+                                    "compressionProperties": {
+                                        "type": "ZipDeflateReadSettings"
+                                    }
+                                }
+                            },
+                            "sink": {
+                                "type": "AzureSqlSink"
+                            },
+                            "enableStaging": false,
+                            "translator": {
+                                "type": "TabularTranslator",
+                                "typeConversion": true,
+                                "typeConversionSettings": {
+                                    "allowDataTruncation": true,
+                                    "treatBooleanAsNumber": false
+                                }
+                            }
+                        },
+                        "inputs": [
+                            {
+                                "referenceName": "SoapDelimetedReturn_copy1",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ],
+                        "outputs": [
+                            {
+                                "referenceName": "dataset_saec_powerbi_dev",
+                                "type": "DatasetReference",
+                                "parameters": {
+                                    "EntityName": "SoapTest",
+                                    "SchemaName": "lnd"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Set variable1",
+                        "type": "SetVariable",
+                        "dependsOn": [
+                            {
+                                "activity": "Web1",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "userProperties": [],
+                        "typeProperties": {
+                            "variableName": "test",
+                            "value": {
+                                "value": "@activity('Web1').output.Response",
+                                "type": "Expression"
+                            }
+                        }
+                    }
+                ],
+                "parameters": {
+                    "pw": {
+                        "type": "string",
+                        "defaultValue": "@ccT3ch!@#!@#"
+                    }
+                },
+                "variables": {
+                    "test": {
+                        "type": "String"
+                    }
+                },
+                "folder": {
+                    "name": "Purchasing/2_Extract"
+                },
+                "annotations": [],
+                "lastPublishTime": "2020-10-08T01:49:57Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/RestAPI')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "RestApi",
+                        "description": "Rest API Call",
+                        "type": "WebActivity",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "url": "https://ch17.isometrix.net/RestAPI.SAEC.QA/api/DataSourceItem?sourceId=3a679cef-2c55-48c8-b9a0-e31e6f4b73b1&languageId=a50a7f35-56f8-451e-82d9-946bd9adedb4",
+                            "method": "GET",
+                            "headers": {
+                                "Authorization": "Basic aXNvQXBpdXNlcjo4dWhiKlVIQg=="
+                            },
+                            "linkedServices": [
+                                {
+                                    "referenceName": "HttpLinkedForREST",
+                                    "type": "LinkedServiceReference"
+                                }
+                            ],
+                            "datasets": [
+                                {
+                                    "referenceName": "RESTJsonReturn",
+                                    "type": "DatasetReference",
+                                    "parameters": {}
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "folder": {
+                    "name": "Purchasing/2_Extract"
+                },
+                "annotations": [],
+                "lastPublishTime": "2020-11-12T08:37:35Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/ACDOCA_VaultLineageLoad_INCR')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "description": "This pipe loads ACDOCA from EXT to STG to RAW to BIZ to INFOMART",
+                "activities": [
+                    {
+                        "name": "EXT_SAP_S4HANA_JournalEntryLineItem_INCR",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [
+                            {
+                                "activity": "SRC_SAP_S4HANA_JournalEntryLineItem_TDFT_INCR",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[sproc].[EXT_SAP_S4HANA_JournalEntryLineItem_INCR]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "STG_SAP_S4HANA_JournalEntryLineItem_INCR",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [
+                            {
+                                "activity": "EXT_SAP_S4HANA_JournalEntryLineItem_INCR",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[sproc].[STG_SAP_S4HANA_JournalEntryLineItem_INCR]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "HUB_JournalEntryLineItem",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [
+                            {
+                                "activity": "STG_SAP_S4HANA_JournalEntryLineItem_INCR",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[sproc].[HUB_SAP_S4HANA_JournalEntryLineItem_INCR]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "GetVaultLineage_LINKSAT_ACDOCA",
+                        "type": "Lookup",
+                        "dependsOn": [
+                            {
+                                "activity": "HUB_JournalEntryLineItem",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "source": {
+                                "type": "AzureSqlSource",
+                                "sqlReaderQuery": "select\t*\nfrom\t[adf].[DataVaultLoad_0_TEMPEXCLUSIONS]\nwhere\tEntityType = 'LINKSAT'",
+                                "queryTimeout": "02:00:00",
+                                "partitionOption": "None"
+                            },
+                            "dataset": {
+                                "referenceName": "DataVaultLoad_0_TEMPEXCLUSIONS",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            },
+                            "firstRowOnly": false
+                        }
+                    },
+                    {
+                        "name": "GetVaultLineage_LINK_ACDOCA",
+                        "type": "Lookup",
+                        "dependsOn": [
+                            {
+                                "activity": "HUB_JournalEntryLineItem",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "source": {
+                                "type": "AzureSqlSource",
+                                "sqlReaderQuery": "select\t*\nfrom\t[adf].[DataVaultLoad_0_TEMPEXCLUSIONS]\nwhere\tEntityType = 'LINK'",
+                                "queryTimeout": "02:00:00",
+                                "partitionOption": "None"
+                            },
+                            "dataset": {
+                                "referenceName": "DataVaultLoad_0_TEMPEXCLUSIONS",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            },
+                            "firstRowOnly": false
+                        }
+                    },
+                    {
+                        "name": "GetVaultLineage_SAT_ACDOCA",
+                        "type": "Lookup",
+                        "dependsOn": [
+                            {
+                                "activity": "HUB_JournalEntryLineItem",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "source": {
+                                "type": "AzureSqlSource",
+                                "sqlReaderQuery": "select\t*\nfrom\t[adf].[DataVaultLoad_0_TEMPEXCLUSIONS]\nwhere\tEntityType = 'SAT'",
+                                "queryTimeout": "02:00:00",
+                                "partitionOption": "None"
+                            },
+                            "dataset": {
+                                "referenceName": "DataVaultLoad_0_TEMPEXCLUSIONS",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            },
+                            "firstRowOnly": false
+                        }
+                    },
+                    {
+                        "name": "ForEach_DataVaultLoad_SAT",
+                        "type": "ForEach",
+                        "dependsOn": [
+                            {
+                                "activity": "GetVaultLineage_SAT_ACDOCA",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "userProperties": [],
+                        "typeProperties": {
+                            "items": {
+                                "value": "@activity('GetVaultLineage_SAT_ACDOCA').output.value",
+                                "type": "Expression"
+                            },
+                            "activities": [
+                                {
+                                    "name": "DataVaultLoad_SAT_LoadProcedure",
+                                    "type": "SqlServerStoredProcedure",
+                                    "dependsOn": [],
+                                    "policy": {
+                                        "timeout": "7.00:00:00",
+                                        "retry": 0,
+                                        "retryIntervalInSeconds": 30,
+                                        "secureOutput": false,
+                                        "secureInput": false
+                                    },
+                                    "userProperties": [],
+                                    "typeProperties": {
+                                        "storedProcedureName": {
+                                            "value": "@concat(item().LoadSchemaName_INCR, '.', item().LoadProcedureName_INCR)",
+                                            "type": "Expression"
+                                        }
+                                    },
+                                    "linkedServiceName": {
+                                        "referenceName": "saec_powerbi_dev",
+                                        "type": "LinkedServiceReference"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "ForEach_DataVaultLoad_LINKSAT",
+                        "type": "ForEach",
+                        "dependsOn": [
+                            {
+                                "activity": "GetVaultLineage_LINKSAT_ACDOCA",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "userProperties": [],
+                        "typeProperties": {
+                            "items": {
+                                "value": "@activity('GetVaultLineage_LINKSAT_ACDOCA').output.value",
+                                "type": "Expression"
+                            },
+                            "activities": [
+                                {
+                                    "name": "DataVaultLoad_LINKSAT_LoadProcedure",
+                                    "type": "SqlServerStoredProcedure",
+                                    "dependsOn": [],
+                                    "policy": {
+                                        "timeout": "7.00:00:00",
+                                        "retry": 0,
+                                        "retryIntervalInSeconds": 30,
+                                        "secureOutput": false,
+                                        "secureInput": false
+                                    },
+                                    "userProperties": [],
+                                    "typeProperties": {
+                                        "storedProcedureName": {
+                                            "value": "@concat(item().LoadSchemaName_INCR, '.', item().LoadProcedureName_INCR)",
+                                            "type": "Expression"
+                                        }
+                                    },
+                                    "linkedServiceName": {
+                                        "referenceName": "saec_powerbi_dev",
+                                        "type": "LinkedServiceReference"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "ForEach_DataVaultLoad_LINK",
+                        "type": "ForEach",
+                        "dependsOn": [
+                            {
+                                "activity": "GetVaultLineage_LINK_ACDOCA",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "userProperties": [],
+                        "typeProperties": {
+                            "items": {
+                                "value": "@activity('GetVaultLineage_LINK_ACDOCA').output.value",
+                                "type": "Expression"
+                            },
+                            "activities": [
+                                {
+                                    "name": "DataVaultLoad_LINK_LoadProcedure",
+                                    "type": "SqlServerStoredProcedure",
+                                    "dependsOn": [],
+                                    "policy": {
+                                        "timeout": "7.00:00:00",
+                                        "retry": 0,
+                                        "retryIntervalInSeconds": 30,
+                                        "secureOutput": false,
+                                        "secureInput": false
+                                    },
+                                    "userProperties": [],
+                                    "typeProperties": {
+                                        "storedProcedureName": {
+                                            "value": "@concat(item().LoadSchemaName_INCR, '.', item().LoadProcedureName_INCR)",
+                                            "type": "Expression"
+                                        }
+                                    },
+                                    "linkedServiceName": {
+                                        "referenceName": "saec_powerbi_dev",
+                                        "type": "LinkedServiceReference"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "Refresh BIZ Table - biz_BRIDGE_JournalEntry_INIT",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [
+                            {
+                                "activity": "ForEach_DataVaultLoad_SAT",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            },
+                            {
+                                "activity": "ForEach_DataVaultLoad_LINKSAT",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            },
+                            {
+                                "activity": "ForEach_DataVaultLoad_LINK",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[biz].[BRIDGE_JournalEntry_INIT]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "SRC_SAP_S4HANA_JournalEntryLineItem_TDFT_INCR",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[sproc].[SRC_SAP_S4HANA_JournalEntryLineItem_TDFT_INCR]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "infomart_Create_mat_GetJournalEntryFields",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [
+                            {
+                                "activity": "Refresh BIZ Table - biz_BRIDGE_JournalEntry_INIT",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[infomart].[Create_mat_GetJournalEntryFields]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    }
+                ],
+                "folder": {
+                    "name": "Purchasing/99_TempVaultLoads_DONOTDELETE"
+                },
+                "annotations": [],
+                "lastPublishTime": "2020-12-07T23:38:14Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/ACDOCA_VaultLineageLoad_INIT')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "description": "This pipe loads ACDOCA from EXT to STG to RAW to BIZ to INFOMART",
+                "activities": [
+                    {
+                        "name": "EXT_SAP_S4HANA_JournalEntryLineItem_INIT",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[sproc].[EXT_SAP_S4HANA_JournalEntryLineItem_INIT]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "STG_SAP_S4HANA_JournalEntryLineItem_INIT",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [
+                            {
+                                "activity": "EXT_SAP_S4HANA_JournalEntryLineItem_INIT",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[sproc].[STG_SAP_S4HANA_JournalEntryLineItem_INIT]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "HUB_SAP_S4HANA_JournalEntryLineItem_INIT",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [
+                            {
+                                "activity": "STG_SAP_S4HANA_JournalEntryLineItem_INIT",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[sproc].[HUB_SAP_S4HANA_JournalEntryLineItem_INIT]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "GetVaultLineage_LINKSAT_ACDOCA",
+                        "type": "Lookup",
+                        "dependsOn": [
+                            {
+                                "activity": "HUB_SAP_S4HANA_JournalEntryLineItem_INIT",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "source": {
+                                "type": "AzureSqlSource",
+                                "sqlReaderQuery": "select\t*\nfrom\t[adf].[DataVaultLoad_0_TEMPEXCLUSIONS]\nwhere\tEntityType = 'LINKSAT'",
+                                "queryTimeout": "02:00:00",
+                                "partitionOption": "None"
+                            },
+                            "dataset": {
+                                "referenceName": "DataVaultLoad_0_TEMPEXCLUSIONS",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            },
+                            "firstRowOnly": false
+                        }
+                    },
+                    {
+                        "name": "GetVaultLineage_LINK_ACDOCA",
+                        "type": "Lookup",
+                        "dependsOn": [
+                            {
+                                "activity": "HUB_SAP_S4HANA_JournalEntryLineItem_INIT",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "source": {
+                                "type": "AzureSqlSource",
+                                "sqlReaderQuery": "select\t*\nfrom\t[adf].[DataVaultLoad_0_TEMPEXCLUSIONS]\nwhere\tEntityType = 'LINK'",
+                                "queryTimeout": "02:00:00",
+                                "partitionOption": "None"
+                            },
+                            "dataset": {
+                                "referenceName": "DataVaultLoad_0_TEMPEXCLUSIONS",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            },
+                            "firstRowOnly": false
+                        }
+                    },
+                    {
+                        "name": "GetVaultLineage_SAT_ACDOCA",
+                        "type": "Lookup",
+                        "dependsOn": [
+                            {
+                                "activity": "HUB_SAP_S4HANA_JournalEntryLineItem_INIT",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "source": {
+                                "type": "AzureSqlSource",
+                                "sqlReaderQuery": "select\t*\nfrom\t[adf].[DataVaultLoad_0_TEMPEXCLUSIONS]\nwhere\tEntityType = 'SAT'",
+                                "queryTimeout": "02:00:00",
+                                "partitionOption": "None"
+                            },
+                            "dataset": {
+                                "referenceName": "DataVaultLoad_0_TEMPEXCLUSIONS",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            },
+                            "firstRowOnly": false
+                        }
+                    },
+                    {
+                        "name": "ForEach_DataVaultLoad_SAT",
+                        "type": "ForEach",
+                        "dependsOn": [
+                            {
+                                "activity": "GetVaultLineage_SAT_ACDOCA",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "userProperties": [],
+                        "typeProperties": {
+                            "items": {
+                                "value": "@activity('GetVaultLineage_SAT_ACDOCA').output.value",
+                                "type": "Expression"
+                            },
+                            "activities": [
+                                {
+                                    "name": "DataVaultLoad_SAT_LoadProcedure",
+                                    "type": "SqlServerStoredProcedure",
+                                    "dependsOn": [],
+                                    "policy": {
+                                        "timeout": "7.00:00:00",
+                                        "retry": 0,
+                                        "retryIntervalInSeconds": 30,
+                                        "secureOutput": false,
+                                        "secureInput": false
+                                    },
+                                    "userProperties": [],
+                                    "typeProperties": {
+                                        "storedProcedureName": {
+                                            "value": "@concat(item().LoadSchemaName_INIT, '.', item().LoadProcedureName_INIT)",
+                                            "type": "Expression"
+                                        }
+                                    },
+                                    "linkedServiceName": {
+                                        "referenceName": "saec_powerbi_dev",
+                                        "type": "LinkedServiceReference"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "ForEach_DataVaultLoad_LINKSAT",
+                        "type": "ForEach",
+                        "dependsOn": [
+                            {
+                                "activity": "GetVaultLineage_LINKSAT_ACDOCA",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "userProperties": [],
+                        "typeProperties": {
+                            "items": {
+                                "value": "@activity('GetVaultLineage_LINKSAT_ACDOCA').output.value",
+                                "type": "Expression"
+                            },
+                            "activities": [
+                                {
+                                    "name": "DataVaultLoad_LINKSAT_LoadProcedure",
+                                    "type": "SqlServerStoredProcedure",
+                                    "dependsOn": [],
+                                    "policy": {
+                                        "timeout": "7.00:00:00",
+                                        "retry": 0,
+                                        "retryIntervalInSeconds": 30,
+                                        "secureOutput": false,
+                                        "secureInput": false
+                                    },
+                                    "userProperties": [],
+                                    "typeProperties": {
+                                        "storedProcedureName": {
+                                            "value": "@concat(item().LoadSchemaName_INIT, '.', item().LoadProcedureName_INIT)",
+                                            "type": "Expression"
+                                        }
+                                    },
+                                    "linkedServiceName": {
+                                        "referenceName": "saec_powerbi_dev",
+                                        "type": "LinkedServiceReference"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "ForEach_DataVaultLoad_LINK",
+                        "type": "ForEach",
+                        "dependsOn": [
+                            {
+                                "activity": "GetVaultLineage_LINK_ACDOCA",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "userProperties": [],
+                        "typeProperties": {
+                            "items": {
+                                "value": "@activity('GetVaultLineage_LINK_ACDOCA').output.value",
+                                "type": "Expression"
+                            },
+                            "activities": [
+                                {
+                                    "name": "DataVaultLoad_LINK_LoadProcedure",
+                                    "type": "SqlServerStoredProcedure",
+                                    "dependsOn": [],
+                                    "policy": {
+                                        "timeout": "7.00:00:00",
+                                        "retry": 0,
+                                        "retryIntervalInSeconds": 30,
+                                        "secureOutput": false,
+                                        "secureInput": false
+                                    },
+                                    "userProperties": [],
+                                    "typeProperties": {
+                                        "storedProcedureName": {
+                                            "value": "@concat(item().LoadSchemaName_INIT, '.', item().LoadProcedureName_INIT)",
+                                            "type": "Expression"
+                                        }
+                                    },
+                                    "linkedServiceName": {
+                                        "referenceName": "saec_powerbi_dev",
+                                        "type": "LinkedServiceReference"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "Refresh BIZ Table - biz_BRIDGE_JournalEntry_INIT",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [
+                            {
+                                "activity": "ForEach_DataVaultLoad_SAT",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            },
+                            {
+                                "activity": "ForEach_DataVaultLoad_LINKSAT",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            },
+                            {
+                                "activity": "ForEach_DataVaultLoad_LINK",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[biz].[BRIDGE_JournalEntry_INIT]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "infomart_Create_mat_GetJournalEntryFields",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [
+                            {
+                                "activity": "Refresh BIZ Table - biz_BRIDGE_JournalEntry_INIT",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[infomart].[Create_mat_GetJournalEntryFields]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    }
+                ],
+                "folder": {
+                    "name": "Purchasing/99_TempVaultLoads_DONOTDELETE"
+                },
+                "annotations": [],
+                "lastPublishTime": "2020-12-01T21:54:30Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/pipeline1')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Lookup Release Objects",
+                        "type": "Lookup",
+                        "dependsOn": [
+                            {
+                                "activity": "Lookup Release Config",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "0.00:30:00",
+                            "retry": 3,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "source": {
+                                "type": "AzureSqlSource",
+                                "queryTimeout": "02:00:00",
+                                "partitionOption": "None"
+                            },
+                            "dataset": {
+                                "referenceName": "dataset_saec_powerbi_dev",
+                                "type": "DatasetReference",
+                                "parameters": {
+                                    "EntityName": "ReleaseObject",
+                                    "SchemaName": "adf"
+                                }
+                            },
+                            "firstRowOnly": false
+                        }
+                    },
+                    {
+                        "name": "ForEach1",
+                        "type": "ForEach",
+                        "dependsOn": [
+                            {
+                                "activity": "Lookup Release Objects",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "userProperties": [],
+                        "typeProperties": {
+                            "items": {
+                                "value": "@activity('Lookup Release Objects').output.value",
+                                "type": "Expression"
+                            },
+                            "activities": [
+                                {
+                                    "name": "GetDefinitionPerObject",
+                                    "type": "SqlServerStoredProcedure",
+                                    "dependsOn": [],
+                                    "policy": {
+                                        "timeout": "1.00:15:00",
+                                        "retry": 2,
+                                        "retryIntervalInSeconds": 30,
+                                        "secureOutput": false,
+                                        "secureInput": false
+                                    },
+                                    "userProperties": [],
+                                    "typeProperties": {
+                                        "storedProcedureName": "[[adf].[GetReleaseDefinition]",
+                                        "storedProcedureParameters": {
+                                            "ObjectDefinition": {
+                                                "value": {
+                                                    "value": "@item().ObjectDefinition",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "String"
+                                            },
+                                            "ObjectName": {
+                                                "value": {
+                                                    "value": "@item().ObjectName",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "String"
+                                            },
+                                            "ObjectSchema": {
+                                                "value": {
+                                                    "value": "@item().ObjectSchema",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "String"
+                                            },
+                                            "ObjectType": {
+                                                "value": {
+                                                    "value": "@item().ObjectType",
+                                                    "type": "Expression"
+                                                },
+                                                "type": "String"
+                                            }
+                                        }
+                                    },
+                                    "linkedServiceName": {
+                                        "referenceName": "saec_powerbi_dev",
+                                        "type": "LinkedServiceReference"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "WriteToSql",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [
+                            {
+                                "activity": "ForEach1",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[adf].[SetReleaseHistory]"
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "Lookup Release Config",
+                        "type": "Lookup",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "0.00:30:00",
+                            "retry": 3,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "source": {
+                                "type": "AzureSqlSource",
+                                "queryTimeout": "02:00:00",
+                                "partitionOption": "None"
+                            },
+                            "dataset": {
+                                "referenceName": "dataset_saec_powerbi_dev",
+                                "type": "DatasetReference",
+                                "parameters": {
+                                    "EntityName": "GetReleaseConfig",
+                                    "SchemaName": "adf"
+                                }
+                            },
+                            "firstRowOnly": false
+                        }
+                    }
+                ],
+                "parameters": {
+                    "ObjectType": {
+                        "type": "string"
+                    },
+                    "ObjectSchema": {
+                        "type": "string"
+                    },
+                    "ObjectName": {
+                        "type": "string"
+                    },
+                    "ObjectDefinition": {
+                        "type": "string"
+                    },
+                    "ReleaseBlobPath": {
+                        "type": "string"
+                    }
+                },
+                "folder": {
+                    "name": "Source Control"
+                },
+                "annotations": [],
+                "lastPublishTime": "2020-11-28T01:15:34Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Hourly_Trigger')]",
+            "type": "Microsoft.DataFactory/factories/triggers",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "description": "Executes the pipelines hourly",
+                "annotations": [],
+                "runtimeState": "Stopped",
+                "pipelines": [
+                    {
+                        "pipelineReference": {
+                            "referenceName": "Finance_Pipelyne_MAINLOAD",
+                            "type": "PipelineReference"
+                        },
+                        "parameters": {}
+                    },
+                    {
+                        "pipelineReference": {
+                            "referenceName": "Finance_Pipelyne_SSIS",
+                            "type": "PipelineReference"
+                        },
+                        "parameters": {}
+                    }
+                ],
+                "type": "ScheduleTrigger",
+                "typeProperties": {
+                    "recurrence": {
+                        "frequency": "Hour",
+                        "interval": 2,
+                        "startTime": "2019-09-02T16:00:00Z",
+                        "timeZone": "UTC"
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/IncrementalLoad')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "description": "Incremental Load Pipe with the load logic to join to an external cdc table",
+                "activities": [
+                    {
+                        "name": "CopyDataFromSapAfterJoiningToChangeDocument",
+                        "type": "Copy",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SapHanaSource",
+                                "query": {
+                                    "value": "@pipeline().parameters.SourceEntityDefinition",
+                                    "type": "Expression"
+                                },
+                                "partitionOption": "None"
+                            },
+                            "sink": {
+                                "type": "AzureSqlSink"
+                            },
+                            "enableStaging": false,
+                            "translator": {
+                                "type": "TabularTranslator",
+                                "typeConversion": true,
+                                "typeConversionSettings": {
+                                    "allowDataTruncation": true,
+                                    "treatBooleanAsNumber": false
+                                }
+                            }
+                        },
+                        "inputs": [
+                            {
+                                "referenceName": "dataset_SAP_HANA_SAAZS_V_SAP33_PROD",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ],
+                        "outputs": [
+                            {
+                                "referenceName": "dataset_saec_powerbi_dev",
+                                "type": "DatasetReference",
+                                "parameters": {
+                                    "EntityName": "EntityName",
+                                    "SchemaName": "dbo"
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "parameters": {
+                    "SourceEntityDefinition": {
+                        "type": "string"
+                    }
+                },
+                "folder": {
+                    "name": "Purchasing/2_Extract"
+                },
+                "annotations": [
+                    "Child"
+                ],
+                "lastPublishTime": "2020-09-30T18:33:40Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/FullLoad')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "description": "Full Load Execution",
+                "activities": [
+                    {
+                        "name": "FullLoadCopyData",
+                        "description": "Full Load to move data from SAP to SQL Landing Zone",
+                        "type": "Copy",
+                        "dependsOn": [
+                            {
+                                "activity": "StartFullLoad",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "0.12:00:00",
+                            "retry": 1,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SapHanaSource",
+                                "query": {
+                                    "value": "@pipeline().parameters.SourceDefinition",
+                                    "type": "Expression"
+                                },
+                                "partitionOption": "None"
+                            },
+                            "sink": {
+                                "type": "AzureSqlSink",
+                                "writeBatchSize": 1000,
+                                "preCopyScript": {
+                                    "value": "IF OBJECT_ID(@{concat('''','[',pipeline().parameters.TargetSchemaName,']','.','[',pipeline().parameters.TargetEntityName,']','''')}) IS NOT NULL\nBEGIN\nTRUNCATE TABLE \n@{concat('[',pipeline().parameters.TargetSchemaName,']','.','[',pipeline().parameters.TargetEntityName,']')} \nEND",
+                                    "type": "Expression"
+                                },
+                                "maxConcurrentConnections": 4,
+                                "tableOption": "autoCreate",
+                                "disableMetricsCollection": false
+                            },
+                            "enableStaging": false,
+                            "translator": {
+                                "type": "TabularTranslator",
+                                "typeConversion": true,
+                                "typeConversionSettings": {
+                                    "allowDataTruncation": true,
+                                    "treatBooleanAsNumber": false
+                                }
+                            }
+                        },
+                        "inputs": [
+                            {
+                                "referenceName": "dataset_SAP_HANA_SAAZS_V_SAP33_PROD",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ],
+                        "outputs": [
+                            {
+                                "referenceName": "dataset_saec_powerbi_dev",
+                                "type": "DatasetReference",
+                                "parameters": {
+                                    "EntityName": {
+                                        "value": "@pipeline().parameters.TargetEntityName",
+                                        "type": "Expression"
+                                    },
+                                    "SchemaName": {
+                                        "value": "@pipeline().parameters.TargetSchemaName",
+                                        "type": "Expression"
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "name": "EventLog",
+                        "description": "Logs the results of the copy activity",
+                        "type": "ExecutePipeline",
+                        "dependsOn": [
+                            {
+                                "activity": "FullLoadCopyData",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "userProperties": [],
+                        "typeProperties": {
+                            "pipeline": {
+                                "referenceName": "EventLog",
+                                "type": "PipelineReference"
+                            },
+                            "waitOnCompletion": true,
+                            "parameters": {
+                                "PipelineRunID": {
+                                    "value": "@pipeline().runId",
+                                    "type": "Expression"
+                                },
+                                "DataFactoryName": {
+                                    "value": "@pipeline().DataFactory",
+                                    "type": "Expression"
+                                },
+                                "PipelineName": {
+                                    "value": "@pipeline().Pipeline",
+                                    "type": "Expression"
+                                },
+                                "PipelineTriggerID": {
+                                    "value": "@pipeline().TriggerId",
+                                    "type": "Expression"
+                                },
+                                "PipelineTriggerName": {
+                                    "value": "@pipeline().TriggerName",
+                                    "type": "Expression"
+                                },
+                                "PipelineTriggerTime": {
+                                    "value": "@pipeline().TriggerTime",
+                                    "type": "Expression"
+                                },
+                                "PipelineTriggerType": {
+                                    "value": "@pipeline().TriggerType",
+                                    "type": "Expression"
+                                },
+                                "OutputJSON": {
+                                    "value": "@string(activity('FullLoadCopyData').output)",
+                                    "type": "Expression"
+                                },
+                                "LoadConfigID": {
+                                    "value": "@pipeline().parameters.LoadConfigID",
+                                    "type": "Expression"
+                                },
+                                "EventType": "Copy data"
+                            }
+                        }
+                    },
+                    {
+                        "name": "ErrorLog",
+                        "description": "Logs the errors of the copy activity",
+                        "type": "ExecutePipeline",
+                        "dependsOn": [
+                            {
+                                "activity": "FullLoadCopyData",
+                                "dependencyConditions": [
+                                    "Failed"
+                                ]
+                            }
+                        ],
+                        "userProperties": [],
+                        "typeProperties": {
+                            "pipeline": {
+                                "referenceName": "ErrorLog",
+                                "type": "PipelineReference"
+                            },
+                            "waitOnCompletion": true,
+                            "parameters": {
+                                "PipelineRunID": {
+                                    "value": "@activity('FullLoadCopyData').output.pipeline.runId",
+                                    "type": "Expression"
+                                },
+                                "DataFactoryName": {
+                                    "value": "@pipeline().DataFactory",
+                                    "type": "Expression"
+                                },
+                                "PipelineName": {
+                                    "value": "@pipeline().Pipeline",
+                                    "type": "Expression"
+                                },
+                                "PipelineTriggerID": {
+                                    "value": "@pipeline().TriggerId",
+                                    "type": "Expression"
+                                },
+                                "PipelineTriggerName": {
+                                    "value": "@pipeline().TriggerName",
+                                    "type": "Expression"
+                                },
+                                "PipelineTriggerTime": {
+                                    "value": "@pipeline().TriggerTime",
+                                    "type": "Expression"
+                                },
+                                "PipelineTriggerType": {
+                                    "value": "@pipeline().TriggerType",
+                                    "type": "Expression"
+                                },
+                                "OutputJSON": {
+                                    "value": "@activity('FullLoadCopyData').output",
+                                    "type": "Expression"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "name": "EndFullLoadSuccess",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [
+                            {
+                                "activity": "EventLog",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[adf].[SetLastLoadDT]",
+                            "storedProcedureParameters": {
+                                "EventType": {
+                                    "value": "End",
+                                    "type": "String"
+                                },
+                                "LoadConfigID": {
+                                    "value": {
+                                        "value": "@pipeline().parameters.LoadConfigID",
+                                        "type": "Expression"
+                                    },
+                                    "type": "Int32"
+                                },
+                                "LoadStageID": {
+                                    "value": "1",
+                                    "type": "Int32"
+                                }
+                            }
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "EndFullLoadFailure",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [
+                            {
+                                "activity": "ErrorLog",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[adf].[SetLastLoadDT]",
+                            "storedProcedureParameters": {
+                                "EventType": {
+                                    "value": "Error",
+                                    "type": "String"
+                                },
+                                "LoadConfigID": {
+                                    "value": {
+                                        "value": "@pipeline().parameters.LoadConfigID",
+                                        "type": "Expression"
+                                    },
+                                    "type": "Int32"
+                                },
+                                "LoadStageID": {
+                                    "value": "1",
+                                    "type": "Int32"
+                                }
+                            }
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    },
+                    {
+                        "name": "StartFullLoad",
+                        "description": "Write the Start Time to the LoadConfigs",
+                        "type": "SqlServerStoredProcedure",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "storedProcedureName": "[[adf].[SetLastLoadDT]",
+                            "storedProcedureParameters": {
+                                "EventType": {
+                                    "value": "Start",
+                                    "type": "String"
+                                },
+                                "LoadConfigID": {
+                                    "value": {
+                                        "value": "@pipeline().parameters.LoadConfigID",
+                                        "type": "Expression"
+                                    },
+                                    "type": "Int32"
+                                },
+                                "LoadStageID": {
+                                    "value": "1",
+                                    "type": "Int32"
+                                }
+                            }
+                        },
+                        "linkedServiceName": {
+                            "referenceName": "saec_powerbi_dev",
+                            "type": "LinkedServiceReference"
+                        }
+                    }
+                ],
+                "parameters": {
+                    "SourceDatabaseName": {
+                        "type": "string",
+                        "defaultValue": "SAPHANADB"
+                    },
+                    "SourceEntityName": {
+                        "type": "string",
+                        "defaultValue": "MARA"
+                    },
+                    "TargetEntityName": {
+                        "type": "string",
+                        "defaultValue": "MARA_material_data_2"
+                    },
+                    "TargetSchemaName": {
+                        "type": "string",
+                        "defaultValue": "lnd"
+                    },
+                    "LoadConfigID": {
+                        "type": "int",
+                        "defaultValue": 0
+                    },
+                    "SourceDefinition": {
+                        "type": "string",
+                        "defaultValue": "SELECT * FROM"
+                    }
+                },
+                "folder": {
+                    "name": "Purchasing/2_Extract"
+                },
+                "annotations": [
+                    "Child"
+                ],
+                "lastPublishTime": "2020-10-31T01:39:22Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/LoadConfig_old')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "description": "Gets the Load Configurations from the Azure instance",
+                "activities": [
+                    {
+                        "name": "GetLoadConfig",
+                        "description": "Gets the Configurations from the Azure instance",
+                        "type": "Lookup",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "source": {
+                                "type": "AzureSqlSource",
+                                "queryTimeout": "02:00:00",
+                                "partitionOption": "None"
+                            },
+                            "dataset": {
+                                "referenceName": "adf_LoadConfig",
+                                "type": "DatasetReference",
+                                "parameters": {
+                                    "AdfSchemaName": {
+                                        "value": "adf",
+                                        "type": "Expression"
+                                    }
+                                }
+                            },
+                            "firstRowOnly": false
+                        }
+                    },
+                    {
+                        "name": "ForeachLoadConfig",
+                        "type": "ForEach",
+                        "dependsOn": [
+                            {
+                                "activity": "GetLoadConfig",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "userProperties": [],
+                        "typeProperties": {
+                            "items": {
+                                "value": "@activity('GetLoadConfig').output.value",
+                                "type": "Expression"
+                            },
+                            "isSequential": false,
+                            "batchCount": 8,
+                            "activities": [
+                                {
+                                    "name": "SwitchLoadType",
+                                    "description": "Switch for the LoadType being used",
+                                    "type": "Switch",
+                                    "dependsOn": [],
+                                    "userProperties": [],
+                                    "typeProperties": {
+                                        "on": {
+                                            "value": "@item().LoadType\n",
+                                            "type": "Expression"
+                                        },
+                                        "cases": [
+                                            {
+                                                "value": "FULL",
+                                                "activities": [
+                                                    {
+                                                        "name": "FullLoadCopyData",
+                                                        "description": "Full Load to move data from SAP to SQL Landing Zone",
+                                                        "type": "Copy",
+                                                        "dependsOn": [],
+                                                        "policy": {
+                                                            "timeout": "0.12:00:00",
+                                                            "retry": 1,
+                                                            "retryIntervalInSeconds": 30,
+                                                            "secureOutput": false,
+                                                            "secureInput": false
+                                                        },
+                                                        "userProperties": [],
+                                                        "typeProperties": {
+                                                            "source": {
+                                                                "type": "SapHanaSource",
+                                                                "partitionOption": "None"
+                                                            },
+                                                            "sink": {
+                                                                "type": "AzureSqlSink",
+                                                                "writeBatchSize": 1000,
+                                                                "preCopyScript": {
+                                                                    "value": "IF OBJECT_ID(@{concat('''','[',variables('TargetSchemaName'),']','.','[',variables('TargetEntityName'),']','''')}) IS NOT NULL\nBEGIN\nTRUNCATE TABLE \n@{concat('[',variables('TargetSchemaName'),']','.','[',variables('TargetEntityName'),']')} \nEND",
+                                                                    "type": "Expression"
+                                                                },
+                                                                "maxConcurrentConnections": 4,
+                                                                "tableOption": "autoCreate",
+                                                                "disableMetricsCollection": false
+                                                            },
+                                                            "enableStaging": false,
+                                                            "translator": {
+                                                                "type": "TabularTranslator",
+                                                                "typeConversion": true,
+                                                                "typeConversionSettings": {
+                                                                    "allowDataTruncation": true,
+                                                                    "treatBooleanAsNumber": false
+                                                                }
+                                                            }
+                                                        },
+                                                        "inputs": [
+                                                            {
+                                                                "referenceName": "dataset_SAP_HANA_SAAZS_V_SAP13",
+                                                                "type": "DatasetReference",
+                                                                "parameters": {
+                                                                    "DatabaseName": {
+                                                                        "value": "@item().SourceDatabaseName",
+                                                                        "type": "Expression"
+                                                                    },
+                                                                    "TableNameTechnical": {
+                                                                        "value": "@item().SourceEntityName",
+                                                                        "type": "Expression"
+                                                                    }
+                                                                }
+                                                            }
+                                                        ],
+                                                        "outputs": [
+                                                            {
+                                                                "referenceName": "dataset_saec_powerbi_dev",
+                                                                "type": "DatasetReference",
+                                                                "parameters": {
+                                                                    "EntityName": {
+                                                                        "value": "@item().TargetEntityName",
+                                                                        "type": "Expression"
+                                                                    },
+                                                                    "SchemaName": {
+                                                                        "value": "@item().TargetSchemaName",
+                                                                        "type": "Expression"
+                                                                    }
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "value": "Incremental",
+                                                "activities": [
+                                                    {
+                                                        "name": "Wait2",
+                                                        "type": "Wait",
+                                                        "dependsOn": [],
+                                                        "userProperties": [],
+                                                        "typeProperties": {
+                                                            "waitTimeInSeconds": 1
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        ],
+                                        "defaultActivities": [
+                                            {
+                                                "name": "Wait1",
+                                                "type": "Wait",
+                                                "dependsOn": [],
+                                                "userProperties": [],
+                                                "typeProperties": {
+                                                    "waitTimeInSeconds": 1
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "concurrency": 1,
+                "variables": {
+                    "SourceDatabaseName": {
+                        "type": "String",
+                        "defaultValue": "SourceDB"
+                    },
+                    "SourceEntityName": {
+                        "type": "String",
+                        "defaultValue": "ABCD"
+                    },
+                    "TargetSchemaName": {
+                        "type": "String",
+                        "defaultValue": "dbo"
+                    },
+                    "TargetEntityName": {
+                        "type": "String",
+                        "defaultValue": "SomeRandomTable"
+                    }
+                },
+                "folder": {
+                    "name": "Purchasing/5_Notify"
+                },
+                "annotations": [],
+                "lastPublishTime": "2020-10-04T22:32:31Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/IncrementalLoad2')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "CopyDataFromSapAfterJoiningToChangeDocument",
+                        "type": "Copy",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SapHanaSource",
+                                "query": {
+                                    "value": "@pipeline().parameters.SourceEntityDefinition",
+                                    "type": "Expression"
+                                },
+                                "partitionOption": "None"
+                            },
+                            "sink": {
+                                "type": "AzureSqlSink"
+                            },
+                            "enableStaging": false,
+                            "translator": {
+                                "type": "TabularTranslator",
+                                "typeConversion": true,
+                                "typeConversionSettings": {
+                                    "allowDataTruncation": true,
+                                    "treatBooleanAsNumber": false
+                                }
+                            }
+                        },
+                        "inputs": [
+                            {
+                                "referenceName": "dataset_SAP_HANA_SAAZS_V_SAP13_INCREMENTAL_QA",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ],
+                        "outputs": [
+                            {
+                                "referenceName": "dataset_saec_powerbi_dev",
+                                "type": "DatasetReference",
+                                "parameters": {
+                                    "EntityName": "EntityName",
+                                    "SchemaName": "dbo"
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "parameters": {
+                    "SourceEntityDefinition": {
+                        "type": "string"
+                    }
+                },
+                "folder": {
+                    "name": "Purchasing/4_Schedule"
+                },
+                "annotations": [
+                    "Child"
+                ],
+                "lastPublishTime": "2020-10-04T22:32:31Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Row_Count')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "description": "This is a row count pipeline and will serve as a way to determine if a load can be done directly or whether its too big to just load ad-hoc",
+                "activities": [
+                    {
+                        "name": "GetRowCount",
+                        "description": "Performs a rowcount against a source to for scheduling purposes",
+                        "type": "Lookup",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "0.00:10:00",
+                            "retry": 2,
+                            "retryIntervalInSeconds": 58,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SapHanaSource",
+                                "query": "SELECT \n    COUNT(1) AS Row_Count\nFROM\n    \"SAPHANADB\".\"DD02L\"",
+                                "partitionOption": "None"
+                            },
+                            "dataset": {
+                                "referenceName": "dataset_SAP_HANA_SAAZS_V_SAP33_PROD",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        }
+                    }
+                ],
+                "parameters": {
+                    "SchemaName": {
+                        "type": "string"
+                    },
+                    "EntityName": {
+                        "type": "string"
+                    }
+                },
+                "folder": {
+                    "name": "Purchasing/Utility"
+                },
+                "annotations": [
+                    "PRODUCTION",
+                    "UTILITY"
+                ],
+                "lastPublishTime": "2020-10-13T21:25:34Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/ValidationPipeLine')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "LandingCdposCdhrJoin",
+                        "type": "Copy",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SapHanaSource",
+                                "partitionOption": "None"
+                            },
+                            "sink": {
+                                "type": "AzureSqlSink",
+                                "writeBatchSize": 1000,
+                                "tableOption": "autoCreate",
+                                "disableMetricsCollection": false
+                            },
+                            "enableStaging": false,
+                            "translator": {
+                                "type": "TabularTranslator",
+                                "typeConversion": true,
+                                "typeConversionSettings": {
+                                    "allowDataTruncation": true,
+                                    "treatBooleanAsNumber": false
+                                }
+                            }
+                        },
+                        "inputs": [
+                            {
+                                "referenceName": "dataset_SAP_HANA_SAAZS_V_SAP13",
+                                "type": "DatasetReference",
+                                "parameters": {
+                                    "DatabaseName": "SAPHANADB",
+                                    "TableNameTechnical": "view_AzureDataFactorySource_Data_ChangeDocumentTracking_Latest"
+                                }
+                            }
+                        ],
+                        "outputs": [
+                            {
+                                "referenceName": "AzureSqlTable1",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ]
+                    }
+                ],
+                "folder": {
+                    "name": "Purchasing/1_Validate"
+                },
+                "annotations": [],
+                "lastPublishTime": "2020-10-04T22:30:48Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/TransformationPipeline')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Copy data1",
+                        "type": "Copy",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SapHanaSource",
+                                "partitionOption": "None"
+                            },
+                            "sink": {
+                                "type": "AzureSqlSink"
+                            },
+                            "enableStaging": false,
+                            "translator": {
+                                "type": "TabularTranslator",
+                                "mappings": [
+                                    {
+                                        "source": {
+                                            "name": "MANDT",
+                                            "type": "String"
+                                        },
+                                        "sink": {
+                                            "name": "MANDT",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "MTEXT",
+                                            "type": "String"
+                                        },
+                                        "sink": {
+                                            "name": "MTEXT",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "ORT01",
+                                            "type": "String"
+                                        },
+                                        "sink": {
+                                            "name": "ORT01",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "MWAER",
+                                            "type": "String"
+                                        },
+                                        "sink": {
+                                            "name": "MWAER",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "ADRNR",
+                                            "type": "String"
+                                        },
+                                        "sink": {
+                                            "name": "ADRNR",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "CCCATEGORY",
+                                            "type": "String"
+                                        },
+                                        "sink": {
+                                            "name": "CCCATEGORY",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "CCCORACTIV",
+                                            "type": "String"
+                                        },
+                                        "sink": {
+                                            "name": "CCCORACTIV",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "CCNOCLIIND",
+                                            "type": "String"
+                                        },
+                                        "sink": {
+                                            "name": "CCNOCLIIND",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "CCCOPYLOCK",
+                                            "type": "String"
+                                        },
+                                        "sink": {
+                                            "name": "CCCOPYLOCK",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "CCNOCASCAD",
+                                            "type": "String"
+                                        },
+                                        "sink": {
+                                            "name": "CCNOCASCAD",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "CCSOFTLOCK",
+                                            "type": "String"
+                                        },
+                                        "sink": {
+                                            "name": "CCSOFTLOCK",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "CCORIGCONT",
+                                            "type": "String"
+                                        },
+                                        "sink": {
+                                            "name": "CCORIGCONT",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "CCIMAILDIS",
+                                            "type": "String"
+                                        },
+                                        "sink": {
+                                            "name": "CCIMAILDIS",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "CCTEMPLOCK",
+                                            "type": "String"
+                                        },
+                                        "sink": {
+                                            "name": "CCTEMPLOCK",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "CHANGEUSER",
+                                            "type": "String"
+                                        },
+                                        "sink": {
+                                            "name": "CHANGEUSER",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "CHANGEDATE",
+                                            "type": "String"
+                                        },
+                                        "sink": {
+                                            "name": "CHANGEDATE",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "LOGSYS",
+                                            "type": "String"
+                                        },
+                                        "sink": {
+                                            "name": "LOGSYS",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    }
+                                ],
+                                "typeConversion": true,
+                                "typeConversionSettings": {
+                                    "allowDataTruncation": true,
+                                    "treatBooleanAsNumber": false
+                                }
+                            }
+                        },
+                        "inputs": [
+                            {
+                                "referenceName": "SapHanaTable1",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ],
+                        "outputs": [
+                            {
+                                "referenceName": "AzureSqlTable1",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ]
+                    }
+                ],
+                "folder": {
+                    "name": "Purchasing/3_Transform"
+                },
+                "annotations": [],
+                "lastPublishTime": "2020-10-04T22:30:48Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/FullLoad_Quick')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "description": "Full Load Execution",
+                "activities": [
+                    {
+                        "name": "Lookup1",
+                        "type": "Lookup",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "source": {
+                                "type": "AzureSqlSource",
+                                "queryTimeout": "02:00:00",
+                                "partitionOption": "None"
+                            },
+                            "dataset": {
+                                "referenceName": "dataset_saec_powerbi_dev",
+                                "type": "DatasetReference",
+                                "parameters": {
+                                    "EntityName": "vw_SplitChangeHeader",
+                                    "SchemaName": "adf"
+                                }
+                            },
+                            "firstRowOnly": false
+                        }
+                    },
+                    {
+                        "name": "ForEach1",
+                        "type": "ForEach",
+                        "dependsOn": [
+                            {
+                                "activity": "Lookup1",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "userProperties": [],
+                        "typeProperties": {
+                            "items": {
+                                "value": "@activity('Lookup1').output",
+                                "type": "Expression"
+                            },
+                            "batchCount": 8,
+                            "activities": [
+                                {
+                                    "name": "FullLoadCopyData",
+                                    "description": "Full Load to move data from SAP to SQL Landing Zone",
+                                    "type": "Copy",
+                                    "dependsOn": [],
+                                    "policy": {
+                                        "timeout": "0.12:00:00",
+                                        "retry": 1,
+                                        "retryIntervalInSeconds": 30,
+                                        "secureOutput": false,
+                                        "secureInput": false
+                                    },
+                                    "userProperties": [],
+                                    "typeProperties": {
+                                        "source": {
+                                            "type": "SapHanaSource",
+                                            "query": {
+                                                "value": "@item().SourceDefinition",
+                                                "type": "Expression"
+                                            },
+                                            "partitionOption": "None"
+                                        },
+                                        "sink": {
+                                            "type": "AzureSqlSink",
+                                            "writeBatchSize": 1000,
+                                            "maxConcurrentConnections": 4,
+                                            "tableOption": "autoCreate",
+                                            "disableMetricsCollection": false
+                                        },
+                                        "enableStaging": false,
+                                        "translator": {
+                                            "type": "TabularTranslator",
+                                            "typeConversion": true,
+                                            "typeConversionSettings": {
+                                                "allowDataTruncation": true,
+                                                "treatBooleanAsNumber": false
+                                            }
+                                        }
+                                    },
+                                    "inputs": [
+                                        {
+                                            "referenceName": "dataset_SAP_HANA_SAAZS_V_SAP33_PROD",
+                                            "type": "DatasetReference",
+                                            "parameters": {}
+                                        }
+                                    ],
+                                    "outputs": [
+                                        {
+                                            "referenceName": "dataset_saec_powerbi_dev",
+                                            "type": "DatasetReference",
+                                            "parameters": {
+                                                "EntityName": {
+                                                    "value": "CDHDR_Change_document_header_PROD_Staged",
+                                                    "type": "Expression"
+                                                },
+                                                "SchemaName": {
+                                                    "value": "lnd",
+                                                    "type": "Expression"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "variables": {
+                    "LowValue": {
+                        "type": "String"
+                    },
+                    "Highvalue": {
+                        "type": "String"
+                    }
+                },
+                "folder": {
+                    "name": "Purchasing/zz_Test"
+                },
+                "annotations": [
+                    "Child"
+                ],
+                "lastPublishTime": "2020-10-21T23:52:04Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Row_Count_Quick')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "description": "This is a row count pipeline and will serve as a way to determine if a load can be done directly or whether its too big to just load ad-hoc",
+                "activities": [
+                    {
+                        "name": "GetRowCount",
+                        "description": "Performs a rowcount against a source to for scheduling purposes",
+                        "type": "Lookup",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "0.00:10:00",
+                            "retry": 2,
+                            "retryIntervalInSeconds": 58,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SapHanaSource",
+                                "query": "SELECT \n    COUNT(1) AS Row_Count\nFROM\n    \"SAPHANADB\".\"DD01L\"",
+                                "partitionOption": "None"
+                            },
+                            "dataset": {
+                                "referenceName": "dataset_SAP_HANA_SAAZS_V_SAP33_PROD",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        }
+                    }
+                ],
+                "folder": {
+                    "name": "Purchasing/zz_Test"
+                },
+                "annotations": [
+                    "TESTING",
+                    "UTILITY"
+                ],
+                "lastPublishTime": "2020-12-01T16:45:27Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/CDHDR_RELOAD')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "description": "Full Load Execution",
+                "activities": [
+                    {
+                        "name": "GetLoadConfig",
+                        "description": "Gets the Configurations from the Azure instancell.",
+                        "type": "Lookup",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "0.00:30:00",
+                            "retry": 2,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "source": {
+                                "type": "AzureSqlSource",
+                                "queryTimeout": "02:00:00",
+                                "partitionOption": "None"
+                            },
+                            "dataset": {
+                                "referenceName": "dataset_saec_powerbi_dev",
+                                "type": "DatasetReference",
+                                "parameters": {
+                                    "EntityName": "vw_SplitChangeHeader",
+                                    "SchemaName": "adf"
+                                }
+                            },
+                            "firstRowOnly": false
+                        }
+                    },
+                    {
+                        "name": "ForEach1",
+                        "type": "ForEach",
+                        "dependsOn": [
+                            {
+                                "activity": "GetLoadConfig",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "userProperties": [],
+                        "typeProperties": {
+                            "items": {
+                                "value": "@activity('GetLoadConfig').output.value",
+                                "type": "Expression"
+                            },
+                            "batchCount": 7,
+                            "activities": [
+                                {
+                                    "name": "FullLoadCopyData",
+                                    "description": "Full Load to move data from SAP to SQL Landing Zone",
+                                    "type": "Copy",
+                                    "dependsOn": [],
+                                    "policy": {
+                                        "timeout": "0.12:00:00",
+                                        "retry": 1,
+                                        "retryIntervalInSeconds": 30,
+                                        "secureOutput": false,
+                                        "secureInput": false
+                                    },
+                                    "userProperties": [],
+                                    "typeProperties": {
+                                        "source": {
+                                            "type": "SapHanaSource",
+                                            "query": {
+                                                "value": "@item().SourceDefinition",
+                                                "type": "Expression"
+                                            },
+                                            "partitionOption": "None"
+                                        },
+                                        "sink": {
+                                            "type": "AzureSqlSink",
+                                            "writeBatchSize": 1000,
+                                            "maxConcurrentConnections": 4,
+                                            "tableOption": "autoCreate",
+                                            "disableMetricsCollection": false
+                                        },
+                                        "enableStaging": false,
+                                        "translator": {
+                                            "type": "TabularTranslator",
+                                            "typeConversion": true,
+                                            "typeConversionSettings": {
+                                                "allowDataTruncation": true,
+                                                "treatBooleanAsNumber": false
+                                            }
+                                        }
+                                    },
+                                    "inputs": [
+                                        {
+                                            "referenceName": "dataset_SAP_HANA_SAAZS_V_SAP33_PROD",
+                                            "type": "DatasetReference",
+                                            "parameters": {}
+                                        }
+                                    ],
+                                    "outputs": [
+                                        {
+                                            "referenceName": "dataset_saec_powerbi_dev",
+                                            "type": "DatasetReference",
+                                            "parameters": {
+                                                "EntityName": {
+                                                    "value": "CDHDR_Change_document_header_PROD_Staged_2",
+                                                    "type": "Expression"
+                                                },
+                                                "SchemaName": {
+                                                    "value": "lnd",
+                                                    "type": "Expression"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "variables": {
+                    "TAB1": {
+                        "type": "String",
+                        "defaultValue": "MARA"
+                    },
+                    "TAB2": {
+                        "type": "String",
+                        "defaultValue": "MARC"
+                    },
+                    "TAB3": {
+                        "type": "String",
+                        "defaultValue": "MARD"
+                    }
+                },
+                "folder": {
+                    "name": "Purchasing/zz_Test"
+                },
+                "annotations": [
+                    "Child"
+                ],
+                "lastPublishTime": "2020-10-29T06:19:06Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/CDPOS_RELOAD')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "description": "Full Load Execution",
+                "activities": [
+                    {
+                        "name": "GetLoadConfig",
+                        "description": "Gets the Configurations from the Azure instance",
+                        "type": "Lookup",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "0.00:30:00",
+                            "retry": 2,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "source": {
+                                "type": "AzureSqlSource",
+                                "queryTimeout": "02:00:00",
+                                "partitionOption": "None"
+                            },
+                            "dataset": {
+                                "referenceName": "dataset_saec_powerbi_dev",
+                                "type": "DatasetReference",
+                                "parameters": {
+                                    "EntityName": "vw_SplitChangeLines",
+                                    "SchemaName": "adf"
+                                }
+                            },
+                            "firstRowOnly": false
+                        }
+                    },
+                    {
+                        "name": "ForEach1",
+                        "type": "ForEach",
+                        "dependsOn": [
+                            {
+                                "activity": "GetLoadConfig",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "userProperties": [],
+                        "typeProperties": {
+                            "items": {
+                                "value": "@activity('GetLoadConfig').output.value",
+                                "type": "Expression"
+                            },
+                            "batchCount": 8,
+                            "activities": [
+                                {
+                                    "name": "FullLoadCopyData",
+                                    "description": "Full Load to move data from SAP to SQL Landing Zone",
+                                    "type": "Copy",
+                                    "dependsOn": [],
+                                    "policy": {
+                                        "timeout": "0.12:00:00",
+                                        "retry": 1,
+                                        "retryIntervalInSeconds": 30,
+                                        "secureOutput": false,
+                                        "secureInput": false
+                                    },
+                                    "userProperties": [],
+                                    "typeProperties": {
+                                        "source": {
+                                            "type": "SapHanaSource",
+                                            "query": {
+                                                "value": "@item().SourceDefinition",
+                                                "type": "Expression"
+                                            },
+                                            "partitionOption": "None"
+                                        },
+                                        "sink": {
+                                            "type": "AzureSqlSink",
+                                            "writeBatchSize": 1000,
+                                            "maxConcurrentConnections": 4,
+                                            "tableOption": "autoCreate",
+                                            "disableMetricsCollection": false
+                                        },
+                                        "enableStaging": false,
+                                        "translator": {
+                                            "type": "TabularTranslator",
+                                            "typeConversion": true,
+                                            "typeConversionSettings": {
+                                                "allowDataTruncation": true,
+                                                "treatBooleanAsNumber": false
+                                            }
+                                        }
+                                    },
+                                    "inputs": [
+                                        {
+                                            "referenceName": "dataset_SAP_HANA_SAAZS_V_SAP33_PROD",
+                                            "type": "DatasetReference",
+                                            "parameters": {}
+                                        }
+                                    ],
+                                    "outputs": [
+                                        {
+                                            "referenceName": "dataset_saec_powerbi_dev",
+                                            "type": "DatasetReference",
+                                            "parameters": {
+                                                "EntityName": {
+                                                    "value": "CDPOS_Change_document_items_PROD_Staged",
+                                                    "type": "Expression"
+                                                },
+                                                "SchemaName": {
+                                                    "value": "lnd",
+                                                    "type": "Expression"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "variables": {
+                    "TAB1": {
+                        "type": "String",
+                        "defaultValue": "MARA"
+                    },
+                    "TAB2": {
+                        "type": "String",
+                        "defaultValue": "MARC"
+                    },
+                    "TAB3": {
+                        "type": "String",
+                        "defaultValue": "MARD"
+                    }
+                },
+                "folder": {
+                    "name": "Purchasing/zz_Test"
+                },
+                "annotations": [
+                    "Child"
+                ],
+                "lastPublishTime": "2020-10-23T16:12:41Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Copy_CDPOS')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "description": "Full Load Execution",
+                "activities": [
+                    {
+                        "name": "FullLoadCopyData",
+                        "description": "Full Load to move data from SAP to SQL Landing Zone",
+                        "type": "Copy",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "0.12:00:00",
+                            "retry": 1,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SapHanaSource",
+                                "query": {
+                                    "value": "SELECT * FROM \"SAPHANADB\".\"CDPOS\" WHERE \"CHANGENR\" >='0009990824'",
+                                    "type": "Expression"
+                                },
+                                "partitionOption": "None"
+                            },
+                            "sink": {
+                                "type": "AzureSqlSink",
+                                "writeBatchSize": 1000,
+                                "preCopyScript": {
+                                    "value": "DELETE FROM [lnd].[CDPOS_Change_document_items_PROD_Staged] WHERE [CHANGENR] >= '0009990824'",
+                                    "type": "Expression"
+                                },
+                                "maxConcurrentConnections": 4,
+                                "tableOption": "autoCreate",
+                                "disableMetricsCollection": false
+                            },
+                            "enableStaging": false,
+                            "translator": {
+                                "type": "TabularTranslator",
+                                "typeConversion": true,
+                                "typeConversionSettings": {
+                                    "allowDataTruncation": true,
+                                    "treatBooleanAsNumber": false
+                                }
+                            }
+                        },
+                        "inputs": [
+                            {
+                                "referenceName": "dataset_SAP_HANA_SAAZS_V_SAP33_PROD",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ],
+                        "outputs": [
+                            {
+                                "referenceName": "dataset_saec_powerbi_dev",
+                                "type": "DatasetReference",
+                                "parameters": {
+                                    "EntityName": {
+                                        "value": "CDPOS_Change_document_items_PROD_Staged",
+                                        "type": "Expression"
+                                    },
+                                    "SchemaName": {
+                                        "value": "lnd",
+                                        "type": "Expression"
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "variables": {
+                    "CHANGENR": {
+                        "type": "String",
+                        "defaultValue": "0009909647"
+                    }
+                },
+                "folder": {
+                    "name": "Purchasing/zz_Test"
+                },
+                "annotations": [
+                    "Child"
+                ],
+                "lastPublishTime": "2020-12-07T22:25:33Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Copy_MatDoc')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "description": "Full Load Execution",
+                "activities": [
+                    {
+                        "name": "FullLoadCopyData",
+                        "description": "Full Load to move data from SAP to SQL Landing Zone",
+                        "type": "Copy",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "0.12:00:00",
+                            "retry": 1,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SapHanaSource",
+                                "query": {
+                                    "value": "SELECT * FROM \"SAPHANADB\".\"MATDOC\"",
+                                    "type": "Expression"
+                                },
+                                "partitionOption": "None"
+                            },
+                            "sink": {
+                                "type": "AzureSqlSink",
+                                "writeBatchSize": 1000,
+                                "maxConcurrentConnections": 4,
+                                "tableOption": "autoCreate",
+                                "disableMetricsCollection": false
+                            },
+                            "enableStaging": false,
+                            "translator": {
+                                "type": "TabularTranslator",
+                                "typeConversion": true,
+                                "typeConversionSettings": {
+                                    "allowDataTruncation": true,
+                                    "treatBooleanAsNumber": false
+                                }
+                            }
+                        },
+                        "inputs": [
+                            {
+                                "referenceName": "dataset_SAP_HANA_SAAZS_V_SAP33_PROD",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ],
+                        "outputs": [
+                            {
+                                "referenceName": "dataset_saec_powerbi_dev",
+                                "type": "DatasetReference",
+                                "parameters": {
+                                    "EntityName": {
+                                        "value": "MATDOC_Material_Documents_PROD_Staged",
+                                        "type": "Expression"
+                                    },
+                                    "SchemaName": {
+                                        "value": "lnd",
+                                        "type": "Expression"
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "variables": {
+                    "TAB1": {
+                        "type": "String",
+                        "defaultValue": "MARA"
+                    },
+                    "TAB2": {
+                        "type": "String",
+                        "defaultValue": "MARC"
+                    },
+                    "TAB3": {
+                        "type": "String",
+                        "defaultValue": "MARD"
+                    }
+                },
+                "folder": {
+                    "name": "Purchasing/zz_Test"
+                },
+                "annotations": [
+                    "Child"
+                ],
+                "lastPublishTime": "2020-12-09T13:33:47Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Copy_CDHDR')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "description": "Full Load Execution",
+                "activities": [
+                    {
+                        "name": "FullLoadCopyData",
+                        "description": "Full Load to move data from SAP to SQL Landing Zone",
+                        "type": "Copy",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "0.12:00:00",
+                            "retry": 1,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SapHanaSource",
+                                "query": {
+                                    "value": "SELECT  *\nFROM \"SAPHANADB\".\"CDHDR\" \nWHERE \"CHANGENR\" >= '0009990824'",
+                                    "type": "Expression"
+                                },
+                                "partitionOption": "None"
+                            },
+                            "sink": {
+                                "type": "AzureSqlSink",
+                                "writeBatchSize": 1000,
+                                "preCopyScript": "DELETE FROM [lnd].[CDHDR_Change_document_header_PROD_Staged] WHERE [CHANGENR] >= '0009990824'",
+                                "maxConcurrentConnections": 4,
+                                "tableOption": "autoCreate",
+                                "disableMetricsCollection": false
+                            },
+                            "enableStaging": false,
+                            "translator": {
+                                "type": "TabularTranslator",
+                                "typeConversion": true,
+                                "typeConversionSettings": {
+                                    "allowDataTruncation": true,
+                                    "treatBooleanAsNumber": false
+                                }
+                            }
+                        },
+                        "inputs": [
+                            {
+                                "referenceName": "dataset_SAP_HANA_SAAZS_V_SAP33_PROD",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ],
+                        "outputs": [
+                            {
+                                "referenceName": "dataset_saec_powerbi_dev",
+                                "type": "DatasetReference",
+                                "parameters": {
+                                    "EntityName": {
+                                        "value": "CDHDR_Change_document_header_PROD_Staged",
+                                        "type": "Expression"
+                                    },
+                                    "SchemaName": {
+                                        "value": "lnd",
+                                        "type": "Expression"
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "variables": {
+                    "CHANGENR": {
+                        "type": "String",
+                        "defaultValue": "0009909647"
+                    }
+                },
+                "folder": {
+                    "name": "Purchasing/zz_Test"
+                },
+                "annotations": [
+                    "Child"
+                ],
+                "lastPublishTime": "2020-12-07T22:25:32Z"
+            },
+            "dependsOn": []
+        }
+    ]
+}

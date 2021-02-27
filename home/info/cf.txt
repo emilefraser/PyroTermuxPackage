@@ -1,0 +1,1 @@
+pkg i cabextract cmake clang cmark chromaprint coreutils cups curl dash db debianutils diffutils dirb direnv dnsmap dos2unix dpkg et exiftool fakeroot fd ffmpeg figlet file flac fmt fzf flex

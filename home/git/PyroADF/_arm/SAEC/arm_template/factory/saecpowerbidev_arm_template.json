@@ -1,0 +1,87 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "factoryName": {
+            "type": "string",
+            "metadata": "Data Factory name",
+            "defaultValue": "saecpowerbidev"
+        },
+        "dataFactory_properties_globalParameters_AzureSqlServerName_value": {
+            "type": "string",
+            "defaultValue": "saazs-v-pwrbidev.database.windows.net"
+        },
+        "dataFactory_properties_globalParameters_AzureSqlDatabaseName_value": {
+            "type": "string",
+            "defaultValue": "saec-powerbi-dev"
+        },
+        "dataFactory_properties_globalParameters_ExtractionSchemaName_value": {
+            "type": "string",
+            "defaultValue": "ext"
+        },
+        "dataFactory_properties_globalParameters_RawDataVaultSchemaName_value": {
+            "type": "string",
+            "defaultValue": "raw"
+        },
+        "dataFactory_properties_globalParameters_StageAreaSchemaName_value": {
+            "type": "string",
+            "defaultValue": "stage"
+        },
+        "dataFactory_properties_globalParameters_MetaDataSchemaName_value": {
+            "type": "string",
+            "defaultValue": "dm"
+        },
+        "dataFactory_properties_globalParameters_AdfSchemaName_value": {
+            "type": "string",
+            "defaultValue": "adf"
+        },
+        "dataFactory_location": {
+            "type": "string",
+            "defaultValue": "westeurope"
+        }
+    },
+    "variables": {
+        "factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+    },
+    "resources": [
+        {
+            "name": "[parameters('factoryName')]",
+            "type": "Microsoft.DataFactory/factories",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "globalParameters": {
+                    "AzureSqlServerName": {
+                        "type": "string",
+                        "value": "[parameters('dataFactory_properties_globalParameters_AzureSqlServerName_value')]"
+                    },
+                    "AzureSqlDatabaseName": {
+                        "type": "string",
+                        "value": "[parameters('dataFactory_properties_globalParameters_AzureSqlDatabaseName_value')]"
+                    },
+                    "ExtractionSchemaName": {
+                        "type": "string",
+                        "value": "[parameters('dataFactory_properties_globalParameters_ExtractionSchemaName_value')]"
+                    },
+                    "RawDataVaultSchemaName": {
+                        "type": "string",
+                        "value": "[parameters('dataFactory_properties_globalParameters_RawDataVaultSchemaName_value')]"
+                    },
+                    "StageAreaSchemaName": {
+                        "type": "string",
+                        "value": "[parameters('dataFactory_properties_globalParameters_StageAreaSchemaName_value')]"
+                    },
+                    "MetaDataSchemaName": {
+                        "type": "string",
+                        "value": "[parameters('dataFactory_properties_globalParameters_MetaDataSchemaName_value')]"
+                    },
+                    "AdfSchemaName": {
+                        "type": "string",
+                        "value": "[parameters('dataFactory_properties_globalParameters_AdfSchemaName_value')]"
+                    }
+                }
+            },
+            "dependsOn": [],
+            "location": "[parameters('dataFactory_location')]"
+        }
+    ]
+}

@@ -1,0 +1,71 @@
+{
+	"name": "dataset_AcAzMetadataDB_ETL_LoadConnection",
+	"properties": {
+		"description": "Dataset to my MetaData Database",
+		"linkedServiceName": {
+			"referenceName": "AcAzMetadataDynamic",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Connection"
+		},
+		"annotations": [
+			"AcAz"
+		],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "LoadConnectionID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "SystemName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ServerName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Port",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Path",
+				"type": "nvarchar"
+			},
+			{
+				"name": "AuthenticationType",
+				"type": "nvarchar"
+			},
+			{
+				"name": "UserName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Password",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CreatedDT",
+				"type": "datetime2",
+				"scale": 7
+			},
+			{
+				"name": "UpdatedDT",
+				"type": "datetime2",
+				"scale": 7
+			},
+			{
+				"name": "IsActive",
+				"type": "bit"
+			}
+		],
+		"typeProperties": {
+			"schema": "ETL",
+			"table": "LoadConnection"
+		}
+	}
+}

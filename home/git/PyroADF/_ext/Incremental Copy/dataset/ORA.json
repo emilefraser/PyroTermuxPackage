@@ -1,0 +1,10 @@
+{
+	"name": "ORA",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Oracle",
+			"type": "LinkedServiceReference"
+		},
+		"type": "OracleTable"
+	}
+}

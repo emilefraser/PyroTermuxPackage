@@ -1,0 +1,10 @@
+{
+	"name": "AcAzAzureKeyVault",
+	"properties": {
+		"annotations": [],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://AcAzEuKeyVault.vault.azure.net/"
+		}
+	}
+}

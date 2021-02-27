@@ -1,0 +1,45 @@
+# ~/.bash_profile: executed by the command interpreter for login shells.
+# see /usr/share/doc/bash/examples/startup-files for examples.
+# the files are located in the bash-doc package.
+
+
+# Start Loading External dotfiles
+# ~/.path can be used to extend PATH
+# ~/.extra can be used for settings you dont want to commit
+for file in ~/.{path,exports,aliases,functions,extra}; do
+	[ -r "$file" ] && [ -f "$file" ] && source "$file";
+done;
+unset file;
+
+
+##########################
+##### TAB COMPLETION #####
+##########################
+# Add tab completion for many Bash commands 
+if which brew &> /dev/null && [ -r "$(brew --prefix)/etc/profile.d/bash_completion.sh" ]; then 	
+	# Ensure existing Homebrew v1 completions continue to work 	
+	export BASH_COMPLETION_COMPAT_DIR="$(brew --prefix)/etc/bash_completion.d";
+	source "$(brew --prefix)/etc/profile.d/bash_completion.sh"; 
+elif [ -f /etc/bash_completion ]; then
+	source /etc/bash_completion; 
+fi;
+
+# Enable tab completion for `g` by marking it as an alias for `git` 
+if type _git &> /dev/null; then
+ 	complete -o default -o nospace -F _git g; 
+fi;  
+
+# Add tab completion for SSH hostnames based on ~/.ssh/config, ignoring wildcards 
+[ -e "$HOME/.ssh/config" ] && complete -o "default" -o "nospace" -W "$(grep "^Host" ~/.ssh/config | grep -v "[?*]" | cut -d " " -f2- | tr ' ' '\n')" scp sftp ssh;  
+
+# Add tab completion for `defaults read|write NSGlobalDomain` 
+# You could just use `-g` instead, but I like being explicit 
+complete -W "NSGlobalDomain" defaults;
+
+############################
+######### STYLE ############
+############################
+# Power Pure Line
+source ~/gh/pureline/pureline ~/.pureline.conf
+
+
