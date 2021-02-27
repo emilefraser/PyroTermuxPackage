@@ -1,0 +1,26 @@
+{
+  "segments": [
+    "newline",
+    "ssh",
+    "cwd",
+    "hg",
+    "jobs",
+    "git",
+    "git_stash",
+    "ssh",
+    "virtual_env",
+    "newline" ,
+    "time",
+    "exit_code",
+    "root"
+  ],
+  "mode": "patched",
+  "cwd": {
+    "mode": "patched",
+    "max_depth": 4
+  },
+  "vcs": {
+    "show_symbol": "true"
+  },
+  "theme": "pyro"
+}

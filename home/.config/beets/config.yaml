@@ -1,0 +1,114 @@
+## GLOBAL BEETS YAML CONFIG FILE
+
+## Paths
+library: library.db
+directory: /storage/466C-6F22/music/
+
+## Plugins
+# plugins:
+pluginpath: []
+
+## Extra Configs
+# include: []
+
+threaded: yes
+
+#paths:
+   default: %bucket{%the{$albumartist}}/%the{$albumartist}/$album%aunique{}/$track $title
+   singleton: %bucket{%the{$artist}}/%the{$artist}/$title(single)/$track $title
+   comp: ℅bucket{%the{$artist}}/%the{$artist}/$album%aunique{}/$track $title
+      # anique{}
+      #albumtype:soundtrack: .....
+
+## Ignores
+ignore_hidden: yes
+ignore: [".*", "*~", "System Volume Information", "lost+found"]
+clutter: [ "Thumbs.DB", ".DS_Store", "*.m3u", ".pls", ".lrc" ]
+replace:
+    '[\\/]': _
+    '^\.': _
+    '[\x00-\x1f]': _
+    '[<>:"\?\*\|]': _
+    '\.$': _
+    '\s+$': ''
+    '^\s+': ''
+    '^-': _  
+
+import:
+    copy: no
+    write: no
+    autotag: no
+    resume: ask
+    incremental: yes
+     quiet_fallback: skip
+    timid: no
+    log: /config/beet.log
+
+
+## Paths
+asciify_paths: yes
+#max_filename_length: 0
+
+## Art
+#art_filename: folder
+
+## Threading
+threaded: yes
+
+## Formatting
+#format_item: $artist - $album - $title
+#format_album: $albumartist - $album
+
+## Sorting
+sort_item: artist+ album+ disc+ track+
+sort_album: albumartist+ album+
+sort_case_insensitive: yes
+
+## Tagging Misc
+original_date: no
+artist_credit: yes
+per_disc_numbering: no
+id3v23: yes
+
+## Encoding
+# terminal_enoding
+
+convert:
+    auto: no
+    ffmpeg: /usr/bin/ffmpeg
+    opts: -ab 320k -ac 2 -ar 48000
+    max_bitrate: 320
+    threads: 1
+
+## Various Artists
+va_name: 'Various Artists'
+
+# UI
+ui:
+    color: yes
+    colors:
+        text_success: green
+        text_warning: yellow
+        text_error: red
+        text_highlight: red
+        text_highlight_minor: lightgray
+        action_default: turquoise
+        action: blue
+
+chroma:
+    auto: no
+
+spotify:
+    mode: open
+    region_filter: US
+    show_faiulres: on
+    tiebreak: first
+
+
+    
+
+plugins: [
+    info chroma spotify fetchart
+     embedart convert scrub replaygainq 
+     lastgenre web
+]
