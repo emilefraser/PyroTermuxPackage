@@ -1,0 +1,324 @@
+Package: apksigner
+Architecture: all
+Installed-Size: 368
+Maintainer: Termux members @termux
+Version: 30.0.3-1
+Homepage: https://developer.android.com/studio/command-line/apksigner
+Description: APK signing tool
+Filename: dists/termux/extras/binary-all/apksigner_30.0.3-1_all.deb
+Size: 325678
+MD5Sum: 4663ad3857483f988becdc40dfbced27
+SHA1: e853f2668871dbe8b903b73040d9031dd39d14b9
+SHA256: f7a6ca14529a0d85ca6b30c7033a59f5af88c177500de6543739005e37f21f11
+SHA512: 4a7c74101ccf70a9a65db0d94abbdacac55dc2539516cbf72dbc228745b6ab3b8c630515056cb0d22fba61693e284d578ec929f490f23808abf381f1e16bb80c
+
+Package: bash-completion
+Architecture: all
+Installed-Size: 2320
+Maintainer: Termux members @termux
+Version: 2.11-1
+Homepage: https://github.com/scop/bash-completion
+Depends: bash
+Description: Programmable completion for the bash shell
+Filename: dists/termux/extras/binary-all/bash-completion_2.11-1_all.deb
+Size: 156772
+MD5Sum: de90d18c8b9f10aff21d785f8ef1cb6a
+SHA1: d2e9b4ec5cc4effde259a98a01995aa0d950bd5d
+SHA256: 3598907f86243375b64ffe27850ad2310b58dbf29220b2fd63be30bf1e4e93e2
+SHA512: 7a40a14dbe68830e8e3e458625fb52ecabcdf8e4d5ef702f68117bcd1f69382236664762c2f45e62bf726daa099b366f21bd615055eb4e73d924ba81c7e2b43a
+
+Package: ca-certificates
+Architecture: all
+Installed-Size: 248
+Maintainer: @termux
+Version: 20210125
+Homepage: https://curl.haxx.se/docs/caextract.html
+Description: Common CA certificates
+Filename: dists/termux/extras/binary-all/ca-certificates_20210125_all.deb
+Size: 113914
+MD5Sum: 6b841fad1aac5e7631b9c396c1f1cd7b
+SHA1: bf12a75442a4e77e01bdc400f1d4caa89a862eca
+SHA256: 856072e36bbdf8c8101e8cad9beaaddeeda85d7aacb97cc11ac7dae82aa264d2
+SHA512: 15d4f903e8c0c290142be5b0fdc5737dba89d52de4803fdb7f565324657861ed2c4a55ef454f1ffa3168ac87da73b8d03acd2ead3b36dd1dc9919a1fb0d173a9
+
+Package: game-repo
+Architecture: all
+Installed-Size: 52
+Maintainer: Henrik Grimler @Grimler91
+Version: 1.3
+Homepage: https://github.com/termux/game-packages
+Depends: termux-keyring
+Description: Package repository containing games for termux
+Filename: dists/termux/extras/binary-all/game-repo_1.3_all.deb
+Size: 1042
+MD5Sum: ce5cbf854e8f2000879b6d897e4cc69d
+SHA1: aa7498074348be4e65a3226b74bc386f676f2c92
+SHA256: 7b09e444cb59702e315e2250dcd76dd92bcef63c8c8bbf1fa52e4d56ffc19319
+SHA512: 73a0b461bab5fff20099f0d3d9642d62a6f41fe662592bdc7579e7f1900c6a7c75efa340363424c0427ce674536ad09c6b229ad5597a02fbad051d83bae2e70e
+
+Package: geoip2-database
+Architecture: all
+Installed-Size: 71704
+Maintainer: Leonid Pliushch <leonid.pliushch@gmail.com>
+Version: 20191221-2
+Homepage: https://dev.maxmind.com/geoip/geoip2/geolite2/
+Description: GeoLite2 IP geolocation databases compiled by MaxMind
+Filename: dists/termux/extras/binary-all/geoip2-database_20191221-2_all.deb
+Size: 23221458
+MD5Sum: 313eaeb1178368c7af496f5d957fd788
+SHA1: 66361b5c428b22a16563b7f5d1ce0fbe2f7ad50f
+SHA256: 408c7fe19ec06eef40af8f946e0206975377fbc3a87077740218a734e1e52598
+SHA512: aca6caefe8209ea35d3d707ca455d6209e1a70339f5e1d97abc077e4af54a023452014db4b92319c93e099f6c259c005db28cb56bdb80bced4ab47941ce6fe07
+
+Package: manpages
+Architecture: all
+Installed-Size: 16248
+Maintainer: @termux
+Version: 5.10
+Homepage: https://www.kernel.org/doc/man-pages/
+Depends: man
+Conflicts: linux-man-pages
+Replaces: linux-man-pages
+Provides: linux-man-pages
+Description: Man pages for linux kernel and C library interfaces
+Filename: dists/termux/extras/binary-all/manpages_5.10_all.deb
+Size: 5893506
+MD5Sum: 4ca68b648476e37b615d08a1b791fc6b
+SHA1: a2bf68a29f68fb9396381430565fe6adc63945f2
+SHA256: 516f7f801f9516b68984f0b73e30a3248b212baf44a43a2eda45dffdedc5eca1
+SHA512: 64e1bec43fd42c96bee9814116772536ef98fff0dd66bea8148c6aa15f2440d840501c58e3c83f99ff535dce51b98358b77a27040de171ca798287726144c197
+
+Package: mime-support
+Architecture: all
+Installed-Size: 64
+Maintainer: Fredrik Fornwall @fornwall
+Version: 3.64
+Homepage: https://packages.debian.org/en/stretch/mime-support
+Conflicts: mutt (<< 1.8.3-1)
+Description: MIME type associations for file types
+Filename: dists/termux/extras/binary-all/mime-support_3.64_all.deb
+Size: 7572
+MD5Sum: 889e3a22295fad216a21809391891428
+SHA1: 21c8abbf3b590145aac263521b0c4bbbf45b09c4
+SHA256: 68ffdea46cd7b3f3d9aedc7d1d415fa17fd7b293b004fe980dfa827edf472314
+SHA512: 8c88b580a608f233d81dceee5e8f27c45d2fb65fc57959b29d4451fc248e41eeee3da42a73f95fef764fd4a272229e0cbface4162bc619b2185e323c7fa00be9
+
+Package: proot-distro
+Architecture: all
+Installed-Size: 136
+Maintainer: Leonid Pliushch <leonid.pliushch@gmail.com>
+Version: 1.6.1
+Homepage: https://github.com/termux/proot-distro
+Depends: bash, bzip2, coreutils, curl, findutils, gzip, ncurses-utils, proot (>= 5.1.107-32), sed, tar, xz-utils
+Description: Termux official utility for managing proot'ed Linux distributions
+Filename: dists/termux/extras/binary-all/proot-distro_1.6.1_all.deb
+Size: 16442
+MD5Sum: 955fd594a14988b2563741f478a7fb04
+SHA1: 8a2ec5eafaf8e271904ebc32584ddc06e74ab4c9
+SHA256: 21e958965c2dd0e719adf0a464aa07b91b5d93cae6a832a47108d99b88e884ef
+SHA512: 6b0fabdc69f08d8973840baeb35f16b709c1fb2c8cd37d223191d79594ae35a4100bce77a1d19b15caa231b47285b9f4af239723e0a28520baa7285039c4c71c
+
+Package: ranger
+Architecture: all
+Installed-Size: 1332
+Maintainer: Termux members @termux
+Version: 1.9.3-1
+Homepage: https://ranger.github.io/
+Depends: python, file
+Description: File manager with VI key bindings
+Filename: dists/termux/extras/binary-all/ranger_1.9.3-1_all.deb
+Size: 181780
+MD5Sum: 1704d7e2501c4999800821d57c1f6719
+SHA1: 805dc99e3d9d6a8fa5a8d57599f4db1664af455d
+SHA256: 32aa4b394d28a1a0f7ad1b40dfdf911d0e1753a3c31554f840fc7dec3b7f01d9
+SHA512: 3b80f8a5e21d1218373afb466ff462f8c06ce8b1343d514beee48fc3bac25834db8523bd55c605dfce49f9df935b70146e73a207097c23ef9b9def4850f06be4
+
+Package: root-repo
+Architecture: all
+Installed-Size: 52
+Maintainer: Henrik Grimler @Grimler91
+Version: 1.7
+Homepage: https://github.com/termux/termux-root-packages
+Depends: termux-keyring
+Description: Package repository containing programs for rooted devices
+Filename: dists/termux/extras/binary-all/root-repo_1.7_all.deb
+Size: 1052
+MD5Sum: 52e1b9be440138aa28728fab719664be
+SHA1: e7d043d6f51e842cb35399b4677fc819e3136141
+SHA256: d3933e8890ff6b82ec5bb43b54ff16b5ff28ed887fb619b716590f61497fd673
+SHA512: 076e319f8df2706776992158b6937e90c7fc8ca7c37f748d66ac6c01785541cbc1f9894b07e8e2afe34e94c8bd5d12e0cb410e86dc02f342b422b147b988c392
+
+Package: science-repo
+Architecture: all
+Installed-Size: 52
+Maintainer: Henrik Grimler @Grimler91
+Version: 1.2
+Homepage: https://github.com/termux/science-packages
+Depends: termux-keyring
+Description: Package repository containing science software
+Filename: dists/termux/extras/binary-all/science-repo_1.2_all.deb
+Size: 1046
+MD5Sum: a4a4162f16d0c1752a60bfb763945e0c
+SHA1: af575307468355b56ed713a31ee9e353c8915f42
+SHA256: 1dc90a85da142b9fec07f0703220e6a6bef004a72737fdab12207e25a650270e
+SHA512: f59b3f822ecb72386a9fd166c85a94db0307dbca7a369589a9d6de2f6a4140bd52adba4cf7382af066c6a40146c04c0e1c91cf27ead9ad4440a5dce344eadac3
+
+Package: termux-apt-repo
+Architecture: all
+Installed-Size: 40
+Maintainer: Fredrik Fornwall @fornwall
+Version: 0.4
+Homepage: https://github.com/termux/termux-apt-repo
+Depends: binutils, python, tar
+Description: Script to create Termux apt repositories
+Filename: dists/termux/extras/binary-all/termux-apt-repo_0.4_all.deb
+Size: 3582
+MD5Sum: b19a2cf0a3d3494eee98c9af0a7e3538
+SHA1: 847c9b332c7741d27387b7ec491601da1c9615a7
+SHA256: 5d58235302fee377d3dfe63a15684fbb177ce2d3457b8bb24b3aafabe62c1f39
+SHA512: 43536273abb202645378b9ef4cc20dfd68ada38ed0d8e7a81ae7a9a2a2e972f91dcd8edd582d07b6e11405a3559f4d896a72355e230bc75baf306ac52cf0cc2a
+
+Package: termux-services
+Architecture: all
+Installed-Size: 84
+Maintainer: Henrik Grimler @Grimler91
+Version: 0.13
+Homepage: https://github.com/termux/termux-services/
+Depends: runit, coreutils
+Description: Service daemon for Termux
+Filename: dists/termux/extras/binary-all/termux-services_0.13_all.deb
+Size: 1892
+MD5Sum: b62db38db2b872a0c9af09ec12fa46a1
+SHA1: 27be2d096c5964b1561af5ce373fcba17e372947
+SHA256: 9d535d776fdb833524e0de97e8093e42eb23d4c37e21bb0c16fff1f8a9d90b00
+SHA512: 39fc577e93a67ba0999667e840a31efe0f4aa9ee68e855460842cb6a9b17efbf659554a4790b772c914deaab2873cd11b8252ca5912b672dbac81431b0fa48e9
+
+Package: termux-tools
+Architecture: all
+Installed-Size: 196
+Maintainer: @termux
+Version: 0.108
+Homepage: https://termux.com/
+Depends: bzip2, coreutils, curl, dash, diffutils, findutils, gawk, grep, gzip, less, procps, psmisc, sed, tar, termux-am, termux-exec, util-linux, xz-utils, dialog
+Essential: yes
+Conflicts: procps (<< 3.3.15-2)
+Recommends: ed, dos2unix, inetutils, net-tools, patch, unzip
+Suggests: termux-api
+Description: Basic system tools for Termux
+Filename: dists/termux/extras/binary-all/termux-tools_0.108_all.deb
+Size: 18026
+MD5Sum: a8cc8c9d2e666a1c678c8679824b1307
+SHA1: 8f6f9e67a5c4d2f6c4415fe3875ce99f4d3a6568
+SHA256: 9e3ae2d4ae7ae2c1a8845288b820ad7c18a66ae90eaeb271ed7b5306eee6216b
+SHA512: ee42070835a7ef49c0d5cd29217139a0f166d7618d4b4da64344879c178081514d20ecf74dbf6afdf39ccfe76183f4d36f919bb507a20f45236b38657db8ce4f
+
+Package: termux-tools
+Architecture: all
+Installed-Size: 196
+Maintainer: @termux
+Version: 0.109
+Homepage: https://termux.com/
+Depends: bzip2, coreutils, curl, dash, diffutils, findutils, gawk, grep, gzip, less, procps, psmisc, sed, tar, termux-am, termux-exec, util-linux, xz-utils, dialog
+Essential: yes
+Conflicts: procps (<< 3.3.15-2)
+Recommends: ed, dos2unix, inetutils, net-tools, patch, unzip
+Suggests: termux-api
+Description: Basic system tools for Termux
+Filename: dists/termux/extras/binary-all/termux-tools_0.109_all.deb
+Size: 17998
+MD5Sum: 5495fc5830a1f01ced0cb6331a290f51
+SHA1: 160d20ad4a4ef36742a81af6bfd44f79a775d849
+SHA256: 89aedba258056f9a8117a80c282b780e119a0d8e07b6d8e1a638cfaae525720d
+SHA512: 66c911bf68217a9ee5745ffab11ed8f2170ed00031313471175f79018fa1fe064f88d0f11a17d7750d936dee47163701a905467ef66571f722c1af405a17f9b7
+
+Package: termux-tools
+Architecture: all
+Installed-Size: 196
+Maintainer: @termux
+Version: 0.111
+Homepage: https://termux.com/
+Depends: bzip2, coreutils, curl, dash, diffutils, findutils, gawk, grep, gzip, less, procps, psmisc, sed, tar, termux-am, termux-exec, util-linux, xz-utils, dialog
+Essential: yes
+Conflicts: procps (<< 3.3.15-2)
+Recommends: ed, dos2unix, inetutils, net-tools, patch, unzip
+Suggests: termux-api
+Description: Basic system tools for Termux
+Filename: dists/termux/extras/binary-all/termux-tools_0.111_all.deb
+Size: 18008
+MD5Sum: 84b240489e240bd3756a20da617a6b4b
+SHA1: b982eb768af9b2ac18f6cfc4810934fcf65a21c9
+SHA256: 8d2e4bed4d19928df769b2a01057ce0c7e7f69fe78ba5d30f1db6eca5b7a2d61
+SHA512: e74501b1f0e9d8faec056e59f1cee8ec7175c07ab11e57712d08d354883160d7eefef1bd4306892a5e915eb6b98a1ef63b2eb6f187dbf502a0486151e7029f15
+
+Package: tsu
+Architecture: all
+Installed-Size: 56
+Maintainer: @termux
+Version: 8.5.1-3
+Homepage: https://github.com/cswl/tsu
+Description: A su wrapper for Termux
+Filename: dists/termux/extras/binary-all/tsu_8.5.1-3_all.deb
+Size: 4410
+MD5Sum: 1584e31de171c63e98241d38d4b8ce9a
+SHA1: 51fefb24409aade7d0e83957d6171a290bf87573
+SHA256: aa56504836d6391f9a2a18ea2a14b5381cf5512fa706d76f19f73d9bd2112773
+SHA512: 06e83f6c656c514a35aff0ef4316ed88422bd674ff9db7376ba36572d5c541f275387851f80e9c7ab1eff406c7b354050b3143ca0d8edf373cc1376054d09435
+
+Package: ttf-dejavu
+Architecture: all
+Installed-Size: 10108
+Maintainer: Leonid Pliushch <leonid.pliushch@gmail.com>
+Version: 2.37-8
+Homepage: https://dejavu-fonts.github.io/
+Description: Font family based on the Bitstream Vera Fonts with a wider range of characters
+Filename: dists/termux/extras/binary-all/ttf-dejavu_2.37-8_all.deb
+Size: 2468280
+MD5Sum: 53bffcb95d1775cde5da1cd747a1c6a4
+SHA1: e6739b8777f79e9387ed07d002b6c7ab3f0f375b
+SHA256: 3fa9352d528cb19aebcdd2de5d1fb0cb67b201be3ae264207fc1a277d2cfd6da
+SHA512: 74be7e2e4c26e1132cc12eaa25648c70062ba6ca91cebc146ae9ebc9b28de368970cf068fdfe0f21e0b618b926e94df3fbed7f4657f2fc208b298afd65363d8b
+
+Package: unstable-repo
+Architecture: all
+Installed-Size: 52
+Maintainer: Leonid Pliushch <leonid.pliushch@gmail.com>
+Version: 6.0
+Homepage: https://github.com/termux/unstable-packages
+Depends: termux-keyring
+Description: Package repository containing new/unstable programs and libraries.
+Filename: dists/termux/extras/binary-all/unstable-repo_6.0_all.deb
+Size: 1104
+MD5Sum: c1898c26bbc3ace2f8004038da6dd994
+SHA1: dfe8d8a760d27a70e91fdcd38ecf70578a739357
+SHA256: e31b5f8d8073dc10d057c35d783b0dc16cee96784a00b075990bcb58ada6fec6
+SHA512: e9cd3fbe1e761afc855d46d9c76dd5cf7b7b42ffb7fb5c337501cafb3711e6b29c9f5357f178c15d8ae655fb524d3d7fe414ae93786a3f0faeefd45b74ad6585
+
+Package: vim-runtime
+Architecture: all
+Installed-Size: 23532
+Maintainer: @termux
+Version: 8.2.2450
+Homepage: https://www.vim.org
+Description: Vi IMproved - Runtime files
+Filename: dists/termux/extras/binary-all/vim-runtime_8.2.2450_all.deb
+Size: 4252410
+MD5Sum: bbc8b02eb671e251238578ea09510071
+SHA1: a47685a545b1641c64fb8d29583b5e4e495dd030
+SHA256: c07554e6fb4dc7795c544b1afc4b6c7cbc58dc523deaf479502768f6df8e3831
+SHA512: 5cc90f640603722bfccf77f218d81fb2c3e71058e9d1ab38ec8c1ff1c0e7fd99bd4227113c3e4da5cc9a848c0225fe4f3ed0f2b252b979ccde303d79c5556026
+
+Package: yarn
+Architecture: all
+Installed-Size: 5284
+Maintainer: Termux members @termux
+Version: 1.22.10
+Homepage: https://yarnpkg.com/
+Depends: nodejs | nodejs-lts
+Description: Fast, reliable, and secure dependency management
+Filename: dists/termux/extras/binary-all/yarn_1.22.10_all.deb
+Size: 891358
+MD5Sum: f4e345879556eb3137b16705648fbd5a
+SHA1: d6bd3777e93698f093cbea415d09096338f4f572
+SHA256: 6099c1c8904f400750b35c444f0e9b079440abeb001b0b024d1c6749d63297c7
+SHA512: 077a20ab84534788802a258b7fb5afc2272026e428cb87d344cb9c8b66590ec3771d5aacca6a1d4b517c80fb0ac9aafea861dd19039014f9204853895c79fb50
+
